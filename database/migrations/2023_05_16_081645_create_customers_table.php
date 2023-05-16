@@ -13,16 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('markets', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('location');
-            $table->string('manager_name');
-            $table->string('manager_phone');
-            $table->string('size')->nullable();
+            $table->string('first_name');
+            $table->string('middle_name');
+            $table->string('last_name');
+            $table->string('nida');
+            $table->string('mobile');
+            $table->string('address');
             $table->timestamps();
             $table->softDeletes();
         });
+
+
     }
 
     /**
@@ -32,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('markets');
+        Schema::dropIfExists('customers');
     }
 };

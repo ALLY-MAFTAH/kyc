@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('markets', function (Blueprint $table) {
+        Schema::create('frames', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('location');
-            $table->string('manager_name');
-            $table->string('manager_phone');
+            $table->string('number')->unique();
+            $table->double('price');
+            $table->bigInteger('customer_id');
+            $table->bigInteger('section_id');
+            $table->string('location')->nullable();
             $table->string('size')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('markets');
+        Schema::dropIfExists('frames');
     }
 };

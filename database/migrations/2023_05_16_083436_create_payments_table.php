@@ -13,13 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('markets', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('location');
-            $table->string('manager_name');
-            $table->string('manager_phone');
-            $table->string('size')->nullable();
+            $table->date('date');
+            $table->double('amount');
+            $table->string('receipt_number')->unique();
+            $table->bigInteger('cage_id')->nullable();
+            $table->bigInteger('frame_id')->nullable();
+            $table->bigInteger('market_id');
+            $table->bigInteger('season_id');
+            $table->bigInteger('customer_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('markets');
+        Schema::dropIfExists('payments');
     }
 };
