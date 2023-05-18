@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('description');
+            $table->bigInteger('market_id');
             $table->timestamps();
             $table->softDeletes();
         });

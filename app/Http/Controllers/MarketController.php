@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Market;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
 class MarketController extends Controller
@@ -14,7 +15,9 @@ class MarketController extends Controller
      */
     public function index()
     {
-        //
+        $markets = Market::all();
+
+        return view('markets.index', compact('markets'));
     }
 
     /**
@@ -22,9 +25,34 @@ class MarketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function postMarket(Request $request)
     {
-        //
+
+        try {
+            $attributes = $this->validate($request, [
+                'number' => ['required', 'unique:markets'],
+                "name" => 'required',
+                "ward" => 'required',
+                "street" => 'required',
+                "manager_name" => 'required',
+                "manager_mobile" => 'required',
+            ]);
+
+            $attributes['size'] = $request->size ?? "";
+
+            $market = Market::create($attributes);
+
+            foreach ($request->sections as $section) {
+                $sectionAttr['name'] = $section;
+                $sectionAttr['market_id'] = $market->id;
+                $newSection = Section::create($sectionAttr);
+                // dd($newSection->updated_at);
+                $market->sections()->save($newSection);
+            }
+            return back()->with('success', "Market created successful");
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
     }
 
     /**

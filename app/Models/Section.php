@@ -13,7 +13,7 @@ class Section extends Model
 
     protected $fillable = [
         'name',
-        'description',
+        'market_id',
     ];
 
     protected $dates = [
@@ -27,5 +27,9 @@ class Section extends Model
     public function cages()
     {
         return $this->hasMany(Cage::class);
+    }
+    public function market()
+    {
+        return $this->belongsTo(Market::class,'market_id');
     }
 }

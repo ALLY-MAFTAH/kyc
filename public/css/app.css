@@ -1,0 +1,14 @@
+.app-name {
+    font-size: 25px;
+    color: rgb(43, 3, 87);
+    text-shadow: 1px 1px 1px rgb(197, 147, 209);
+    font-weight: bold;
+}
+
+#wards span {
+    display: block !important;
+}
+
+#streets span {
+    display: block !important;
+}
