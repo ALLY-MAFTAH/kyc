@@ -3,12 +3,12 @@
         <a style="text-decoration: none" class="sidebar-brand brand-logo" href="{{ route('home') }}"><span
                 class="app-name">KYC System</span></a>
         <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="{{ route('home') }}"><img
-                src="assets/images/logo-mini.svg" alt="logo" /></a>
+                src="{{asset('assets/images/logo-mini.svg')}}" alt="logo" /></a>
     </div>
     <ul class="nav">
         <li class="nav-item nav-profile">
             <a href="{{ route('home') }}" class="nav-link">
-                <img src="assets/images/logo.png" height="90px" alt="logo" />
+                <img src="{{asset('assets/images/logo.png')}}" height="90px" alt="logo" />
             </a>
         </li>
         <li class="nav-item">
