@@ -6,11 +6,11 @@
     <div class="page-header flex-wrap">
         <h3 class="mb-2"> Markets</h3>
         <div class="d-flex">
-            <button type="button" class="btn btn-sm bg-white btn-icon-text border">
+            <button type="button" class="btn  bg-white btn-icon-text border">
                 <i class="mdi mdi-download btn-icon-prepend"></i> Download </button>
-            <button type="button" class="btn btn-sm bg-white btn-icon-text border ml-3">
+            <button type="button" class="btn  bg-white btn-icon-text border ml-3">
                 <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
-            <button type="button" class="btn btn-sm ml-3 btn-primary collapsed"data-bs-toggle="collapse"
+            <button type="button" class="btn  ml-3 btn-primary collapsed"data-bs-toggle="collapse"
                 data-bs-target="#addMarket"> Create Market </button>
         </div>
         <br>
@@ -45,25 +45,33 @@
                                 <div class="col-md-3 form-group">
                                     <label for="number">Number</label>
                                     <input type="text" class="form-control" id="number" placeholder="Number"required
-                                        autocomplete="number" name="number" />
+                                        autocomplete="number" name="number" /> @error('number')
+                                        <span class="error" style="color:red">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label for="name">Name</label>
                                     <input type="text" class="form-control" id="name" placeholder="Name"required
-                                        autocomplete="name" name="name" />
+                                        autocomplete="name" name="name" /> @error('name')
+                                        <span class="error" style="color:red">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label for="ward">Ward</label>
                                     <div id="wards">
                                         <input class="typeahead" id="ward" type="text" placeholder="Ward"required
-                                            autocomplete="ward" name="ward" />
+                                            autocomplete="ward" name="ward" /> @error('ward')
+                                            <span class="error" style="color:red">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label for="street">Street</label>
                                     <div id="streets">
                                         <input type="text" class="typeahead" id="street" name="street"
-                                            autocomplete="street" placeholder="Street"required />
+                                            autocomplete="street" placeholder="Street"required /> @error('street')
+                                            <span class="error" style="color:red">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -71,24 +79,30 @@
                                 <div class="col-md-3 form-group">
                                     <label for="manager_name">Manager Name</label>
                                     <input type="text" class="form-control" id="manager_name" autocomplete="name"
-                                        placeholder="Mnager Name"required name="manager_name" />
+                                        placeholder="Mnager Name"required name="manager_name" /> @error('manager_name')
+                                        <span class="error" style="color:red">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label for="manager_mobile">Manager Mobile</label>
                                     <input type="number" class="form-control" id="manager_mobile"autocomplete="phone"
                                         placeholder="Eg; 0712345678" maxlength="10" pattern="0[0-9]{9}"required
-                                        name="manager_mobile" />
+                                        name="manager_mobile" /> @error('manager_mobile')
+                                        <span class="error" style="color:red">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label for="size">Market Size</label>
                                     <input type="text" class="form-control" id="size" autocomplete="size"
-                                        placeholder="Size (Optional)" name="size" />
+                                        placeholder="Size (Optional)" name="size" /> @error('size')
+                                        <span class="error" style="color:red">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Market Sections</label>
                                     <select class="js-example-basic-multiple form-control" multiple="multiple" required
                                         name="sections[]" style="width: 100%;">
-                                        <option value="All Flat">All Flat</option>
+                                        <option value="General">General</option>
                                         <option value="Ground Floor">Ground Floor</option>
                                         <option value="First Floor">First Floor</option>
                                         <option value="Second Floor">Second Floor</option>
@@ -102,7 +116,9 @@
                                         <option value="Inside">Inside</option>
                                         <option value="Outside">Outside</option>
                                         <option value="Upper">Upper</option>
-                                    </select>
+                                    </select> @error('selections')
+                                        <span class="error" style="color:red">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row mb-2 mt-2">
@@ -143,9 +159,23 @@
                             <td>{{ $market->manager_mobile }}</td>
                             <td>{{ $market->size }}</td>
                             <td class="text-center">
-                                <a href="" class="btn btn-outline-info">View</a>
-                                <a href="" class="btn btn-outline-primary">Edit</a>
-                                <a href="" class="btn btn-outline-danger">Delete</a>
+                                <a href="{{ route('markets.show', $market) }}" class="btn  btn-outline-info collapsed"
+                                    type="button">
+                                    <i class="feather icon-edit"></i> View
+                                </a>
+                                {{-- <a href="#" class="btn  btn-outline-primary collapsed" type="button"
+                                    data-toggle="modal" data-target="#editModal-{{ $market->id }}"
+                                    aria-expanded="false" aria-controls="collapseTwo">
+                                    <i class="feather icon-edit"></i> Edit
+                                </a> --}}
+                                <a href="#" class="btn  btn-outline-danger"
+                                    onclick="if(confirm('Are you sure want to delete {{ $market->name }}?')) document.getElementById('delete-market-{{ $market->id }}').submit()">
+                                    <i class="f"></i>Delete
+                                </a>
+                                <form id="delete-market-{{ $market->id }}" method="post"
+                                    action="{{ route('markets.delete', $market) }}">
+                                    @csrf @method('delete')
+                                </form>
                             </td>
                         </tr>
                     @endforeach

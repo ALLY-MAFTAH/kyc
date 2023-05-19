@@ -19,8 +19,8 @@ return new class extends Migration
             $table->double('price');
             $table->string('type');
             $table->bigInteger('customer_id');
-            $table->bigInteger('section_id');
-            $table->string('location')->nullable();
+            $table->bigInteger('market_id');
+            $table->string('location');
             $table->string('size')->nullable();
             $table->timestamps();
             $table->softDeletes();

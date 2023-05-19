@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Market;
 use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class MarketController extends Controller
 {
@@ -18,6 +20,18 @@ class MarketController extends Controller
         $markets = Market::all();
 
         return view('markets.index', compact('markets'));
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Market  $market
+     * @return \Illuminate\Http\Response
+     */
+    public function showMarket(Market $market)
+    {
+        return view('markets.show', compact('market'));
     }
 
     /**
@@ -66,27 +80,6 @@ class MarketController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Market  $market
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Market $market)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Market  $market
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Market $market)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -95,6 +88,43 @@ class MarketController extends Controller
      * @param  \App\Models\Market  $market
      * @return \Illuminate\Http\Response
      */
+    public function putMarket(Request $request, Market $market)
+    {
+        try {
+            $attributes = $this->validate($request, [
+
+                'number' => 'required |unique:markets,number,' . $market->id,
+                "name" => 'required',
+                "ward" => 'required',
+                "street" => 'required',
+                "manager_name" => 'required',
+                "manager_mobile" => 'required',
+            ]);
+
+            $attributes['size'] = $request->size ?? $market->size;
+
+            $market->update($attributes);
+
+
+            foreach ($market->sections as $sec) {
+                $sec->delete();
+            }
+            foreach ($request->sections as $section) {
+
+                $sectionAttr['name'] = $section;
+                $sectionAttr['market_id'] = $market->id;
+                $newSection = Section::create($sectionAttr);
+                // dd($newSection->updated_at);
+                $market->sections()->save($newSection);
+            }
+            return back()->with('success', "Market edited successful");
+        } catch (ValidationException $exception) {
+            return back()->withErrors($exception->errors())->withInput();
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage())->withInput();
+        }
+    }
+
     public function update(Request $request, Market $market)
     {
         //
@@ -106,8 +136,10 @@ class MarketController extends Controller
      * @param  \App\Models\Market  $market
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Market $market)
+    public function deleteMarket(Market $market)
     {
-        //
+        $market->delete();
+
+        return back()->with('success', 'Market deleted successful');
     }
 }

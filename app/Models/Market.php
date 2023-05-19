@@ -29,4 +29,16 @@ class Market extends Model
     {
         return $this->hasMany(Section::class);
     }
+    public function frames()
+    {
+        return $this->hasMany(Frame::class);
+    }
+    public function cages()
+    {
+        return $this->hasMany(Cage::class);
+    }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

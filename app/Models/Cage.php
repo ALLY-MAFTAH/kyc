@@ -16,7 +16,7 @@ class Cage extends Model
         'location',
         'price',
         'customer_id',
-        'section_id',
+        'market_id',
         'size',
         'type',
     ];
@@ -25,9 +25,9 @@ class Cage extends Model
         'deleted_at'
     ];
 
-    public function section()
+    public function market()
     {
-        return $this->belongsTo(Section::class, 'section_id');
+        return $this->belongsTo(Section::class, 'market_id');
     }
     public function customer()
     {

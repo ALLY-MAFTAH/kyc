@@ -24,7 +24,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // MARKETS ROUTES
 Route::get('/markets', [MarketController::class, 'index'])->name('markets.index');
-Route::get('/show-market/{market}', [MarketController::class, 'putMarket'])->name('markets.show');
+Route::get('/show-market/{market}', [MarketController::class, 'showMarket'])->name('markets.show');
 Route::post('/add-market', [MarketController::class, 'postMarket'])->name('markets.add');
 Route::put('/edit-market/{market}', [MarketController::class, 'putMarket'])->name('markets.edit');
 Route::delete('/delete-market/{market}', [MarketController::class, 'deleteMarket'])->name('markets.delete');
@@ -84,3 +84,6 @@ Route::get('/show-setting/{setting}', [SSettingController::class, 'putSSetting']
 Route::post('/add-setting', [SSettingController::class, 'postSSetting'])->name('settings.add');
 Route::put('/edit-setting/{setting}', [SSettingController::class, 'putSSetting'])->name('settings.edit');
 Route::delete('/delete-setting/{setting}', [SSettingController::class, 'deleteSSetting'])->name('settings.delete');
+
+// MESSAGES ROUTES
+Route::post('send-message', [MessageController::class, 'sendMessage'])->name('send-message');

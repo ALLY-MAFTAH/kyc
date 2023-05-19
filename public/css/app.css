@@ -12,3 +12,14 @@
 #streets span {
     display: block !important;
 }
+
+.valid-label {
+    border-radius: 0px;
+    color: black;
+    font-size: small;
+    width:90px;
+    border: solid 1px white;
+    background-color: rgba(131, 171, 247, 0.434);
+    margin-right: 5px;
+
+}
