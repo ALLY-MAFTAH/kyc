@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cages', function (Blueprint $table) {
+        Schema::create('customer_terms', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('number')->unique();
-            $table->double('price');
-            $table->string('type');
-            $table->bigInteger('market_id');
-            $table->string('location');
-            $table->string('size')->nullable();
+            $table->bigInteger('customer_id');
+            $table->bigInteger('term_id');
+            $table->boolean('is_paid')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cages');
+        Schema::dropIfExists('customer_terms');
     }
 };

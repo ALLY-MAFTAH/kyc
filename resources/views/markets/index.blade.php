@@ -11,7 +11,7 @@
             <button type="button" class="btn  bg-white btn-icon-text border ml-3">
                 <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
             <button type="button" class="btn  ml-3 btn-primary collapsed"data-bs-toggle="collapse"
-                data-bs-target="#addMarket"> Create Market </button>
+                data-bs-target="#addMarketCollapse"> Create Market </button>
         </div>
         <br>
     </div>
@@ -30,12 +30,11 @@
             {{ session('error') }}
         </div>
     @endif
-    <div class="card">
-        <div class="card-header">Markets
-        </div>
+    <div class="card shadow">
+        <div class="card-header">Markets</div>
         <div class="card-body">
-            <div id="addMarket" style="width: 100%;border-width:0px" class="accordion-collapse collapse"
-                aria-labelledby="addMarket" data-bs-parent="#addMarket">
+            <div id="addMarketCollapse" style="width: 100%;border-width:0px" class="accordion-collapse collapse"
+                aria-labelledby="addMarketCollapse" data-bs-parent="#addMarketCollapse">
                 <div class="accordion-body">
                     <div class="text-center" style="color:gray">Create Market</div>
                     <div class="card p-2 mt-1" style="background: var(--form-bg-color)">
@@ -133,7 +132,7 @@
                     <br>
                 </div>
             </div>
-            <table class="table table-responsive">
+            <table id="data-tebo1" class="dt-responsive nowrap  rounded-3 table table-hover"style="width: 100%">
                 <thead class="table-header">
                     <tr>
                         <th>#</th>
@@ -163,11 +162,6 @@
                                     type="button">
                                     <i class="feather icon-edit"></i> View
                                 </a>
-                                {{-- <a href="#" class="btn  btn-outline-primary collapsed" type="button"
-                                    data-toggle="modal" data-target="#editModal-{{ $market->id }}"
-                                    aria-expanded="false" aria-controls="collapseTwo">
-                                    <i class="feather icon-edit"></i> Edit
-                                </a> --}}
                                 <a href="#" class="btn  btn-outline-danger"
                                     onclick="if(confirm('Are you sure want to delete {{ $market->name }}?')) document.getElementById('delete-market-{{ $market->id }}').submit()">
                                     <i class="f"></i>Delete
@@ -185,4 +179,11 @@
     </div>
 @endsection
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+            @if (session('addMarketCollapse'))
+                $('#addMarketCollapse').addClass('show');
+            @endif
+        });
+    </script>
 @endsection

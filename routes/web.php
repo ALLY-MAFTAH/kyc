@@ -38,52 +38,52 @@ Route::delete('/delete-section/{section}', [SectionController::class, 'deleteSec
 
 // FRAMES ROUTES
 Route::get('/frames', [FrameController::class, 'index'])->name('frames.index');
-Route::get('/show-frame/{frame}', [FrameController::class, 'putFrame'])->name('frames.show');
+Route::get('/show-frame/{frame}', [FrameController::class, 'showFrame'])->name('frames.show');
 Route::post('/add-frame', [FrameController::class, 'postFrame'])->name('frames.add');
 Route::put('/edit-frame/{frame}', [FrameController::class, 'putFrame'])->name('frames.edit');
 Route::delete('/delete-frame/{frame}', [FrameController::class, 'deleteFrame'])->name('frames.delete');
 
 // CAGES ROUTES
 Route::get('/cages', [CageController::class, 'index'])->name('cages.index');
-Route::get('/show-cage/{cage}', [CageController::class, 'putCage'])->name('cages.show');
+Route::get('/show-cage/{cage}', [CageController::class, 'showCage'])->name('cages.show');
 Route::post('/add-cage', [CageController::class, 'postCage'])->name('cages.add');
 Route::put('/edit-cage/{cage}', [CageController::class, 'putCage'])->name('cages.edit');
 Route::delete('/delete-cage/{cage}', [CageController::class, 'deleteCage'])->name('cages.delete');
 
 // CUSTOMERS ROUTES
 Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-Route::get('/show-customer/{customer}', [CustomerController::class, 'putCustomer'])->name('customers.show');
+Route::get('/show-customer/{customer}', [CustomerController::class, 'showCustomer'])->name('customers.show');
 Route::post('/add-customer', [CustomerController::class, 'postCustomer'])->name('customers.add');
 Route::put('/edit-customer/{customer}', [CustomerController::class, 'putCustomer'])->name('customers.edit');
 Route::delete('/delete-customer/{customer}', [CustomerController::class, 'deleteCustomer'])->name('customers.delete');
 
 // PAYMENTS ROUTES
 Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
-Route::get('/show-payment/{payment}', [PaymentController::class, 'putPayment'])->name('payments.show');
+Route::get('/show-payment/{payment}', [PaymentController::class, 'showPayment'])->name('payments.show');
 Route::post('/add-payment', [PaymentController::class, 'postPayment'])->name('payments.add');
 Route::put('/edit-payment/{payment}', [PaymentController::class, 'putPayment'])->name('payments.edit');
 Route::delete('/delete-payment/{payment}', [PaymentController::class, 'deletePayment'])->name('payments.delete');
 
 // USERS ROUTES
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::get('/show-user/{user}', [UserController::class, 'putUser'])->name('users.show');
+Route::get('/show-user/{user}', [UserController::class, 'showUser'])->name('users.show');
 Route::post('/add-user', [UserController::class, 'postUser'])->name('users.add');
 Route::put('/edit-user/{user}', [UserController::class, 'putUser'])->name('users.edit');
 Route::delete('/delete-user/{user}', [UserController::class, 'deleteUser'])->name('users.delete');
 
 // REPORTS ROUTES
 Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-Route::get('/show-report/{report}', [ReportController::class, 'putReport'])->name('reports.show');
+Route::get('/show-report/{report}', [ReportController::class, 'showReport'])->name('reports.show');
 Route::post('/add-report', [ReportController::class, 'postReport'])->name('reports.add');
 Route::put('/edit-report/{report}', [ReportController::class, 'putReport'])->name('reports.edit');
 Route::delete('/delete-report/{report}', [ReportController::class, 'deleteReport'])->name('reports.delete');
 
 // SETTINGS ROUTES
-Route::get('/settings', [SSettingController::class, 'index'])->name('settings.index');
-Route::get('/show-setting/{setting}', [SSettingController::class, 'putSSetting'])->name('settings.show');
-Route::post('/add-setting', [SSettingController::class, 'postSSetting'])->name('settings.add');
-Route::put('/edit-setting/{setting}', [SSettingController::class, 'putSSetting'])->name('settings.edit');
-Route::delete('/delete-setting/{setting}', [SSettingController::class, 'deleteSSetting'])->name('settings.delete');
+Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+Route::get('/show-setting/{setting}', [SettingController::class, 'showSetting'])->name('settings.show');
+Route::post('/add-setting', [SettingController::class, 'postSetting'])->name('settings.add');
+Route::put('/edit-setting/{setting}', [SettingController::class, 'putSetting'])->name('settings.edit');
+Route::delete('/delete-setting/{setting}', [SettingController::class, 'deleteSetting'])->name('settings.delete');
 
 // MESSAGES ROUTES
 Route::post('send-message', [MessageController::class, 'sendMessage'])->name('send-message');

@@ -44,7 +44,7 @@ class MarketController extends Controller
 
         try {
             $attributes = $this->validate($request, [
-                'number' => ['required', 'unique:markets'],
+                'number' => ['required', 'unique:markets,number,NULL,id,deleted_at,NULL'],
                 "name" => 'required',
                 "ward" => 'required',
                 "street" => 'required',
@@ -64,8 +64,10 @@ class MarketController extends Controller
                 $market->sections()->save($newSection);
             }
             return back()->with('success', "Market created successful");
+        } catch (ValidationException $exception) {
+            return back()->withErrors($exception->errors())->withInput()->with('addMarketCollapse', true);
         } catch (\Throwable $th) {
-            return back()->with('error', $th->getMessage());
+            return back()->with('error', $th->getMessage())->withInput();
         }
     }
 
@@ -119,7 +121,7 @@ class MarketController extends Controller
             }
             return back()->with('success', "Market edited successful");
         } catch (ValidationException $exception) {
-            return back()->withErrors($exception->errors())->withInput();
+            return back()->withErrors($exception->errors())->withInput()->with('editMarketModal', true);
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
         }

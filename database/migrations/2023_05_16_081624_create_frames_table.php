@@ -17,7 +17,6 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('number')->unique();
             $table->double('price');
-            $table->bigInteger('customer_id');
             $table->bigInteger('market_id');
             $table->string('location');
             $table->string('size')->nullable();

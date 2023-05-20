@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Frame;
+use App\Models\Market;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class FrameController extends Controller
 {
@@ -14,28 +16,9 @@ class FrameController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $frames = Frame::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('frames.index', compact('frames'));
     }
 
     /**
@@ -44,9 +27,40 @@ class FrameController extends Controller
      * @param  \App\Models\Frame  $frame
      * @return \Illuminate\Http\Response
      */
-    public function show(Frame $frame)
+    public function showFrame(Frame $frame)
     {
-        //
+        return view('frames.show', compact('frame'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postFrame(Request $request)
+    {
+        try {
+            $attributes = $this->validate($request, [
+                'number' => ['required', 'unique:frames,number,NULL,id,deleted_at,NULL'],
+                "location" => 'required',
+                "market_id" => 'required',
+            ]);
+
+            $attributes['size'] = $request->size ?? "";
+            $attributes['price'] = 40000;
+
+            $frame = Frame::create($attributes);
+            $market = Market::find($request->market_id);
+
+            $market->frames()->save($frame);
+
+            return back()->with('success', "Frame added successfully");
+        } catch (ValidationException $exception) {
+            return back()->withErrors($exception->errors())->withInput()->with('addFrameCollapse', true);
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage())->withInput();
+        }
     }
 
     /**
@@ -78,8 +92,10 @@ class FrameController extends Controller
      * @param  \App\Models\Frame  $frame
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Frame $frame)
+    public function deleteFrame(Frame $frame)
     {
-        //
+        $frame->delete();
+
+        return back()->with('success', 'Frame deleted successful');
     }
 }

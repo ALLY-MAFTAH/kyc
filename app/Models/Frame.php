@@ -15,7 +15,6 @@ class Frame extends Model
         'number',
         'location',
         'price',
-        'customer_id',
         'market_id',
         'size',
     ];
@@ -28,8 +27,8 @@ class Frame extends Model
     {
         return $this->belongsTo(Market::class, 'market_id');
     }
-    public function customer()
+    public function customers()
     {
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->belongsToMany(Customer::class);
     }
 }

@@ -40,5 +40,4 @@ class Customer extends Model
     {
         return $this->belongsToMany(Term::class);
     }
-
 }

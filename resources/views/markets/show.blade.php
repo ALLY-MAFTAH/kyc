@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="col-md-3  py-2">
-                            <div class="card p-1" style="background-color:rgba(189, 214, 237, 0.396)">
+                            <div class="card p-1" style="background-color:rgba(232, 239, 245, 0.396)">
                                 <div class="pb-2 text-center">
                                     <b class="">Sections</b>
                                 </div>
@@ -127,7 +127,7 @@
             </div>
         </div>
         <br>
-        <div class="card">
+        <div class="card shadow">
             <div class="card-header  text-center" style="font-size: 20px">
                 <div class="row">
                     <div class="col">
@@ -135,21 +135,21 @@
                     </div>
                     <div class="col">
                         <button type="button" class="btn  ml-3 btn-primary collapsed"data-bs-toggle="collapse"
-                            data-bs-target="#addFrame"> Add Frame </button>
+                            data-bs-target="#addFrameCollapse"> Add Frame </button>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-
-                <div id="addFrame" style="width: 100%;border-width:0px" class="accordion-collapse collapse"
-                    aria-labelledby="addFrame" data-bs-parent="#addFrame">
+                <div id="addFrameCollapse" style="width: 100%;border-width:0px" class="accordion-collapse collapse"
+                    aria-labelledby="addFrameCollapse" data-bs-parent="#addFrameCollapse">
                     <div class="accordion-body">
                         <div class="text-center" style="color:gray">Add Frame</div>
                         <div class="card p-2 mt-1" style="background: var(--form-bg-color)">
                             <form action="{{ route('frames.add') }}" method="POST">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-md-3 form-group">
+                                    <input type="number" name="market_id" value="{{ $market->id }}" hidden>
+                                    <div class="col-md-4 form-group">
                                         <label for="number">Number</label>
                                         <input type="text" class="form-control" id="number"
                                             placeholder="Number"required autocomplete="number" name="number" />
@@ -157,81 +157,30 @@
                                             <span class="error" style="color:red">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="col-md-3 form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" class="form-control" id="name"
-                                            placeholder="Name"required autocomplete="name" name="name" />
-                                        @error('name')
+
+                                    <div class="col-md-4 form-group">
+                                        <label>Location</label>
+                                        <select class="js-example-basic-single form-control" required name="location"
+                                            style="width: 100%;">
+                                            <option value="">-- Select Location --</option>
+                                            @foreach ($market->sections as $section)
+                                                <option value="{{ $section->name }}">{{ $section->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('location')
                                             <span class="error" style="color:red">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="col-md-3 form-group">
-                                        <label for="ward">Ward</label>
-                                        <div id="wards">
-                                            <input class="typeahead" id="ward" type="text"
-                                                placeholder="Ward"required autocomplete="ward" name="ward" />
-                                            @error('ward')
-                                                <span class="error" style="color:red">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label for="street">Street</label>
-                                        <div id="streets">
-                                            <input type="text" class="typeahead" id="street" name="street"
-                                                autocomplete="street" placeholder="Street"required /> @error('street')
-                                                <span class="error" style="color:red">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3 form-group">
-                                        <label for="manager_name">Manager Name</label>
-                                        <input type="text" class="form-control" id="manager_name" autocomplete="name"
-                                            placeholder="Mnager Name"required name="manager_name" />
-                                        @error('manager_name')
-                                            <span class="error" style="color:red">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label for="manager_mobile">Manager Mobile</label>
-                                        <input type="number" class="form-control"
-                                            id="manager_mobile"autocomplete="phone" placeholder="Eg; 0712345678"
-                                            maxlength="10" pattern="0[0-9]{9}" required name="manager_mobile" />
-                                        @error('manager_mobile')
-                                            <span class="error" style="color:red">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label for="size">Market Size</label>
+
+
+                                    <div class="col-md-4 form-group">
+                                        <label for="size">Frame Size</label>
                                         <input type="text" class="form-control" id="size" autocomplete="size"
                                             placeholder="Size (Optional)" name="size" /> @error('size')
                                             <span class="error" style="color:red">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="col-md-3 form-group">
-                                        <label>Market Sections</label>
-                                        <select class="js-example-basic-multiple form-control" multiple="multiple"
-                                            required name="sections[]" style="width: 100%;">
-                                            <option value="General">General</option>
-                                            <option value="Ground Floor">Ground Floor</option>
-                                            <option value="First Floor">First Floor</option>
-                                            <option value="Second Floor">Second Floor</option>
-                                            <option value="Third Floor">Third Floor</option>
-                                            <option value="First Wing">First Wing</option>
-                                            <option value="Second Wing">Second Wing</option>
-                                            <option value="Third Wing">Third Wing</option>
-                                            <option value="Left Wing">Left Wing</option>
-                                            <option value="Right Wing">Right Wing</option>
-                                            <option value="Central Wing">Central Wing</option>
-                                            <option value="Inside">Inside</option>
-                                            <option value="Outside">Outside</option>
-                                            <option value="Upper">Upper</option>
-                                        </select> @error('selections')
-                                            <span class="error" style="color:red">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+
                                 </div>
                                 <div class="row mb-2 mt-2">
                                     <div class="text-center">
@@ -246,8 +195,7 @@
                     </div>
                 </div>
                 <div class="table-responsive-lg">
-                    <table id="data-tebo1"
-                        class="dt-responsive nowrap shadow rounded-3 table table-hover"style="width: 100%">
+                    <table id="data-tebo1" class="dt-responsive nowrap  rounded-3 table table-hover"style="width: 100%">
                         <thead class=" table-head">
                             <tr>
                                 <th class="text-center" style="max-width: 20px">#</th>
@@ -264,10 +212,16 @@
                                 <tr>
                                     <td class="text-center" style="max-width: 20px">{{ ++$index }}</td>
                                     <td>{{ $frame->number }}</td>
-                                    <td> {{ $frame->section }} </td>
+                                    <td> {{ $frame->location }} </td>
                                     <td> {{ $frame->price }} </td>
+                                    <td>
+                                        <a href="">
+                                            {{ $frame->customer }}
+                                        </a>
+                                    </td>
+                                    <td> {{ $frame->size }} </td>
                                     <td class="text-center">
-                                        <a href="{{ route('frames.show') }}" class="btn  btn-outline-info"
+                                        <a href="{{ route('frames.show', $frame) }}" class="btn  btn-outline-info"
                                             type="button">
                                             View
                                         </a>
@@ -288,7 +242,137 @@
                 </div>
             </div>
         </div>
+        <br>
+        <div class="card shadow">
+            <div class="card-header  text-center" style="font-size: 20px">
+                <div class="row">
+                    <div class="col">
+                        Cages
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn  ml-3 btn-primary collapsed"data-bs-toggle="collapse"
+                            data-bs-target="#addCageCollapse"> Add Cage </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="addCageCollapse" style="width: 100%;border-width:0px" class="accordion-collapse collapse"
+                    aria-labelledby="addCageCollapse" data-bs-parent="#addCageCollapse">
+                    <div class="accordion-body">
+                        <div class="text-center" style="color:gray">Add Cage</div>
+                        <div class="card p-2 mt-1" style="background: var(--form-bg-color)">
+                            <form action="{{ route('cages.add') }}" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <input type="number" name="market_id" value="{{ $market->id }}" hidden>
+                                    <div class="col-md-3 form-group">
+                                        <label for="number">Number</label>
+                                        <input type="text" class="form-control" id="number"
+                                            placeholder="Number"required autocomplete="number" name="number" />
+                                        @error('number')
+                                            <span class="error" style="color:red">{{ $message }}</span>
+                                        @enderror
+                                    </div>
 
+                                    <div class="col-md-3 form-group">
+                                        <label>Location</label>
+                                        <select class="js-example-basic-single form-control" required name="location"
+                                            style="width: 100%;">
+                                            <option value="">-- Select Location --</option>
+                                            @foreach ($market->sections as $section)
+                                                <option value="{{ $section->name }}">{{ $section->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('location')
+                                            <span class="error" style="color:red">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label>Type</label>
+                                        <select class="js-example-basic-single form-control" required name="type"
+                                            style="width: 100%;">
+                                            <option value="">-- Select Type --</option>
+                                            <option value="Imaginary">Imaginary</option>
+                                            <option value="Real">Real</option>
+
+                                        </select>
+                                        @error('type')
+                                            <span class="error" style="color:red">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+
+                                    <div class="col-md-3 form-group">
+                                        <label for="size">Cage Size</label>
+                                        <input type="text" class="form-control" id="size" autocomplete="size"
+                                            placeholder="Size (Optional)" name="size" /> @error('size')
+                                            <span class="error" style="color:red">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                </div>
+                                <div class="row mb-2 mt-2">
+                                    <div class="text-center">
+                                        <button type="submit" class="btn  btn-outline-primary">
+                                            {{ __('Submit') }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div class="table-responsive-lg">
+                    <table id="data-tebo1" class="dt-responsive nowrap  rounded-3 table table-hover"style="width: 100%">
+                        <thead class=" table-head">
+                            <tr>
+                                <th class="text-center" style="max-width: 20px">#</th>
+                                <th>Number</th>
+                                <th>Location</th>
+                                <th>Type</th>
+                                <th>Price</th>
+                                <th>Current Customer</th>
+                                <th>Size</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($market->cages as $index => $cage)
+                                <tr>
+                                    <td class="text-center" style="max-width: 20px">{{ ++$index }}</td>
+                                    <td>{{ $cage->number }}</td>
+                                    <td> {{ $cage->location }} </td>
+                                    <td> {{ $cage->price }} </td>
+                                    <td> {{ $cage->type }} </td>
+                                    <td>
+                                        <a href="">
+                                            {{ $cage->customer }}
+                                        </a>
+                                    </td>
+                                    <td> {{ $cage->size }} </td>
+                                    <td class="text-center">
+                                        <a href="{{ route('cages.show', $cage) }}" class="btn  btn-outline-info"
+                                            type="button">
+                                            View
+                                        </a>
+                                        <a href="#" class="btn  btn-outline-danger"
+                                            onclick="if(confirm('Are you sure want to delete cage number: {{ $cage->number }}?')) document.getElementById('delete-cage-{{ $cage->id }}').submit()">
+                                            Delete
+                                        </a>
+                                        <form id="delete-cage-{{ $cage->id }}" method="post"
+                                            action="{{ route('cages.delete', $cage) }}">
+                                            @csrf @method('delete')
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><br>
 
         <div class="modal fade" id="editModal-{{ $market->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
@@ -309,4 +393,26 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            @if (session('addFrameCollapse'))
+                $('#addFrameCollapse').addClass('show');
+            @endif
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            @if (session('addCageCollapse'))
+                $('#addCageCollapse').addClass('show');
+            @endif
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            @if (session('modalOpen'))
+                $('#editMarketModal').addClass('show');
+            @endif
+        });
+    </script>
 @endsection
