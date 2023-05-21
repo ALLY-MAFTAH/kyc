@@ -44,14 +44,14 @@
                                 <div class="col-md-3 form-group">
                                     <label for="number">Number</label>
                                     <input type="text" class="form-control" id="number" placeholder="Number"required
-                                        autocomplete="number" name="number" /> @error('number')
+                                        value="{{ old('number') }}" autocomplete="number" name="number" /> @error('number')
                                         <span class="error" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label for="name">Name</label>
                                     <input type="text" class="form-control" id="name" placeholder="Name"required
-                                        autocomplete="name" name="name" /> @error('name')
+                                        value="{{ old('name') }}" autocomplete="name" name="name" /> @error('name')
                                         <span class="error" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -59,7 +59,7 @@
                                     <label for="ward">Ward</label>
                                     <div id="wards">
                                         <input class="typeahead" id="ward" type="text" placeholder="Ward"required
-                                            autocomplete="ward" name="ward" /> @error('ward')
+                                            value="{{ old('ward') }}" autocomplete="ward" name="ward" /> @error('ward')
                                             <span class="error" style="color:red">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -68,7 +68,8 @@
                                     <label for="street">Street</label>
                                     <div id="streets">
                                         <input type="text" class="typeahead" id="street" name="street"
-                                            autocomplete="street" placeholder="Street"required /> @error('street')
+                                            value="{{ old('street') }}" autocomplete="street"
+                                            placeholder="Street"required /> @error('street')
                                             <span class="error" style="color:red">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -78,22 +79,24 @@
                                 <div class="col-md-3 form-group">
                                     <label for="manager_name">Manager Name</label>
                                     <input type="text" class="form-control" id="manager_name" autocomplete="name"
-                                        placeholder="Mnager Name"required name="manager_name" /> @error('manager_name')
+                                        value="{{ old('manager_name') }}" placeholder="Manager Name"required
+                                        name="manager_name" /> @error('manager_name')
                                         <span class="error" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label for="manager_mobile">Manager Mobile</label>
                                     <input type="number" class="form-control" id="manager_mobile"autocomplete="phone"
-                                        placeholder="Eg; 0712345678" maxlength="10" pattern="0[0-9]{9}"required
-                                        name="manager_mobile" /> @error('manager_mobile')
+                                        value="{{ old('manager_mobile') }}" placeholder="Eg; 0712345678" maxlength="10"
+                                        pattern="0[0-9]{9}"required name="manager_mobile" /> @error('manager_mobile')
                                         <span class="error" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label for="size">Market Size</label>
                                     <input type="text" class="form-control" id="size" autocomplete="size"
-                                        placeholder="Size (Optional)" name="size" /> @error('size')
+                                        value="{{ old('size') }}" placeholder="Size (Optional)" name="size" />
+                                    @error('size')
                                         <span class="error" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div>

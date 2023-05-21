@@ -32,6 +32,10 @@ class Customer extends Model
     {
         return $this->hasMany(Cage::class);
     }
+    public function markets()
+    {
+        return $this->belongsToMany(Market::class);
+    }
     public function payments()
     {
         return $this->hasMany(Payment::class);

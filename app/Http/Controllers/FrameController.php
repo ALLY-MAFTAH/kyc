@@ -42,9 +42,9 @@ class FrameController extends Controller
     {
         try {
             $attributes = $this->validate($request, [
-                'number' => ['required', 'unique:frames,number,NULL,id,deleted_at,NULL'],
-                "location" => 'required',
-                "market_id" => 'required',
+                'number' => ['required', 'unique:frames,number,NULL,id,deleted_at,NULL,market_id,' . $request->input('market_id')],
+                'location' => 'required',
+                'market_id' => 'required',
             ]);
 
             $attributes['size'] = $request->size ?? "";
@@ -64,26 +64,35 @@ class FrameController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Frame  $frame
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Frame $frame)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Frame  $frame
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Frame $frame)
+    public function putFrame(Request $request, Frame $frame)
     {
-        //
+        try {
+            $attributes = $this->validate($request, [
+                'number' => ['required', 'unique:frames,number,NULL,' . $frame->id . ',deleted_at,NULL,market_id,' . $request->input('market_id')],
+                'location' => 'required',
+                'market_id' => 'required',
+            ]);
+
+            $attributes['size'] = $request->size ?? $frame->size;
+            $attributes['price'] = 40000;
+
+            $frame->update($attributes);
+            $market = Market::find($request->market_id);
+
+            $market->frames()->save($frame);
+
+            return back()->with('success', "Frame edited successfully");
+        } catch (ValidationException $exception) {
+            return back()->withErrors($exception->errors())->withInput()->with('editFrameModal', true);
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage())->withInput();
+        }
     }
 
     /**

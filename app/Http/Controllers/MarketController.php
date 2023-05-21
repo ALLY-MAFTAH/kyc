@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Market;
 use App\Models\Section;
 use Illuminate\Http\Request;
@@ -31,7 +32,12 @@ class MarketController extends Controller
      */
     public function showMarket(Market $market)
     {
-        return view('markets.show', compact('market'));
+
+        $customers = Customer::whereDoesntHave('markets', function ($query) use ($market) {
+            $query->where('market_id', $market->id);
+        })->get();
+
+        return view('markets.show', compact('market', 'customers'));
     }
 
     /**
@@ -94,7 +100,6 @@ class MarketController extends Controller
     {
         try {
             $attributes = $this->validate($request, [
-
                 'number' => 'required |unique:markets,number,' . $market->id,
                 "name" => 'required',
                 "ward" => 'required',

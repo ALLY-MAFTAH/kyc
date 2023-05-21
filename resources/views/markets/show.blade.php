@@ -23,7 +23,7 @@
     <div class="page-wrapper mdc-toolbar-fixed-adjust">
 
         <div class="row">
-            <div class="col-md-7 pb-2">
+            <div class="col-md-6 pb-2">
                 <div class="card shadow px-2">
                     <div class="row">
                         <div class="col-md-9  py-2">
@@ -56,7 +56,7 @@
                                                 </div>
                                             @endif
                                         </h5>
-                                        <div class="pt-4">
+                                        <div class="pt-4 pb-2">
                                             <button href="#" data-bs-toggle="modal"
                                                 data-bs-target="#editModal-{{ $market->id }}"
                                                 class="btn-outline-primary btn" type="button">EDIT</button>
@@ -84,10 +84,19 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5 pb-2">
+            <div class="col-md-6 pb-2">
                 <div class="card shadow">
                     <div class="card-header text-center">Summary</div>
                     <div class="row px-2 pt-2">
+                        <div class="col text-center"style="border-right: 1px dashed #333;">
+                            <i class="mdi mdi-account-multiple" style="font-size: 38px;color:rgb(38, 137, 5)"></i>
+                            <div class="py-3">
+                                <b> {{ $market->customers()->count() }}</b>
+                            </div>
+                            <div class="">
+                                CUSTOMERS
+                            </div>
+                        </div>
                         <div class="col text-center"style="border-right: 1px dashed #333;">
                             <i class="mdi mdi-image-filter-frames" style="font-size: 38px;color:rgb(234, 20, 241)"></i>
                             <div class="py-3">
@@ -145,51 +154,7 @@
                     <div class="accordion-body">
                         <div class="text-center" style="color:gray">Add Frame</div>
                         <div class="card p-2 mt-1" style="background: var(--form-bg-color)">
-                            <form action="{{ route('frames.add') }}" method="POST">
-                                @csrf
-                                <div class="row">
-                                    <input type="number" name="market_id" value="{{ $market->id }}" hidden>
-                                    <div class="col-md-4 form-group">
-                                        <label for="number">Number</label>
-                                        <input type="text" class="form-control" id="number"
-                                            placeholder="Number"required autocomplete="number" name="number" />
-                                        @error('number')
-                                            <span class="error" style="color:red">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-md-4 form-group">
-                                        <label>Location</label>
-                                        <select class="js-example-basic-single form-control" required name="location"
-                                            style="width: 100%;">
-                                            <option value="">-- Select Location --</option>
-                                            @foreach ($market->sections as $section)
-                                                <option value="{{ $section->name }}">{{ $section->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('location')
-                                            <span class="error" style="color:red">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-
-
-                                    <div class="col-md-4 form-group">
-                                        <label for="size">Frame Size</label>
-                                        <input type="text" class="form-control" id="size" autocomplete="size"
-                                            placeholder="Size (Optional)" name="size" /> @error('size')
-                                            <span class="error" style="color:red">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-
-                                </div>
-                                <div class="row mb-2 mt-2">
-                                    <div class="text-center">
-                                        <button type="submit" class="btn  btn-outline-primary">
-                                            {{ __('Submit') }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                            @include('includes.add_frame_form')
                         </div>
                         <br>
                     </div>
@@ -211,19 +176,26 @@
                             @foreach ($market->frames as $index => $frame)
                                 <tr>
                                     <td class="text-center" style="max-width: 20px">{{ ++$index }}</td>
-                                    <td>{{ $frame->number }}</td>
+                                    <td> {{ $frame->number }}</td>
                                     <td> {{ $frame->location }} </td>
-                                    <td> {{ $frame->price }} </td>
+                                    <td> {{ number_format($frame->price, 0, '.', ',') }} Tsh </td>
                                     <td>
-                                        <a href="">
-                                            {{ $frame->customer }}
-                                        </a>
+                                        @if ($frame->customer)
+                                            <a style="text-decoration: none"
+                                                href="{{ route('customers.show', ['customer' => $frame->customer, 'marketId' => $market->id]) }}">
+                                                {{ $frame->customer->first_name }}
+                                                {{ $frame->customer->middle_name }}
+                                                {{ $frame->customer->last_name }}
+                                            </a>
+                                        @else
+                                            <label class="p-1 m-0 text-white bg-danger">Empty</label>
+                                        @endif
                                     </td>
                                     <td> {{ $frame->size }} </td>
                                     <td class="text-center">
-                                        <a href="{{ route('frames.show', $frame) }}" class="btn  btn-outline-info"
-                                            type="button">
-                                            View
+                                        <a href="#" class="btn  btn-outline-info" data-toggle="modal"
+                                            data-target="#editFrameModal-{{ $frame->id }}" type="button">
+                                            Edit
                                         </a>
                                         <a href="#" class="btn  btn-outline-danger"
                                             onclick="if(confirm('Are you sure want to delete frame number: {{ $frame->number }}?')) document.getElementById('delete-frame-{{ $frame->id }}').submit()">
@@ -234,9 +206,24 @@
                                             @csrf @method('delete')
                                         </form>
                                     </td>
+                                    <div class="modal fade" id="editFrameModal-{{ $frame->id }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Frame</h5>
+                                                    <button type="button" style="background-color:red"
+                                                        class="btn-close  btn-danger" data-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    @include('includes.edit_frame_form')
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
@@ -261,70 +248,13 @@
                     <div class="accordion-body">
                         <div class="text-center" style="color:gray">Add Cage</div>
                         <div class="card p-2 mt-1" style="background: var(--form-bg-color)">
-                            <form action="{{ route('cages.add') }}" method="POST">
-                                @csrf
-                                <div class="row">
-                                    <input type="number" name="market_id" value="{{ $market->id }}" hidden>
-                                    <div class="col-md-3 form-group">
-                                        <label for="number">Number</label>
-                                        <input type="text" class="form-control" id="number"
-                                            placeholder="Number"required autocomplete="number" name="number" />
-                                        @error('number')
-                                            <span class="error" style="color:red">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-md-3 form-group">
-                                        <label>Location</label>
-                                        <select class="js-example-basic-single form-control" required name="location"
-                                            style="width: 100%;">
-                                            <option value="">-- Select Location --</option>
-                                            @foreach ($market->sections as $section)
-                                                <option value="{{ $section->name }}">{{ $section->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('location')
-                                            <span class="error" style="color:red">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label>Type</label>
-                                        <select class="js-example-basic-single form-control" required name="type"
-                                            style="width: 100%;">
-                                            <option value="">-- Select Type --</option>
-                                            <option value="Imaginary">Imaginary</option>
-                                            <option value="Real">Real</option>
-
-                                        </select>
-                                        @error('type')
-                                            <span class="error" style="color:red">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-
-
-                                    <div class="col-md-3 form-group">
-                                        <label for="size">Cage Size</label>
-                                        <input type="text" class="form-control" id="size" autocomplete="size"
-                                            placeholder="Size (Optional)" name="size" /> @error('size')
-                                            <span class="error" style="color:red">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-
-                                </div>
-                                <div class="row mb-2 mt-2">
-                                    <div class="text-center">
-                                        <button type="submit" class="btn  btn-outline-primary">
-                                            {{ __('Submit') }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                            @include('includes.add_cage_form')
                         </div>
                         <br>
                     </div>
                 </div>
                 <div class="table-responsive-lg">
-                    <table id="data-tebo1" class="dt-responsive nowrap  rounded-3 table table-hover"style="width: 100%">
+                    <table id="data-tebo2" class="dt-responsive nowrap  rounded-3 table table-hover"style="width: 100%">
                         <thead class=" table-head">
                             <tr>
                                 <th class="text-center" style="max-width: 20px">#</th>
@@ -341,20 +271,27 @@
                             @foreach ($market->cages as $index => $cage)
                                 <tr>
                                     <td class="text-center" style="max-width: 20px">{{ ++$index }}</td>
-                                    <td>{{ $cage->number }}</td>
+                                    <td> {{ $cage->number }}</td>
                                     <td> {{ $cage->location }} </td>
-                                    <td> {{ $cage->price }} </td>
+                                    <td> {{ number_format($cage->price, 0, '.', ',') }} Tsh </td>
                                     <td> {{ $cage->type }} </td>
                                     <td>
-                                        <a href="">
-                                            {{ $cage->customer }}
-                                        </a>
+                                        @if ($cage->customer)
+                                            <a style="text-decoration: none"
+                                                href="{{ route('customers.show', ['customer' => $cage->customer, 'marketId' => $market->id]) }}">
+                                                {{ $cage->customer->first_name }}
+                                                {{ $cage->customer->middle_name }}
+                                                {{ $cage->customer->last_name }}
+                                            </a>
+                                        @else
+                                            <label class="p-1 m-0 text-white bg-danger">Empty</label>
+                                        @endif
                                     </td>
                                     <td> {{ $cage->size }} </td>
                                     <td class="text-center">
-                                        <a href="{{ route('cages.show', $cage) }}" class="btn  btn-outline-info"
-                                            type="button">
-                                            View
+                                        <a href="#" class="btn btn-outline-info"
+                                           data-toggle="modal" data-target="#editCageModal-{{$cage->id}}" type="button">
+                                            Edit
                                         </a>
                                         <a href="#" class="btn  btn-outline-danger"
                                             onclick="if(confirm('Are you sure want to delete cage number: {{ $cage->number }}?')) document.getElementById('delete-cage-{{ $cage->id }}').submit()">
@@ -363,6 +300,96 @@
                                         <form id="delete-cage-{{ $cage->id }}" method="post"
                                             action="{{ route('cages.delete', $cage) }}">
                                             @csrf @method('delete')
+                                        </form>
+                                    </td>
+                                    <div class="modal fade" id="editCageModal-{{ $cage->id }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Cage</h5>
+                                                    <button type="button" style="background-color:red"
+                                                        class="btn-close  btn-danger" data-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    @include('includes.edit_cage_form')
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><br>
+        <div class="card shadow">
+            <div class="card-header  text-center" style="font-size: 20px">
+                <div class="row">
+                    <div class="col">
+                        Customer
+                    </div>
+                    <div class="col">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Customer</button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <a class="dropdown-item" href="#"data-bs-toggle="collapse"
+                                    data-bs-target="#addCustomerCollapse">New Customer</a>
+                                <hr>
+                                <a class="dropdown-item" href="#" data-toggle="modal"
+                                    data-target="#addCustomerModal">From Existing</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="addCustomerCollapse" style="width: 100%;border-width:0px" class="accordion-collapse collapse"
+                    aria-labelledby="addCustomerCollapse" data-bs-parent="#addCustomerCollapse">
+                    <div class="accordion-body">
+                        <div class="text-center" style="color:gray">Register Customer</div>
+                        <div class="card p-2 mt-1" style="background: var(--form-bg-color)">
+                            @include('includes.add_customer_form')
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div class="table-responsive-lg">
+                    <table id="data-tebo3" class="dt-responsive nowrap  rounded-3 table table-hover"style="width: 100%">
+                        <thead class=" table-head">
+                            <tr>
+                                <th class="text-center" style="max-width: 20px">#</th>
+                                <th>NIDA</th>
+                                <th>Full Name</th>
+                                <th>Mobile Number</th>
+                                <th>Address</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($market->customers()->get() as $index => $customer)
+                                <tr>
+                                    <td class="text-center" style="max-width: 20px">{{ ++$index }}</td>
+                                    <td> {{ $customer->nida }}</td>
+                                    <td> {{ $customer->first_name }} {{ $customer->middle_name }}
+                                        {{ $customer->last_name }} </td>
+                                    <td> {{ $customer->mobile }} </td>
+                                    <td> {{ $customer->address }} </td>
+                                    <td class="text-center">
+                                        <a href="{{ route('customers.show', ['customer' => $customer, 'marketId' => $market->id]) }}"
+                                            class="btn  btn-outline-info" type="button"> View
+                                        </a>
+                                        <a href="#" class="btn  btn-outline-danger" type="button"
+                                            onclick="if(confirm('Are you sure want to remove this customer from this market ? ')) document.getElementById('remove-customer-from-market-{{ $customer->id }}').submit()">
+                                            Remove
+                                        </a>
+                                        <form id="remove-customer-from-market-{{ $customer->id }}" method="post"
+                                            action="{{ route('customers.remove_from_market', $customer) }}">
+                                            @csrf
+                                            <input type="number" name="market_id" value="{{ $market->id }}" hidden>
                                         </form>
                                     </td>
                                 </tr>
@@ -380,11 +407,53 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Edit Market</h5>
-                        <button type="button" style="background-color:red" class="btn-close btn btn-danger"
-                            data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" style="background-color:red" class="btn-close  btn-danger"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-start">
                         @include('includes.edit_market_form')
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Customer</h5>
+                        <button type="button" style="background-color:red" class="btn-close btn-danger"
+                            data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-start">
+                        <form action="{{ route('customers.add_to_market', $market) }}" method="POST">
+                            @csrf
+                            <div class="row">
+                                <div class="form-group">
+                                    <label>Customer</label>
+                                    <select class="js-example-basic-single form-control" required name="customer_id"
+                                        style="width: 100%;">
+                                        <option value="">-- Select Customer --</option>
+                                        @foreach ($customers as $customer)
+                                            <option value="{{ old('customer_id', $customer->id) }}">{{ $customer->nida }}
+                                                -
+                                                {{ $customer->first_name }} {{ $customer->middle_name }}
+                                                {{ $customer->last_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('customer_id')
+                                        <span class="error" style="color:red">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-2 mt-2">
+                                <div class="text-center">
+                                    <button type="submit" class="btn  btn-outline-primary">
+                                        {{ __('Submit') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -393,7 +462,6 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
             @if (session('addFrameCollapse'))
@@ -410,8 +478,29 @@
     </script>
     <script>
         $(document).ready(function() {
-            @if (session('modalOpen'))
+            @if (session('addCustomerCollapse'))
+                $('#addCustomerCollapse').addClass('show');
+            @endif
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            @if (session('editMarketModal'))
                 $('#editMarketModal').addClass('show');
+            @endif
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            @if (session('editFrameModal'))
+                $('#editFrameModal').addClass('show');
+            @endif
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            @if (session('editCageModal'))
+                $('#editCageModal').addClass('show');
             @endif
         });
     </script>

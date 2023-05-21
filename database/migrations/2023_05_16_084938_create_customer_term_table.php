@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customer_frames', function (Blueprint $table) {
+        Schema::create('customer_term', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('customer_id');
-            $table->bigInteger('frame_id');
-            $table->boolean('available')->default(false);
+            $table->bigInteger('term_id');
+            $table->boolean('is_paid')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer_frames');
+        Schema::dropIfExists('customer_term');
     }
 };

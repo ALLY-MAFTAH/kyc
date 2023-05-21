@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cage_customers', function (Blueprint $table) {
+        Schema::create('customer_market', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('customer_id');
-            $table->bigInteger('cage_id');
-            $table->boolean('available')->default(false);
+            $table->bigInteger('market_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cage_customers');
+        Schema::dropIfExists('customer_market');
     }
 };

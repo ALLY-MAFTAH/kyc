@@ -42,14 +42,14 @@ class CageController extends Controller
     {
         try {
             $attributes = $this->validate($request, [
-                'number' => ['required', 'unique:cages,number,NULL,id,deleted_at,NULL'],
-                "location" => 'required',
-                "type" => 'required',
-                "market_id" => 'required',
+                'number' => ['required', 'unique:cages,number,NULL,id,deleted_at,NULL,market_id,' . $request->input('market_id')],
+                'location' => 'required',
+                'type' => 'required',
+                'market_id' => 'required',
             ]);
 
             $attributes['size'] = $request->size ?? "";
-            $attributes['price'] = 15000;
+            $attributes['price'] = 40000;
 
             $cage = Cage::create($attributes);
             $market = Market::find($request->market_id);
@@ -58,22 +58,10 @@ class CageController extends Controller
 
             return back()->with('success', "Cage added successfully");
         } catch (ValidationException $exception) {
-            dd($exception);
             return back()->withErrors($exception->errors())->withInput()->with('addCageCollapse', true);
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Cage  $cage
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Cage $cage)
-    {
-        //
     }
 
     /**
@@ -83,9 +71,30 @@ class CageController extends Controller
      * @param  \App\Models\Cage  $cage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cage $cage)
+    public function putCage(Request $request, Cage $cage)
     {
-        //
+        try {
+            $attributes = $this->validate($request, [
+                'number' => 'required | unique:cages,number,' . $cage->id,
+                'location' => 'required',
+                'type' => 'required',
+                'market_id' => 'required',
+            ]);
+
+            $attributes['size'] = $request->size ?? $cage->size;
+            $attributes['price'] = 40000;
+
+            $cage->update($attributes);
+            $market = Market::find($request->market_id);
+
+            $market->cages()->save($cage);
+
+            return back()->with('success', "Cage edited successfully");
+        } catch (ValidationException $exception) {
+            return back()->withErrors($exception->errors())->withInput()->with('editCageModal', true);
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage())->withInput();
+        }
     }
 
     /**

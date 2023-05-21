@@ -11,9 +11,13 @@ class CustomerTerm extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable=[
+    protected $fillable = [
         'customer_id',
         'term_id',
         'is_paid',
+    ];
+
+    protected $dates = [
+        'deleted_at'
     ];
 }

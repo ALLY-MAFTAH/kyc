@@ -29,9 +29,8 @@ class Cage extends Model
     {
         return $this->belongsTo(Market::class, 'market_id');
     }
-    public function customers()
+    public function customer()
     {
-        return $this->belongsToMany(Customer::class, 'customer_id');
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }
-

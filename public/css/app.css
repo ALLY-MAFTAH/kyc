@@ -17,14 +17,19 @@
     border-radius: 0px;
     color: black;
     font-size: small;
-    width:90px;
+    width: 90px;
     border: solid 1px white;
     background-color: rgba(131, 171, 247, 0.434);
-    margin-right: 5px;
+    margin-right: 2px;
+    margin-left: 2px;
 
 }
-.btn
-{
+
+.btn {
     margin-bottom: -20px !important;
     margin-top: -20px !important;
+}
+
+.form-control-sm {
+    height: 2rem !important;
 }
