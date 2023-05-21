@@ -136,8 +136,10 @@
                                             style="padding:2px;color:rgb(3, 3, 113)">
                                             <span style="font-size: 15px">Frame No: <b>{{ $frame->number }}</b></span>
                                             <a href="{{ route('customers.detach_frame', ['customer' => $customer, 'frameId' => $frame->id]) }}"
-                                                class=""><i class="mdi mdi-delete-forever"
-                                                    style="color:red;font-size:30px"></i></a>
+                                                onclick="return confirm('Are you sure you want to remove this frame?');"
+                                                class="">
+                                                <i class="mdi mdi-delete-forever" style="color:red;font-size:30px"></i>
+                                            </a>
                                         </div>
                                         <div class="card-body" style="padding: 6px; font-size:13px">
                                             <div>Location: <span style="color:rgb(4, 4, 141)">{{ $frame->location }}</span>
@@ -164,7 +166,8 @@
                                                 @csrf
                                                 <div class="form-group">
                                                     <select class="js-example-basic-multiple form-control"
-                                                        multiple="multiple" required name="frames[]" style="width: 100%;">
+                                                        multiple="multiple" required name="frames[]"
+                                                        style="width: 100%;">
                                                         @foreach ($emptyFrames as $frame)
                                                             <option value={{ $frame->id }}>Frame No:
                                                                 {{ $frame->number }} &nbsp;&nbsp;&nbsp;
@@ -183,7 +186,6 @@
                                                         </button>
                                                     </div>
                                                 </div>
-
                                             </form>
                                         </div>
                                         <br>
@@ -219,8 +221,10 @@
                                             style="padding:2px;color:rgb(3, 3, 113)">
                                             <span style="font-size: 15px">Cage No: <b>{{ $cage->number }}</b></span>
                                             <a href="{{ route('customers.detach_cage', ['customer' => $customer, 'cageId' => $cage->id]) }}"
-                                                class=""><i class="mdi mdi-delete-forever"
-                                                    style="color:red;font-size:30px"></i></a>
+                                                onclick="return confirm('Are you sure you want to remove this cage?');"
+                                                class="">
+                                                <i class="mdi mdi-delete-forever" style="color:red;font-size:30px"></i>
+                                            </a>
                                         </div>
                                         <div class="card-body" style="padding: 6px; font-size:13px">
                                             <div>Location: <span style="color:rgb(4, 4, 141)">{{ $cage->location }}</span>
@@ -301,7 +305,6 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
             @if (session('addFrameCollapse'))

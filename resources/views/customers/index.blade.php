@@ -40,7 +40,7 @@
                         <th>Full Name</th>
                         <th>Mobile Number</th>
                         <th>Physical Address</th>
-                        <th class="text-center">Actions</th>
+                        {{-- <th class="text-center">Actions</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +51,7 @@
                             <td>{{ $customer->first_name }} {{ $customer->middle_name }} {{ $customer->last_name }}</td>
                             <td>{{ $customer->mobile }}</td>
                             <td>{{ $customer->address }}</td>
-                            <td class="text-center">
+                            {{-- <td class="text-center">
                                 <a href="{{ route('customers.show', $customer) }}" class="btn  btn-outline-info collapsed"
                                     type="button">
                                     <i class="feather icon-edit"></i> View
@@ -64,7 +64,7 @@
                                     action="{{ route('customers.delete', $customer) }}">
                                     @csrf @method('delete')
                                 </form>
-                            </td>
+                            </td> --}}
                         </tr>
                     @endforeach
                 </tbody>

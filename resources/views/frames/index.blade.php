@@ -41,8 +41,8 @@
                         <th>Location</th>
                         <th>Price</th>
                         <th>Market</th>
+                        <th>Current Customer</th>
                         <th>Size</th>
-                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,15 +51,27 @@
                             <td>{{ ++$index }}</td>
                             <td>{{ $frame->number }}</td>
                             <td>{{ $frame->location }}</td>
-                            <td>{{ $frame->price }}</td>
+                            <td>{{ number_format($frame->price, 0, '.', ',') }} Tsh</td>
                             <td>{{ $frame->market->name }}</td>
+                            <td>
+                                @if ($frame->customer)
+                                    {{-- <a style="text-decoration: none"
+                                        href="{{ route('customers.show', ['customer' => $frame->customer, 'marketId' => $market->id]) }}"> --}}
+                                        {{ $frame->customer->first_name }}
+                                        {{ $frame->customer->middle_name }}
+                                        {{ $frame->customer->last_name }}
+                                    {{-- </a> --}}
+                                @else
+                                    <label class="p-1 m-0 text-white bg-danger">Empty</label>
+                                @endif
+                            </td>
                             <td>{{ $frame->size }}</td>
-                            <td class="text-center">
+                            {{-- <td class="text-center">
                                 <a href="{{ route('frames.show', $frame) }}" class="btn  btn-outline-info collapsed"
                                     type="button">
                                     <i class="feather icon-edit"></i> View
                                 </a>
-                            </td>
+                            </td> --}}
                         </tr>
                     @endforeach
                 </tbody>

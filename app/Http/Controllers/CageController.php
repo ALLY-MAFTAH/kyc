@@ -49,7 +49,7 @@ class CageController extends Controller
             ]);
 
             $attributes['size'] = $request->size ?? "";
-            $attributes['price'] = 40000;
+            $attributes['price'] = 15000;
 
             $cage = Cage::create($attributes);
             $market = Market::find($request->market_id);
@@ -82,7 +82,7 @@ class CageController extends Controller
             ]);
 
             $attributes['size'] = $request->size ?? $cage->size;
-            $attributes['price'] = 40000;
+            $attributes['price'] = 15000;
 
             $cage->update($attributes);
             $market = Market::find($request->market_id);

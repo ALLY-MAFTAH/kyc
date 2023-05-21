@@ -74,7 +74,7 @@ class FrameController extends Controller
     {
         try {
             $attributes = $this->validate($request, [
-                'number' => ['required', 'unique:frames,number,NULL,' . $frame->id . ',deleted_at,NULL,market_id,' . $request->input('market_id')],
+                'number' => 'required | unique:frames,number,' . $frame->id,
                 'location' => 'required',
                 'market_id' => 'required',
             ]);

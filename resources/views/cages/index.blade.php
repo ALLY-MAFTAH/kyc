@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 @section('styles')
 @endsection
@@ -40,11 +39,11 @@
                         <th>#</th>
                         <th>Number</th>
                         <th>Location</th>
-                        <th>Type</th>
                         <th>Price</th>
                         <th>Market</th>
+                        <th>Current Customer</th>
+                        <th>Type</th>
                         <th>Size</th>
-                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,16 +52,28 @@
                             <td>{{ ++$index }}</td>
                             <td>{{ $cage->number }}</td>
                             <td>{{ $cage->location }}</td>
-                            <td>{{ $cage->type }}</td>
-                            <td>{{ $cage->price }}</td>
+                            <td>{{ number_format($cage->price, 0, '.', ',') }} Tsh</td>
                             <td>{{ $cage->market->name }}</td>
+                            <td>
+                                @if ($cage->customer)
+                                    {{-- <a style="text-decoration: none"
+                                        href="{{ route('customers.show', ['customer' => $cage->customer, 'marketId' => $market->id]) }}"> --}}
+                                        {{ $cage->customer->first_name }}
+                                        {{ $cage->customer->middle_name }}
+                                        {{ $cage->customer->last_name }}
+                                    {{-- </a> --}}
+                                @else
+                                    <label class="p-1 m-0 text-white bg-danger">Empty</label>
+                                @endif
+                            </td>
+                            <td>{{ $cage->type }}</td>
                             <td>{{ $cage->size }}</td>
-                            <td class="text-center">
+                            {{-- <td class="text-center">
                                 <a href="{{ route('cages.show', $cage) }}" class="btn  btn-outline-info collapsed"
                                     type="button">
                                     <i class="feather icon-edit"></i> View
                                 </a>
-                            </td>
+                            </td> --}}
                         </tr>
                     @endforeach
                 </tbody>

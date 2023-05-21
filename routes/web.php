@@ -63,7 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/attach-frame/{customer}', [CustomerController::class, 'attachFrame'])->name('customers.attach_frame');
     Route::get('/detach-frame/{customer}/{frameId}', [CustomerController::class, 'detachFrame'])->name('customers.detach_frame');
     Route::post('/attach-cage/{customer}', [CustomerController::class, 'attachCage'])->name('customers.attach_cage');
-    Route::post('/detach-cage/{customer}/{cageId}', [CustomerController::class, 'detachCage'])->name('customers.detach_cage');
+    Route::get('/detach-cage/{customer}/{cageId}', [CustomerController::class, 'detachCage'])->name('customers.detach_cage');
 
     // PAYMENTS ROUTES
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
