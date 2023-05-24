@@ -49,7 +49,9 @@
 
             <div class="main-panel">
                 <div class="content-wrapper pb-0">
-
+                    <div id="loader" class="loader">
+                        <!-- Loader content here -->
+                    </div>
                     @yield('content')
                 </div>
                 @include('partials.footer')
@@ -121,39 +123,39 @@
                     targets: '_all'
                 }, ],
                 // buttons: [
-                    // {
-                    //     extend: 'print',
-                    //     exportOptions: {
-                    //         columns: ':visible'
-                    //     },
-                    //     messageTop: 'DATAAAAAAAAAA'
+                // {
+                //     extend: 'print',
+                //     exportOptions: {
+                //         columns: ':visible'
+                //     },
+                //     messageTop: 'DATAAAAAAAAAA'
 
-                    // },
-                    // {
-                    //     extend: 'pdf',
-                    //     exportOptions: {
-                    //         columns: ':visible'
-                    //     },
-                    //     margin: [20, 20, 20, 20],
-                    //     padding: [20, 20, 20, 20],
-                    //     customize: function(doc) {
-                    //         doc.content[1].table.widths = Array(doc.content[1].table.body[0]
-                    //             .length + 1).join('*').split('');
-                    //         doc.content[1].table.widths[0] = 'auto';
-                    //     }
-                    // },
-                    // {
-                    //     extend: 'excel',
-                    //     exportOptions: {
-                    //         columns: ':visible'
-                    //     }
-                    // },
-                    // {
-                    //     extend: 'csv',
-                    //     exportOptions: {
-                    //         columns: ':visible'
-                    //     }
-                    // },
+                // },
+                // {
+                //     extend: 'pdf',
+                //     exportOptions: {
+                //         columns: ':visible'
+                //     },
+                //     margin: [20, 20, 20, 20],
+                //     padding: [20, 20, 20, 20],
+                //     customize: function(doc) {
+                //         doc.content[1].table.widths = Array(doc.content[1].table.body[0]
+                //             .length + 1).join('*').split('');
+                //         doc.content[1].table.widths[0] = 'auto';
+                //     }
+                // },
+                // {
+                //     extend: 'excel',
+                //     exportOptions: {
+                //         columns: ':visible'
+                //     }
+                // },
+                // {
+                //     extend: 'csv',
+                //     exportOptions: {
+                //         columns: ':visible'
+                //     }
+                // },
                 //     'colvis'
                 // ]
             });
@@ -262,6 +264,35 @@
             });
             table.buttons().container()
                 .appendTo('#data-tebo2_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide the loader initially
+            document.getElementById('loader').style.display = 'none';
+
+            // Show the loader on form submit
+            document.addEventListener('submit', function() {
+                document.getElementById('loader').style.display = 'block';
+            });
+
+            // Show the loader on link clicks or page navigation
+            document.addEventListener('click', function(event) {
+                var target = event.target;
+                var isModalButton =
+                    target.closest('[data-bs-toggle="modal"]') ||
+                    target.closest('[data-toggle="modal"]') ||
+                    target.closest('[data-bs-toggle="collapse"]') ||
+                    target.closest('[data-toggle="collapse"]') ||
+                    target.closest('.modal');
+
+                if (
+                    (target.tagName === 'A' || target.getAttribute('href')) &&
+                    !isModalButton
+                ) {
+                    document.getElementById('loader').style.display = 'block';
+                }
+            });
         });
     </script>
     @yield('scripts')
