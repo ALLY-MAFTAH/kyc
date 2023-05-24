@@ -48,28 +48,46 @@ class PaymentController extends Controller
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Payment $payment)
+    public function postPayment(Request $request)
     {
-        //
+        try {
+            $attributes = $this->validate($request, [
+                "frame_id" => 'required',
+                "customer_id" => 'required',
+                "date" => 'required',
+                "amount" => 'required',
+                'market_id' => 'required',
+                'month' => 'required',
+                'year' => 'required',
+                "receipt_number" => 'required',
+            ]);
+
+            $payment = Payment::create($attributes);
+
+            return ['status' => true, 'data' => $payment];
+        } catch (\Throwable $th) {
+            return ['status' => false, 'data' => $th->getMessage()];
+        }
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Payment $payment)
+    public function putPayment(Request $request, Payment $payment)
     {
-        //
+        try {
+            $attributes = $this->validate($request, [
+                'date' => 'required',
+                'amount' => 'required',
+                'receipt_number' => 'required',
+                'vehicle_id' => 'required',
+                'sticker_id' => 'required',
+                'business_id' => 'required',
+            ]);
+
+            $payment->update($attributes);
+
+            alert()->success('You have successful edited payment');
+        } catch (\Throwable $th) {
+            alert()->error($th->getMessage());
+        }
+        return redirect()->back();
     }
 
     /**

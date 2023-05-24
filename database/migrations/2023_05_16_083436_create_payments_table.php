@@ -17,12 +17,13 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->date('date');
             $table->double('amount');
-            $table->string('receipt_number')->unique();
             $table->bigInteger('stall_id')->nullable();
             $table->bigInteger('frame_id')->nullable();
             $table->bigInteger('market_id');
-            $table->bigInteger('season_id');
             $table->bigInteger('customer_id');
+            $table->string('receipt_number');
+            $table->integer('year');
+            $table->string('month');
             $table->timestamps();
             $table->softDeletes();
         });

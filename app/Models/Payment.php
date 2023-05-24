@@ -18,8 +18,9 @@ class Payment extends Model
         'stall_id',
         'frame_id',
         'market_id',
-        'term_id',
         'customer_id',
+        'month',
+        'year',
 
     ];
 
@@ -27,10 +28,6 @@ class Payment extends Model
         'deleted_at'
     ];
 
-    public function term()
-    {
-        return $this->belongsTo(Term::class, 'term_id');
-    }
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id');

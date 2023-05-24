@@ -44,7 +44,8 @@
                                 <div class="col-md-3 form-group">
                                     <label for="code">Code</label>
                                     <input type="text" class="form-control" id="code" placeholder="Code"required
-                                        value="{{ old('code') }}" autocomplete="code" name="code" /> @error('code')
+                                        value="{{ old('code') }}" autocomplete="code" name="code" />
+                                    @error('code')
                                         <span class="error" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div>

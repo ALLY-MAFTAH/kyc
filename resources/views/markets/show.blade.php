@@ -118,11 +118,9 @@
                         <div class="col text-center"style="">
                             <i class="mdi mdi-cash-usd" style="font-size: 40px;color:rgb(32, 12, 251)"></i>
                             <div class="py-3">
-                                @if ($market && $market->amounts)
-                                    <b>{{ number_format($market->amounts->sum('amount'), 0, '.', ',') }}</b> TZS
-                                @else
-                                    <b>0</b> TZS
-                                @endif
+
+                                <b>{{ number_format($market->payments->sum('amount'), 0, '.', ',') }}</b> TZS
+
                             </div>
                             <div class="">
                                 CONTRIBUTION
@@ -287,8 +285,8 @@
                                     </td>
                                     <td> {{ $stall->size }} </td>
                                     <td class="text-center">
-                                        <a href="#" class="btn btn-outline-info"
-                                           data-toggle="modal" data-target="#editStallModal-{{$stall->id}}" type="button">
+                                        <a href="#" class="btn btn-outline-info" data-toggle="modal"
+                                            data-target="#editStallModal-{{ $stall->id }}" type="button">
                                             Edit
                                         </a>
                                         <a href="#" class="btn  btn-outline-danger"

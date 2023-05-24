@@ -141,14 +141,36 @@ class CustomerController extends Controller
     // ATTACH FRAME
     public function attachFrame(Request $request, Customer $customer)
     {
-        $frameIds = $request->frames;
-
+        $months = $request->months;
         try {
-            foreach ($frameIds as $frameId) {
-                $frame = Frame::find($frameId);
-                $attributes['customer_id'] = $customer->id;
-                $frame->update($attributes);
-                $customer->frames()->save($frame);
+            $frame = Frame::find($request->frame_id);
+            $attributes['customer_id'] = $customer->id;
+            $frame->update($attributes);
+            $customer->frames()->save($frame);
+
+            foreach ($months as $month) {
+                $paymentRequest = new Request([
+                    "frame_id" => $frame->id,
+                    "customer_id" => $customer->id,
+                    "date" => now(),
+                    "amount" => $frame->price,
+                    'market_id' => $frame->market_id,
+                    'month' => $month,
+                    'year' => date('Y'),
+                    "receipt_number" => $request->receipt_number,
+                ]);
+                $paymentController = new PaymentController();
+                $payment = null;
+                $paymentResponse = $paymentController->postPayment($paymentRequest);
+
+                if ($paymentResponse['status'] == true) {
+                    $payment = $paymentResponse['data'];
+                    $customer->payments()->save($payment);
+                    $frame->payments()->save($payment);
+                    $frame->market->payments()->save($payment);
+                } else {
+                    return back()->with('error', $paymentResponse['data'])->withInput();
+                }
             }
 
             return back()->with('success', 'Frames successfully assigned to customer');

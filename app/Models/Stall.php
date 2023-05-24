@@ -33,4 +33,8 @@ class Stall extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }
