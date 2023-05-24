@@ -6,6 +6,8 @@ use App\Models\Stall;
 use App\Models\Customer;
 use App\Models\Frame;
 use App\Models\Market;
+use App\Models\Message;
+use App\Services\MessagingService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -213,7 +215,7 @@ class CustomerController extends Controller
             return back()->with('error', $th->getMessage())->withInput();
         }
     }
-    // ATTACH CAGE
+    // ATTACH STALL
     public function attachStall(Request $request, Customer $customer)
     {
         $stallIds = $request->stalls;
@@ -246,7 +248,7 @@ class CustomerController extends Controller
             return back()->with('error', $th->getMessage())->withInput();
         }
     }
-    // DETACH CAGE
+    // DETACH STALL
     public function detachStall(Customer $customer, $stallId)
     {
         try {
@@ -259,5 +261,28 @@ class CustomerController extends Controller
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
         }
+    }
+    public function sendMessage(Request $request, Customer $customer)
+    {
+
+        $messagingService = new MessagingService();
+        $sendMessageResponse = $messagingService->sendMessage($customer->mobile, $request->body);
+
+        if ($sendMessageResponse['status'] == "Sent") {
+
+            $attributes['category'] = 'Reminder';
+            $attributes['date'] = Carbon::now();
+            $attributes['msg'] = $sendMessageResponse['msg'];
+            $attributes['mobile'] = $sendMessageResponse['mobile'];
+            $attributes['customer_id'] = $customer->id;
+
+            $message = Message::create($attributes);
+            $customer->messages()->save($message);
+
+            return back()->with('success', 'Message sent successful');
+        } else {
+            return back()->with('error', 'Message not sent, crosscheck your inputs');
+        }
+        return back();
     }
 }

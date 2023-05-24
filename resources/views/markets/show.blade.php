@@ -112,7 +112,7 @@
                                 <b> {{ count($market->stalls) }}</b>
                             </div>
                             <div class="">
-                                CAGES
+                                STALLS
                             </div>
                         </div>
                         <div class="col text-center"style="">
@@ -512,37 +512,42 @@
             @endif
         });
     </script>
-      <script>
+    <script>
         function captureImage() {
-          // Access the camera and capture video stream
-          navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function (stream) {
-              var video = document.createElement('video');
-              var canvas = document.getElementById('canvas');
-              var context = canvas.getContext('2d');
-      
-              // Play the video stream in the video element
-              video.srcObject = stream;
-              video.play();
-      
-              // When the video is playing, capture a frame from the video stream
-              video.addEventListener('play', function () {
-                var width = video.videoWidth;
-                var height = video.videoHeight;
-                canvas.width = width;
-                canvas.height = height;
-      
-                // Draw the video frame onto the canvas
-                function drawFrame() {
-                  context.drawImage(video, 0, 0, width, height);
-                  requestAnimationFrame(drawFrame);
-                }
-                drawFrame();
-              });
-            })
-            .catch(function (error) {
-              console.log('Error accessing the camera: ', error);
-            });
+            // Access the camera and capture video stream
+            navigator.mediaDevices.getUserMedia({
+                    video: true
+                })
+                .then(function(stream) {
+                    var video = document.createElement('video');
+                    var canvas = document.getElementById('canvas');
+                    var context = canvas.getContext('2d');
+
+                    // Play the video stream in the video element
+                    video.srcObject = stream;
+                    video.play();
+
+                    // When the video is playing, capture a frame from the video stream
+                    video.addEventListener('play', function() {
+                        var size = Math.min(video.videoWidth, video.videoHeight);
+                        canvas.width = size;
+                        canvas.height = size;
+
+                        // Calculate the offset to center the video frame within the canvas
+                        var xOffset = (video.videoWidth - size) / 2;
+                        var yOffset = (video.videoHeight - size) / 2;
+
+                        // Draw the video frame onto the canvas
+                        function drawFrame() {
+                            context.drawImage(video, xOffset, yOffset, size, size, 0, 0, size, size);
+                            requestAnimationFrame(drawFrame);
+                        }
+                        drawFrame();
+                    });
+                })
+                .catch(function(error) {
+                    console.log('Error accessing the camera: ', error);
+                });
         }
-      </script>
+    </script>
 @endsection

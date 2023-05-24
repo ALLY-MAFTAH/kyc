@@ -34,7 +34,7 @@ class MessagingService
             $response = $messageResponse->successful() ? 'Sent' : 'Failed';
             return [
                 'status' =>  $response,
-                'mobile' =>  $to,
+                'mobile' =>  $receiver,
                 'msg' =>  $text,
             ];
         } catch (\Throwable $th) {

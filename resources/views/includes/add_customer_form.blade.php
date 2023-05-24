@@ -28,14 +28,17 @@
          </div>
          <div class="col-md-3 form-group">
              <label for="photo">Profile Picture</label>
-             <input type="file" name="photo" class="file-upload-default" />
+             <input type="file" id="photo" value="{{old('photo')}}" name="photo" required class="file-upload-default" accept=".jpg,.png,.jpeg,.gif"/>
              <div class="input-group col-xs-12">
                  <input type="text" class="form-control file-upload-info" disabled placeholder="Capture Image" />
                  <span class="input-group-append">
-                     <button class="file-upload-browse bstn btn-primary" type="button"
+                     <button class="file-upload-browse btn-primary" type="button"
                          onclick="captureImage()">Capture</button>
                  </span>
              </div>
+             @error('photo')
+             <span class="error" style="color:red">{{ $message }}</span>
+         @enderror
          </div>
          <canvas id="canvas" style="display: none;"></canvas>
      </div>

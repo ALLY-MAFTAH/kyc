@@ -41,8 +41,8 @@ class Customer extends Model
     {
         return $this->hasMany(Payment::class);
     }
-    public function terms()
+    public function customer()
     {
-        return $this->belongsToMany(Term::class);
+        return $this->hasMany(Message::class);
     }
 }

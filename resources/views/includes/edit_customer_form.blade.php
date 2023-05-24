@@ -30,7 +30,7 @@
     </div>
     <div class="form-group">
         <label for="photo">Profile Picture</label>
-        <input type="file" name="photo" class="file-upload-default" />
+        <input type="file" name="photo" class="file-upload-default" accept=".jpg,.png,.jpeg,.gif" />
         <div class="input-group col-xs-12">
             <input type="text" class="form-control file-upload-info" disabled placeholder="Capture Image" />
             <span class="input-group-append">
@@ -43,8 +43,7 @@
     <div class="form-group">
         <label for="nida">NIDA</label>
         <input type="number" class="form-control" id="nida"autocomplete="nida"
-            value="{{ old('nida', $customer->nida) }}"
-            pattern="0[0-9]{9}"required name="nida" />
+            value="{{ old('nida', $customer->nida) }}" pattern="0[0-9]{9}"required name="nida" />
         @error('nida')
             <span class="error" style="color:red">{{ $message }}</span>
         @enderror

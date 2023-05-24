@@ -26,8 +26,8 @@
             <div class="col-md-6 pb-2">
                 <div class="card shadow px-2">
                     <div class="row">
-                        <div class="col-3 leftProfSide">
-                            <div class="ml-2 mt-3"
+                        <div class="col-md-3 text-center">
+                            <div class="my-3 mx-2 text-center"
                                 style="width: 130px; height: 130px; overflow: hidden; border-radius: 50%; border: 1px solid rgb(0, 132, 255);">
                                 <img src="{{ asset('storage/' . $customer->photo) }}" alt="" style="width: 100%;"
                                     onerror="this.onerror=null; this.src='{{ asset('assets/images/user.png') }}';">
@@ -99,7 +99,7 @@
                                 <b> {{ $customerStalls->count() }}</b>
                             </div>
                             <div class="">
-                                CAGES
+                                STALLS
                             </div>
                         </div>
                         <div class="col text-center"style="">
@@ -424,13 +424,12 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Message
                         </h5>
-                        <button type="button" style="background-color:red" class=" btn-danger btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        <button type="button" style="background-color:red" class=" btn-danger btn-close"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ route('send-message') }}">
+                        <form method="POST" action="{{ route('send-message',$customer->id) }}">
                             @csrf
-                            <input hidden type="text" name="customer_id" value="{{ $customer->id }}">
                             <div class="text-start mb-1">
                                 <label for="body" class="col-form-label text-sm-start">{{ __('Body') }}</label>
                                 <textarea rows="3" id="body" type="text" placeholder="Body"
@@ -454,7 +453,6 @@
             </div>
         </div>
     </div>
-    
 @endsection
 @section('scripts')
     <script>
@@ -477,5 +475,43 @@
                 $('#editCustomerModal').addClass('show');
             @endif
         });
+    </script>
+    <script>
+        function captureImage() {
+            // Access the camera and capture video stream
+            navigator.mediaDevices.getUserMedia({
+                    video: true
+                })
+                .then(function(stream) {
+                    var video = document.createElement('video');
+                    var canvas = document.getElementById('canvas');
+                    var context = canvas.getContext('2d');
+
+                    // Play the video stream in the video element
+                    video.srcObject = stream;
+                    video.play();
+
+                    // When the video is playing, capture a frame from the video stream
+                    video.addEventListener('play', function() {
+                        var size = Math.min(video.videoWidth, video.videoHeight);
+                        canvas.width = size;
+                        canvas.height = size;
+
+                        // Calculate the offset to center the video frame within the canvas
+                        var xOffset = (video.videoWidth - size) / 2;
+                        var yOffset = (video.videoHeight - size) / 2;
+
+                        // Draw the video frame onto the canvas
+                        function drawFrame() {
+                            context.drawImage(video, xOffset, yOffset, size, size, 0, 0, size, size);
+                            requestAnimationFrame(drawFrame);
+                        }
+                        drawFrame();
+                    });
+                })
+                .catch(function(error) {
+                    console.log('Error accessing the camera: ', error);
+                });
+        }
     </script>
 @endsection

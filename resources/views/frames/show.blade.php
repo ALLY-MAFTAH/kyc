@@ -87,7 +87,7 @@
                                 <b> {{ $frameStalls->count() }}</b>
                             </div>
                             <div class="">
-                                CAGES
+                                STALLS
                             </div>
                         </div>
                         <div class="col text-center"style="">

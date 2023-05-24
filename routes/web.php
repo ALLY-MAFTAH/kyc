@@ -45,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/edit-frame/{frame}', [FrameController::class, 'putFrame'])->name('frames.edit');
     Route::delete('/delete-frame/{frame}', [FrameController::class, 'deleteFrame'])->name('frames.delete');
 
-    // CAGES ROUTES
+    // STALLS ROUTES
     Route::get('/stalls', [StallController::class, 'index'])->name('stalls.index');
     Route::get('/show-stall/{stall}', [StallController::class, 'showStall'])->name('stalls.show');
     Route::post('/add-stall', [StallController::class, 'postStall'])->name('stalls.add');
@@ -64,6 +64,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/detach-frame/{customer}/{frameId}', [CustomerController::class, 'detachFrame'])->name('customers.detach_frame');
     Route::post('/attach-stall/{customer}', [CustomerController::class, 'attachStall'])->name('customers.attach_stall');
     Route::get('/detach-stall/{customer}/{stallId}', [CustomerController::class, 'detachStall'])->name('customers.detach_stall');
+    Route::post('send-message/{customerId}', [CustomerController::class, 'sendMessage'])->name('send-message');
 
     // PAYMENTS ROUTES
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
@@ -94,5 +95,4 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/delete-setting/{setting}', [SettingController::class, 'deleteSetting'])->name('settings.delete');
 
     // MESSAGES ROUTES
-    Route::post('send-message', [MessageController::class, 'sendMessage'])->name('send-message');
 });
