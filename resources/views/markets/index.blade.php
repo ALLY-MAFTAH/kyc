@@ -65,10 +65,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label for="sub_ward">Sub-Ward</label>
-                                    <div id="sub_wards">
-                                        <input type="text" class="typeahead" id="sub_ward" name="sub_ward"
-                                            value="{{ old('sub_ward') }}" autocomplete="sub_ward"
+                                    <label for="street">Sub-Ward</label>
+                                    <div id="streets">
+                                        <input type="text" class="typeahead" id="street" name="sub_ward"
+                                            value="{{ old('sub_ward') }}" autocomplete="street"
                                             placeholder="Sub-Ward"required /> @error('sub_ward')
                                             <span class="error" style="color:red">{{ $message }}</span>
                                         @enderror
@@ -158,7 +158,7 @@
                             <td>{{ $market->code }}</td>
                             <td>{{ $market->name }}</td>
                             <td>{{ $market->ward }}</td>
-                            <td>{{ $market->sub_ward }}</td>
+                            <td>{{ $market->street }}</td>
                             <td>{{ $market->manager_name }}</td>
                             <td>{{ $market->manager_mobile }}</td>
                             <td>{{ $market->size }}</td>

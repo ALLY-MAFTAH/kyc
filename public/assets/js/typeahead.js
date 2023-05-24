@@ -49,9 +49,18 @@
         'Kibamba',
         'Kawe',
         'Hananasif',];
-    var list_of_sub_wards = [
+    var list_of_streets = [
 
-        'Tegeta A', 'Tegeta B', 'Magomeni', 'Osterbay'];
+        'Makumbusho',
+        'Kawe',
+        'Kigogo',
+        'Manzese',
+        'Mikocheni',
+        'Sinza',
+        'Tegeta A',
+        'Tegeta B',
+        'Magomeni',
+        'Osterbay'];
 
     $('#wards .typeahead').typeahead({
         hint: true,
@@ -61,13 +70,13 @@
         name: 'list_of_wards',
         source: substringMatcher(list_of_wards)
     });
-    $('#sub_wards .typeahead').typeahead({
+    $('#streets .typeahead').typeahead({
         hint: true,
         highlight: true,
         minLength: 1
     }, {
-        name: 'list_of_sub_wards',
-        source: substringMatcher(list_of_sub_wards)
+        name: 'list_of_streets',
+        source: substringMatcher(list_of_streets)
     });
     // constructs the suggestion engine
     var list_of_wards = new Bloodhound({

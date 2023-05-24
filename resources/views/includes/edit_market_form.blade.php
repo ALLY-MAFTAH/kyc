@@ -29,11 +29,11 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="sub_ward">Sub-Ward</label>
-        <div id="sub_wards">
-            <input type="text" class="typeahead" id="sub_ward"
+        <label for="street">Sub-Ward</label>
+        <div id="streets">
+            <input type="text" class="typeahead" id="street"
                 value="{{ old('sub_ward', $market->sub_ward) }}" name="sub_ward"
-                autocomplete="sub_ward" placeholder="Sub-Ward"required /> @error('sub_ward')
+                autocomplete="street" placeholder="Sub-Ward"required /> @error('sub_ward')
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
         </div>
