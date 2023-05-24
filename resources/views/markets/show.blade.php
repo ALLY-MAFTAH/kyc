@@ -31,10 +31,10 @@
                                 <div class="row">
                                     <div class="col-5">
                                         <h5 class="my-0">
-                                            <div style="color:rgb(188, 186, 186)">Number: </div>
+                                            <div style="color:rgb(188, 186, 186)">Code: </div>
                                             <div style="color:rgb(188, 186, 186)">Name: </div>
                                             <div style="color:rgb(188, 186, 186)">Ward: </div>
-                                            <div style="color:rgb(188, 186, 186)">Street: </div>
+                                            <div style="color:rgb(188, 186, 186)">Sub-Ward: </div>
                                             <div style="color:rgb(188, 186, 186)">Manager Name: </div>
                                             <div style="color:rgb(188, 186, 186)">Manager Phone: </div>
                                             <div style="color:rgb(188, 186, 186)">Size: </div>
@@ -42,10 +42,10 @@
                                     </div>
                                     <div class="col-7">
                                         <h5 class="my-0">
-                                            <div style="color:rgb(3, 3, 87)">{{ $market->number }}</div>
+                                            <div style="color:rgb(3, 3, 87)">{{ $market->code }}</div>
                                             <div>{{ $market->name }}</div>
                                             <div>{{ $market->ward }}</div>
-                                            <div>{{ $market->street }}</div>
+                                            <div>{{ $market->sub_ward }}</div>
                                             <div>{{ $market->manager_name }}</div>
                                             <div>{{ $market->manager_mobile }}</div>
                                             @if ($market->size)
@@ -128,10 +128,8 @@
                                 CONTRIBUTION
                             </div>
                         </div>
-
                     </div>
                     <br>
-
                 </div>
             </div>
         </div>
@@ -164,7 +162,7 @@
                         <thead class=" table-head">
                             <tr>
                                 <th class="text-center" style="max-width: 20px">#</th>
-                                <th>Number</th>
+                                <th>Code</th>
                                 <th>Location</th>
                                 <th>Price</th>
                                 <th>Current Customer</th>
@@ -176,7 +174,7 @@
                             @foreach ($market->frames as $index => $frame)
                                 <tr>
                                     <td class="text-center" style="max-width: 20px">{{ ++$index }}</td>
-                                    <td> {{ $frame->number }}</td>
+                                    <td> {{ $frame->code }}</td>
                                     <td> {{ $frame->location }} </td>
                                     <td> {{ number_format($frame->price, 0, '.', ',') }} Tsh </td>
                                     <td>
@@ -198,7 +196,7 @@
                                             Edit
                                         </a>
                                         <a href="#" class="btn  btn-outline-danger"
-                                            onclick="if(confirm('Are you sure want to delete frame number: {{ $frame->number }}?')) document.getElementById('delete-frame-{{ $frame->id }}').submit()">
+                                            onclick="if(confirm('Are you sure want to delete frame number: {{ $frame->code }}?')) document.getElementById('delete-frame-{{ $frame->id }}').submit()">
                                             Delete
                                         </a>
                                         <form id="delete-frame-{{ $frame->id }}" method="post"
@@ -258,7 +256,7 @@
                         <thead class=" table-head">
                             <tr>
                                 <th class="text-center" style="max-width: 20px">#</th>
-                                <th>Number</th>
+                                <th>Code</th>
                                 <th>Location</th>
                                 <th>Type</th>
                                 <th>Price</th>
@@ -271,7 +269,7 @@
                             @foreach ($market->cages as $index => $cage)
                                 <tr>
                                     <td class="text-center" style="max-width: 20px">{{ ++$index }}</td>
-                                    <td> {{ $cage->number }}</td>
+                                    <td> {{ $cage->code }}</td>
                                     <td> {{ $cage->location }} </td>
                                     <td> {{ number_format($cage->price, 0, '.', ',') }} Tsh </td>
                                     <td> {{ $cage->type }} </td>
@@ -294,7 +292,7 @@
                                             Edit
                                         </a>
                                         <a href="#" class="btn  btn-outline-danger"
-                                            onclick="if(confirm('Are you sure want to delete cage number: {{ $cage->number }}?')) document.getElementById('delete-cage-{{ $cage->id }}').submit()">
+                                            onclick="if(confirm('Are you sure want to delete cage number: {{ $cage->code }}?')) document.getElementById('delete-cage-{{ $cage->id }}').submit()">
                                             Delete
                                         </a>
                                         <form id="delete-cage-{{ $cage->id }}" method="post"

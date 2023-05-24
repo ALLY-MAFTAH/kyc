@@ -134,7 +134,7 @@
                                     <div class="card shadow mt-2">
                                         <div class="card-header d-flex justify-content-between align-items-center"
                                             style="padding:2px;color:rgb(3, 3, 113)">
-                                            <span style="font-size: 15px">Frame No: <b>{{ $frame->number }}</b></span>
+                                            <span style="font-size: 15px">Frame No: <b>{{ $frame->code }}</b></span>
                                             <a href="{{ route('customers.detach_frame', ['customer' => $customer, 'frameId' => $frame->id]) }}"
                                                 onclick="return confirm('Are you sure you want to remove this frame?');"
                                                 class="">
@@ -170,7 +170,7 @@
                                                         style="width: 100%;">
                                                         @foreach ($emptyFrames as $frame)
                                                             <option value={{ $frame->id }}>Frame No:
-                                                                {{ $frame->number }} &nbsp;&nbsp;&nbsp;
+                                                                {{ $frame->code }} &nbsp;&nbsp;&nbsp;
                                                                 ({{ $frame->location }})
                                                             </option>
                                                         @endforeach
@@ -219,7 +219,7 @@
                                     <div class="card shadow mt-2">
                                         <div class="card-header d-flex justify-content-between align-items-center"
                                             style="padding:2px;color:rgb(3, 3, 113)">
-                                            <span style="font-size: 15px">Cage No: <b>{{ $cage->number }}</b></span>
+                                            <span style="font-size: 15px">Cage No: <b>{{ $cage->code }}</b></span>
                                             <a href="{{ route('customers.detach_cage', ['customer' => $customer, 'cageId' => $cage->id]) }}"
                                                 onclick="return confirm('Are you sure you want to remove this cage?');"
                                                 class="">
@@ -256,7 +256,7 @@
                                                         multiple="multiple" required name="cages[]" style="width: 100%;">
                                                         @foreach ($emptyCages as $cage)
                                                             <option value={{ $cage->id }}>Cage No:
-                                                                {{ $cage->number }} &nbsp;&nbsp;&nbsp;
+                                                                {{ $cage->code }} &nbsp;&nbsp;&nbsp;
                                                                 ({{ $cage->location }})
                                                             </option>
                                                         @endforeach

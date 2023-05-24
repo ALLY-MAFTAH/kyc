@@ -41,7 +41,7 @@
                                     </div>
                                     <div class="col-7">
                                         <h5 class="my-0">
-                                            <div style="color:rgb(3, 3, 87)">{{ $frame->number }}</div>
+                                            <div style="color:rgb(3, 3, 87)">{{ $frame->code }}</div>
                                             <div>{{ $frame->location }}</div>
                                             <div>{{ $frame->price }}</div>
                                             <div>{{ $frame->market->name }}</div>
@@ -136,7 +136,7 @@
                                     <div class="card shadow mt-2">
                                         <div class="card-header d-flex justify-content-between align-items-center"
                                             style="padding:2px;color:rgb(3, 3, 113)">
-                                            <span style="font-size: 15px">Frame No: <b>{{ $frame->number }}</b></span>
+                                            <span style="font-size: 15px">Frame No: <b>{{ $frame->code }}</b></span>
                                             <a href="{{ route('frames.detach_frame', ['frame' => $frame, 'frameId' => $frame->id]) }}"
                                                 class=""><i class="mdi mdi-delete-forever"
                                                     style="color:red;font-size:30px"></i></a>
@@ -170,7 +170,7 @@
                                                         style="width: 100%;">
                                                         @foreach ($emptyFrames as $frame)
                                                             <option value={{ $frame->id }}>Frame No:
-                                                                {{ $frame->number }} &nbsp;&nbsp;&nbsp;
+                                                                {{ $frame->code }} &nbsp;&nbsp;&nbsp;
                                                                 ({{ $frame->location }})
                                                             </option>
                                                         @endforeach

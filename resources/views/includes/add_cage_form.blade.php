@@ -3,10 +3,10 @@
     <div class="row">
         <input type="number" name="market_id" value="{{ $market->id }}" hidden>
         <div class="col-md-3 form-group">
-            <label for="number">Number</label>
-            <input type="text" class="form-control" id="number" value="{{ old('number') }}"
-                placeholder="Number"required autocomplete="number" name="number" />
-            @error('number')
+            <label for="code">Code</label>
+            <input type="text" class="form-control" id="code" value="{{ old('code') }}"
+                placeholder="Code"required autocomplete="code" name="code" />
+            @error('code')
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
         </div>

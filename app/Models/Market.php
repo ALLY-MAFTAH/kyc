@@ -12,10 +12,10 @@ class Market extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'number',
+        'code',
         'name',
         'ward',
-        'street',
+        'sub_ward',
         'manager_name',
         'manager_mobile',
         'size',

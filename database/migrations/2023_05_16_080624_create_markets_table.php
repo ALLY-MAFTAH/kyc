@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('markets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('number')->unique();
+            $table->string('code')->unique();
             $table->string('name');
             $table->string('ward');
-            $table->string('street');
+            $table->string('sub_ward');
             $table->string('manager_name');
             $table->string('manager_mobile');
             $table->string('size')->nullable();

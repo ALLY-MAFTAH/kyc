@@ -49,7 +49,7 @@
         'Kibamba',
         'Kawe',
         'Hananasif',];
-    var list_of_streets = [
+    var list_of_sub_wards = [
 
         'Tegeta A', 'Tegeta B', 'Magomeni', 'Osterbay'];
 
@@ -61,13 +61,13 @@
         name: 'list_of_wards',
         source: substringMatcher(list_of_wards)
     });
-    $('#streets .typeahead').typeahead({
+    $('#sub_wards .typeahead').typeahead({
         hint: true,
         highlight: true,
         minLength: 1
     }, {
-        name: 'list_of_streets',
-        source: substringMatcher(list_of_streets)
+        name: 'list_of_sub_wards',
+        source: substringMatcher(list_of_sub_wards)
     });
     // constructs the suggestion engine
     var list_of_wards = new Bloodhound({

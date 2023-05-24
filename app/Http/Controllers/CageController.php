@@ -42,7 +42,7 @@ class CageController extends Controller
     {
         try {
             $attributes = $this->validate($request, [
-                'number' => ['required', 'unique:cages,number,NULL,id,deleted_at,NULL,market_id,' . $request->input('market_id')],
+                'code' => ['required', 'unique:cages,code,NULL,id,deleted_at,NULL,market_id,' . $request->input('market_id')],
                 'location' => 'required',
                 'type' => 'required',
                 'market_id' => 'required',
@@ -75,7 +75,7 @@ class CageController extends Controller
     {
         try {
             $attributes = $this->validate($request, [
-                'number' => 'required | unique:cages,number,' . $cage->id,
+                'code' => 'required | unique:cages,code,' . $cage->id,
                 'location' => 'required',
                 'type' => 'required',
                 'market_id' => 'required',

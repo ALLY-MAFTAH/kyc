@@ -12,7 +12,7 @@ class Frame extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'number',
+        'code',
         'location',
         'price',
         'market_id',

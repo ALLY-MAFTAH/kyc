@@ -37,7 +37,7 @@
                 <thead class="table-header">
                     <tr>
                         <th>#</th>
-                        <th>Number</th>
+                        <th>Code</th>
                         <th>Location</th>
                         <th>Price</th>
                         <th>Market</th>
@@ -49,7 +49,7 @@
                     @foreach ($frames as $index => $frame)
                         <tr>
                             <td>{{ ++$index }}</td>
-                            <td>{{ $frame->number }}</td>
+                            <td>{{ $frame->code }}</td>
                             <td>{{ $frame->location }}</td>
                             <td>{{ number_format($frame->price, 0, '.', ',') }} Tsh</td>
                             <td>{{ $frame->market->name }}</td>

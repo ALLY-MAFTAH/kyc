@@ -12,7 +12,7 @@ class Cage extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'number',
+        'code',
         'location',
         'price',
         'customer_id',

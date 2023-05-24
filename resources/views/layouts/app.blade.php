@@ -5,7 +5,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.9, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" />
 
     <title>{{ config('app.name', 'KYC') }}</title>
 

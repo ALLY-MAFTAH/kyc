@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('cages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('number');
-            $table->unique(['number', 'market_id']);
+            $table->string('code');
+            $table->unique(['code', 'market_id']);
             $table->double('price');
             $table->string('type');
             $table->bigInteger('market_id');

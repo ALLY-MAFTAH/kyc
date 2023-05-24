@@ -37,7 +37,7 @@
                 <thead class="table-header">
                     <tr>
                         <th>#</th>
-                        <th>Number</th>
+                        <th>Code</th>
                         <th>Location</th>
                         <th>Price</th>
                         <th>Market</th>
@@ -50,7 +50,7 @@
                     @foreach ($cages as $index => $cage)
                         <tr>
                             <td>{{ ++$index }}</td>
-                            <td>{{ $cage->number }}</td>
+                            <td>{{ $cage->code }}</td>
                             <td>{{ $cage->location }}</td>
                             <td>{{ number_format($cage->price, 0, '.', ',') }} Tsh</td>
                             <td>{{ $cage->market->name }}</td>

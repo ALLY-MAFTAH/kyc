@@ -50,10 +50,10 @@ class MarketController extends Controller
 
         try {
             $attributes = $this->validate($request, [
-                'number' => ['required', 'unique:markets,number,NULL,id,deleted_at,NULL'],
+                'code' => ['required', 'unique:markets,code,NULL,id,deleted_at,NULL'],
                 "name" => 'required',
                 "ward" => 'required',
-                "street" => 'required',
+                "sub_ward" => 'required',
                 "manager_name" => 'required',
                 "manager_mobile" => 'required',
             ]);
@@ -100,10 +100,10 @@ class MarketController extends Controller
     {
         try {
             $attributes = $this->validate($request, [
-                'number' => 'required |unique:markets,number,' . $market->id,
+                'code' => 'required |unique:markets,code,' . $market->id,
                 "name" => 'required',
                 "ward" => 'required',
-                "street" => 'required',
+                "sub_ward" => 'required',
                 "manager_name" => 'required',
                 "manager_mobile" => 'required',
             ]);

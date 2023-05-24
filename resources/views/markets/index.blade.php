@@ -42,9 +42,9 @@
                             @csrf
                             <div class="row">
                                 <div class="col-md-3 form-group">
-                                    <label for="number">Number</label>
-                                    <input type="text" class="form-control" id="number" placeholder="Number"required
-                                        value="{{ old('number') }}" autocomplete="number" name="number" /> @error('number')
+                                    <label for="code">Code</label>
+                                    <input type="text" class="form-control" id="code" placeholder="Code"required
+                                        value="{{ old('code') }}" autocomplete="code" name="code" /> @error('code')
                                         <span class="error" style="color:red">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -65,11 +65,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label for="street">Street</label>
-                                    <div id="streets">
-                                        <input type="text" class="typeahead" id="street" name="street"
-                                            value="{{ old('street') }}" autocomplete="street"
-                                            placeholder="Street"required /> @error('street')
+                                    <label for="sub_ward">Sub-Ward</label>
+                                    <div id="sub_wards">
+                                        <input type="text" class="typeahead" id="sub_ward" name="sub_ward"
+                                            value="{{ old('sub_ward') }}" autocomplete="sub_ward"
+                                            placeholder="Sub-Ward"required /> @error('sub_ward')
                                             <span class="error" style="color:red">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -104,7 +104,7 @@
                                     <label>Market Sections</label>
                                     <select class="js-example-basic-multiple form-control" multiple="multiple" required
                                         name="sections[]" style="width: 100%;">
-                                        <option value="General">General</option>
+                                        <option value="Base">Base</option>
                                         <option value="Ground Floor">Ground Floor</option>
                                         <option value="First Floor">First Floor</option>
                                         <option value="Second Floor">Second Floor</option>
@@ -118,6 +118,8 @@
                                         <option value="Inside">Inside</option>
                                         <option value="Outside">Outside</option>
                                         <option value="Upper">Upper</option>
+                                        <option value="Down">Down</option>
+                                        <option value="Underground">Underground</option>
                                     </select> @error('selections')
                                         <span class="error" style="color:red">{{ $message }}</span>
                                     @enderror
@@ -139,10 +141,10 @@
                 <thead class="table-header">
                     <tr>
                         <th>#</th>
-                        <th>Number</th>
+                        <th>Code</th>
                         <th>Name</th>
                         <th>Ward</th>
-                        <th>Street</th>
+                        <th>Sub-Ward</th>
                         <th>Manager Name</th>
                         <th>Manager Phone</th>
                         <th>Size</th>
@@ -153,10 +155,10 @@
                     @foreach ($markets as $index => $market)
                         <tr>
                             <td>{{ ++$index }}</td>
-                            <td>{{ $market->number }}</td>
+                            <td>{{ $market->code }}</td>
                             <td>{{ $market->name }}</td>
                             <td>{{ $market->ward }}</td>
-                            <td>{{ $market->street }}</td>
+                            <td>{{ $market->sub_ward }}</td>
                             <td>{{ $market->manager_name }}</td>
                             <td>{{ $market->manager_mobile }}</td>
                             <td>{{ $market->size }}</td>

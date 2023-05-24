@@ -2,11 +2,11 @@
     @csrf
     @method('PUT')
     <div class="form-group">
-        <label for="number">Number</label>
-        <input type="text" class="form-control" id="number" autofocus
-            value="{{ old('number', $market->number) }}" placeholder="Number"required
-            autocomplete="number" name="number" />
-        @error('number')
+        <label for="code">Code</label>
+        <input type="text" class="form-control" id="code" autofocus
+            value="{{ old('code', $market->code) }}" placeholder="Code"required
+            autocomplete="code" name="code" />
+        @error('code')
             <span class="error" style="color:red">{{ $message }}</span>
         @enderror
     </div>
@@ -29,11 +29,11 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="street">Street</label>
-        <div id="streets">
-            <input type="text" class="typeahead" id="street"
-                value="{{ old('street', $market->street) }}" name="street"
-                autocomplete="street" placeholder="Street"required /> @error('street')
+        <label for="sub_ward">Sub-Ward</label>
+        <div id="sub_wards">
+            <input type="text" class="typeahead" id="sub_ward"
+                value="{{ old('sub_ward', $market->sub_ward) }}" name="sub_ward"
+                autocomplete="sub_ward" placeholder="Sub-Ward"required /> @error('sub_ward')
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
         </div>
