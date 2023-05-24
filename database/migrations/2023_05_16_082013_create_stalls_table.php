@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cages', function (Blueprint $table) {
+        Schema::create('stalls', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code');
             $table->unique(['code', 'market_id']);
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cages');
+        Schema::dropIfExists('stalls');
     }
 };

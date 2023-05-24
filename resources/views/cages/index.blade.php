@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="page-header flex-wrap">
-        <h3 class="mb-2"> Cages</h3>
+        <h3 class="mb-2"> Stalls</h3>
         <div class="d-flex">
             <button type="button" class="btn  bg-white btn-icon-text border">
                 <i class="mdi mdi-download btn-icon-prepend"></i> Download </button>
@@ -29,7 +29,7 @@
         </div>
     @endif
     <div class="card shadow">
-        <div class="card-header">Cages
+        <div class="card-header">Stalls
         </div>
         <div class="card-body">
 
@@ -47,29 +47,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($cages as $index => $cage)
+                    @foreach ($stalls as $index => $stall)
                         <tr>
                             <td>{{ ++$index }}</td>
-                            <td>{{ $cage->code }}</td>
-                            <td>{{ $cage->location }}</td>
-                            <td>{{ number_format($cage->price, 0, '.', ',') }} Tsh</td>
-                            <td>{{ $cage->market->name }}</td>
+                            <td>{{ $stall->code }}</td>
+                            <td>{{ $stall->location }}</td>
+                            <td>{{ number_format($stall->price, 0, '.', ',') }} Tsh</td>
+                            <td>{{ $stall->market->name }}</td>
                             <td>
-                                @if ($cage->customer)
+                                @if ($stall->customer)
                                     {{-- <a style="text-decoration: none"
-                                        href="{{ route('customers.show', ['customer' => $cage->customer, 'marketId' => $market->id]) }}"> --}}
-                                        {{ $cage->customer->first_name }}
-                                        {{ $cage->customer->middle_name }}
-                                        {{ $cage->customer->last_name }}
+                                        href="{{ route('customers.show', ['customer' => $stall->customer, 'marketId' => $market->id]) }}"> --}}
+                                        {{ $stall->customer->first_name }}
+                                        {{ $stall->customer->middle_name }}
+                                        {{ $stall->customer->last_name }}
                                     {{-- </a> --}}
                                 @else
                                     <label class="p-1 m-0 text-white bg-danger">Empty</label>
                                 @endif
                             </td>
-                            <td>{{ $cage->type }}</td>
-                            <td>{{ $cage->size }}</td>
+                            <td>{{ $stall->type }}</td>
+                            <td>{{ $stall->size }}</td>
                             {{-- <td class="text-center">
-                                <a href="{{ route('cages.show', $cage) }}" class="btn  btn-outline-info collapsed"
+                                <a href="{{ route('stalls.show', $stall) }}" class="btn  btn-outline-info collapsed"
                                     type="button">
                                     <i class="feather icon-edit"></i> View
                                 </a>
@@ -84,8 +84,8 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            @if (session('addCageCollapse'))
-                $('#addCageCollapse').addClass('show');
+            @if (session('addStallCollapse'))
+                $('#addStallCollapse').addClass('show');
             @endif
         });
     </script>

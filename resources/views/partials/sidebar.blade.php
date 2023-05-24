@@ -30,9 +30,9 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('cages.index') }}">
+            <a class="nav-link" href="{{ route('stalls.index') }}">
                 <i class="mdi mdi-table menu-icon"></i>
-                <span class="menu-title">Cages</span>
+                <span class="menu-title">Stalls</span>
             </a>
         </li>
         <li class="nav-item">

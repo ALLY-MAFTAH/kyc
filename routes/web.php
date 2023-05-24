@@ -46,11 +46,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/delete-frame/{frame}', [FrameController::class, 'deleteFrame'])->name('frames.delete');
 
     // CAGES ROUTES
-    Route::get('/cages', [CageController::class, 'index'])->name('cages.index');
-    Route::get('/show-cage/{cage}', [CageController::class, 'showCage'])->name('cages.show');
-    Route::post('/add-cage', [CageController::class, 'postCage'])->name('cages.add');
-    Route::put('/edit-cage/{cage}', [CageController::class, 'putCage'])->name('cages.edit');
-    Route::delete('/delete-cage/{cage}', [CageController::class, 'deleteCage'])->name('cages.delete');
+    Route::get('/stalls', [StallController::class, 'index'])->name('stalls.index');
+    Route::get('/show-stall/{stall}', [StallController::class, 'showStall'])->name('stalls.show');
+    Route::post('/add-stall', [StallController::class, 'postStall'])->name('stalls.add');
+    Route::put('/edit-stall/{stall}', [StallController::class, 'putStall'])->name('stalls.edit');
+    Route::delete('/delete-stall/{stall}', [StallController::class, 'deleteStall'])->name('stalls.delete');
 
     // CUSTOMERS ROUTES
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
@@ -62,8 +62,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/remove-customer-from-market/{customer}', [CustomerController::class, 'removeCustomerFromMarket'])->name('customers.remove_from_market');
     Route::post('/attach-frame/{customer}', [CustomerController::class, 'attachFrame'])->name('customers.attach_frame');
     Route::get('/detach-frame/{customer}/{frameId}', [CustomerController::class, 'detachFrame'])->name('customers.detach_frame');
-    Route::post('/attach-cage/{customer}', [CustomerController::class, 'attachCage'])->name('customers.attach_cage');
-    Route::get('/detach-cage/{customer}/{cageId}', [CustomerController::class, 'detachCage'])->name('customers.detach_cage');
+    Route::post('/attach-stall/{customer}', [CustomerController::class, 'attachStall'])->name('customers.attach_stall');
+    Route::get('/detach-stall/{customer}/{stallId}', [CustomerController::class, 'detachStall'])->name('customers.detach_stall');
 
     // PAYMENTS ROUTES
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');

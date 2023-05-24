@@ -1,4 +1,4 @@
-<form action="{{ route('cages.add') }}" method="POST">
+<form action="{{ route('stalls.add') }}" method="POST">
     @csrf
     <div class="row">
         <input type="number" name="market_id" value="{{ $market->id }}" hidden>
@@ -34,7 +34,7 @@
             @enderror
         </div>
         <div class="col-md-3 form-group">
-            <label for="size">Cage Size</label>
+            <label for="size">Stall Size</label>
             <input type="text" class="form-control" id="size" autocomplete="size" value="{{ old('size') }}"
                 placeholder="Size (Optional)" name="size" /> @error('size')
                 <span class="error" style="color:red">{{ $message }}</span>

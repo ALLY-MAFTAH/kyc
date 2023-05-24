@@ -15,7 +15,7 @@ class Payment extends Model
         'date',
         'amount',
         'receipt_number',
-        'cage_id',
+        'stall_id',
         'frame_id',
         'market_id',
         'term_id',
@@ -39,9 +39,9 @@ class Payment extends Model
     {
         return $this->belongsTo(Frame::class, 'frame_id');
     }
-    public function cage()
+    public function stall()
     {
-        return $this->belongsTo(Cage::class, 'cage_id');
+        return $this->belongsTo(Stall::class, 'stall_id');
     }
     public function market()
     {

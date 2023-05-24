@@ -83,7 +83,7 @@
                         <div class="col text-center"style="border-right: 1px dashed #333;">
                             <i class="mdi mdi-table" style="font-size: 40px;color:rgb(244, 149, 7)"></i>
                             <div class="py-3">
-                                <b> {{ $customerCages->count() }}</b>
+                                <b> {{ $customerStalls->count() }}</b>
                             </div>
                             <div class="">
                                 CAGES
@@ -201,11 +201,11 @@
                     <div class="card-header  text-center" style="font-size: 20px">
                         <div class="row">
                             <div class="col">
-                                Cages
+                                Stalls
                             </div>
                             <div class="col">
                                 <button type="button" class="btn btn-primary collapsed" data-toggle="collapse"
-                                    data-target="#assignCageCollapse">Assign New Cage </button>
+                                    data-target="#assignStallCollapse">Assign New Stall </button>
                             </div>
                         </div>
                     </div>
@@ -213,55 +213,55 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="text-center">
-                                    Assigned Cages
+                                    Assigned Stalls
                                 </div>
-                                @forelse ($customerCages as $cage)
+                                @forelse ($customerStalls as $stall)
                                     <div class="card shadow mt-2">
                                         <div class="card-header d-flex justify-content-between align-items-center"
                                             style="padding:2px;color:rgb(3, 3, 113)">
-                                            <span style="font-size: 15px">Cage No: <b>{{ $cage->code }}</b></span>
-                                            <a href="{{ route('customers.detach_cage', ['customer' => $customer, 'cageId' => $cage->id]) }}"
-                                                onclick="return confirm('Are you sure you want to remove this cage?');"
+                                            <span style="font-size: 15px">Stall No: <b>{{ $stall->code }}</b></span>
+                                            <a href="{{ route('customers.detach_stall', ['customer' => $customer, 'stallId' => $stall->id]) }}"
+                                                onclick="return confirm('Are you sure you want to remove this stall?');"
                                                 class="">
                                                 <i class="mdi mdi-delete-forever" style="color:red;font-size:30px"></i>
                                             </a>
                                         </div>
                                         <div class="card-body" style="padding: 6px; font-size:13px">
-                                            <div>Location: <span style="color:rgb(4, 4, 141)">{{ $cage->location }}</span>
+                                            <div>Location: <span style="color:rgb(4, 4, 141)">{{ $stall->location }}</span>
                                             </div>
                                             <div>Price: <span
-                                                    style="color:rgb(4, 4, 141)">{{ number_format($cage->price, 0, '.', ',') }}
+                                                    style="color:rgb(4, 4, 141)">{{ number_format($stall->price, 0, '.', ',') }}
                                                     Tsh</span></div>
-                                            <div>Type: <span style="color:rgb(4, 4, 141)">{{ $cage->type }}</span></div>
-                                            <div>Size: <span style="color:rgb(4, 4, 141)">{{ $cage->size }}</span></div>
+                                            <div>Type: <span style="color:rgb(4, 4, 141)">{{ $stall->type }}</span></div>
+                                            <div>Size: <span style="color:rgb(4, 4, 141)">{{ $stall->size }}</span></div>
                                         </div>
                                     </div>
                                 @empty
-                                    <div class="text-gray text-center pt-2" style="font-size: 13px"> 0 Cages</div>
+                                    <div class="text-gray text-center pt-2" style="font-size: 13px"> 0 Stalls</div>
                                 @endforelse
 
                             </div>
                             <div class="col-6">
-                                <div id="assignCageCollapse" style="width: 100%;border-width:0px"
-                                    class="accordion-collapse collapse" aria-labelledby="assignCageCollapse"
-                                    data-parent="#assignCageCollapse">
+                                <div id="assignStallCollapse" style="width: 100%;border-width:0px"
+                                    class="accordion-collapse collapse" aria-labelledby="assignStallCollapse"
+                                    data-parent="#assignStallCollapse">
                                     <div class="accordion-body">
-                                        <div class="text-center" style="color:gray">Cages to Assign</div>
+                                        <div class="text-center" style="color:gray">Stalls to Assign</div>
                                         <div class="card p-2 mt-2" style="background: var(--form-bg-color)">
-                                            <form action="{{ route('customers.attach_cage', $customer) }}"
+                                            <form action="{{ route('customers.attach_stall', $customer) }}"
                                                 method="post">
                                                 @csrf
                                                 <div class="form-group">
                                                     <select class="js-example-basic-multiple form-control"
-                                                        multiple="multiple" required name="cages[]" style="width: 100%;">
-                                                        @foreach ($emptyCages as $cage)
-                                                            <option value={{ $cage->id }}>Cage No:
-                                                                {{ $cage->code }} &nbsp;&nbsp;&nbsp;
-                                                                ({{ $cage->location }})
+                                                        multiple="multiple" required name="stalls[]" style="width: 100%;">
+                                                        @foreach ($emptyStalls as $stall)
+                                                            <option value={{ $stall->id }}>Stall No:
+                                                                {{ $stall->code }} &nbsp;&nbsp;&nbsp;
+                                                                ({{ $stall->location }})
                                                             </option>
                                                         @endforeach
                                                     </select>
-                                                    @error('cages[]')
+                                                    @error('stalls[]')
                                                         <span class="error" style="color:red">{{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -314,8 +314,8 @@
     </script>
     <script>
         $(document).ready(function() {
-            @if (session('addCageCollapse'))
-                $('#addCageCollapse').addClass('show');
+            @if (session('addStallCollapse'))
+                $('#addStallCollapse').addClass('show');
             @endif
         });
     </script>

@@ -24,9 +24,9 @@ class Section extends Model
     {
         return $this->hasMany(Frame::class);
     }
-    public function cages()
+    public function stalls()
     {
-        return $this->hasMany(Cage::class);
+        return $this->hasMany(Stall::class);
     }
     public function market()
     {

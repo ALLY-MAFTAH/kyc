@@ -84,7 +84,7 @@
                         <div class="col text-center"style="border-right: 1px dashed #333;">
                             <i class="mdi mdi-table" style="font-size: 40px;color:rgb(244, 149, 7)"></i>
                             <div class="py-3">
-                                <b> {{ $frameCages->count() }}</b>
+                                <b> {{ $frameStalls->count() }}</b>
                             </div>
                             <div class="">
                                 CAGES
@@ -202,11 +202,11 @@
                     <div class="card-header  text-center" style="font-size: 20px">
                         <div class="row">
                             <div class="col">
-                                Cages
+                                Stalls
                             </div>
                             <div class="col">
                                 <button type="button" class="btn  ml-3 btn-primary collapsed"data-bs-toggle="collapse"
-                                    data-bs-target="#addCageCollapse"> Assign New Cage </button>
+                                    data-bs-target="#addStallCollapse"> Assign New Stall </button>
                             </div>
                         </div>
                     </div>
@@ -248,8 +248,8 @@
     </script>
     <script>
         $(document).ready(function() {
-            @if (session('addCageCollapse'))
-                $('#addCageCollapse').addClass('show');
+            @if (session('addStallCollapse'))
+                $('#addStallCollapse').addClass('show');
             @endif
         });
     </script>

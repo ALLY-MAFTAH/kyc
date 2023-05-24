@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cage;
+use App\Models\Stall;
 use App\Models\Market;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class CageController extends Controller
+class StallController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,20 +16,20 @@ class CageController extends Controller
      */
     public function index()
     {
-        $cages = Cage::all();
+        $stalls = Stall::all();
 
-        return view('cages.index', compact('cages'));
+        return view('stalls.index', compact('stalls'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cage  $cage
+     * @param  \App\Models\Stall  $stall
      * @return \Illuminate\Http\Response
      */
-    public function showCage(Cage $cage)
+    public function showStall(Stall $stall)
     {
-        return view('cages.show', compact('cage'));
+        return view('stalls.show', compact('stall'));
     }
 
     /**
@@ -38,11 +38,11 @@ class CageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postCage(Request $request)
+    public function postStall(Request $request)
     {
         try {
             $attributes = $this->validate($request, [
-                'code' => ['required', 'unique:cages,code,NULL,id,deleted_at,NULL,market_id,' . $request->input('market_id')],
+                'code' => ['required', 'unique:stalls,code,NULL,id,deleted_at,NULL,market_id,' . $request->input('market_id')],
                 'location' => 'required',
                 'type' => 'required',
                 'market_id' => 'required',
@@ -51,14 +51,14 @@ class CageController extends Controller
             $attributes['size'] = $request->size ?? "";
             $attributes['price'] = 15000;
 
-            $cage = Cage::create($attributes);
+            $stall = Stall::create($attributes);
             $market = Market::find($request->market_id);
 
-            $market->cages()->save($cage);
+            $market->stalls()->save($stall);
 
-            return back()->with('success', "Cage added successfully");
+            return back()->with('success', "Stall added successfully");
         } catch (ValidationException $exception) {
-            return back()->withErrors($exception->errors())->withInput()->with('addCageCollapse', true);
+            return back()->withErrors($exception->errors())->withInput()->with('addStallCollapse', true);
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
         }
@@ -68,30 +68,30 @@ class CageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cage  $cage
+     * @param  \App\Models\Stall  $stall
      * @return \Illuminate\Http\Response
      */
-    public function putCage(Request $request, Cage $cage)
+    public function putStall(Request $request, Stall $stall)
     {
         try {
             $attributes = $this->validate($request, [
-                'code' => 'required | unique:cages,code,' . $cage->id,
+                'code' => 'required | unique:stalls,code,' . $stall->id,
                 'location' => 'required',
                 'type' => 'required',
                 'market_id' => 'required',
             ]);
 
-            $attributes['size'] = $request->size ?? $cage->size;
+            $attributes['size'] = $request->size ?? $stall->size;
             $attributes['price'] = 15000;
 
-            $cage->update($attributes);
+            $stall->update($attributes);
             $market = Market::find($request->market_id);
 
-            $market->cages()->save($cage);
+            $market->stalls()->save($stall);
 
-            return back()->with('success', "Cage edited successfully");
+            return back()->with('success', "Stall edited successfully");
         } catch (ValidationException $exception) {
-            return back()->withErrors($exception->errors())->withInput()->with('editCageModal', true);
+            return back()->withErrors($exception->errors())->withInput()->with('editStallModal', true);
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
         }
@@ -100,13 +100,13 @@ class CageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cage  $cage
+     * @param  \App\Models\Stall  $stall
      * @return \Illuminate\Http\Response
      */
-    public function deleteCage(Cage $cage)
+    public function deleteStall(Stall $stall)
     {
-        $cage->delete();
+        $stall->delete();
 
-        return back()->with('success', 'Cage deleted successful');
+        return back()->with('success', 'Stall deleted successful');
     }
 }

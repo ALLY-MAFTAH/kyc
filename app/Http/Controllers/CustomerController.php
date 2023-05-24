@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cage;
+use App\Models\Stall;
 use App\Models\Customer;
 use App\Models\Frame;
 use App\Models\Market;
@@ -33,17 +33,17 @@ class CustomerController extends Controller
         $market = Market::find($marketId);
 
         $customerFrames = $customer->frames()->where('market_id', $marketId)->get();
-        $customerCages = $customer->cages()->where('market_id', $marketId)->get();
+        $customerStalls = $customer->stalls()->where('market_id', $marketId)->get();
 
         $emptyFrames = Frame::where(['market_id' => $marketId, 'customer_id' => null])->get();
-        $emptyCages = Cage::where(['market_id' => $marketId, 'customer_id' => null])->get();
+        $emptyStalls = Stall::where(['market_id' => $marketId, 'customer_id' => null])->get();
 
         return view('customers.show', compact(
             'customer',
             'market',
             'customerFrames',
-            'customerCages',
-            'emptyCages',
+            'customerStalls',
+            'emptyStalls',
             'emptyFrames',
         ));
     }
@@ -157,19 +157,19 @@ class CustomerController extends Controller
         }
     }
     // ATTACH CAGE
-    public function attachCage(Request $request, Customer $customer)
+    public function attachStall(Request $request, Customer $customer)
     {
-        $cageIds = $request->cages;
+        $stallIds = $request->stalls;
 
         try {
-            foreach ($cageIds as $cageId) {
-                $cage = Cage::find($cageId);
+            foreach ($stallIds as $stallId) {
+                $stall = Stall::find($stallId);
                 $attributes['customer_id'] = $customer->id;
-                $cage->update($attributes);
-                $customer->cages()->save($cage);
+                $stall->update($attributes);
+                $customer->stalls()->save($stall);
             }
 
-            return back()->with('success', 'Cages successfully assigned to customer');
+            return back()->with('success', 'Stalls successfully assigned to customer');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
         }
@@ -190,15 +190,15 @@ class CustomerController extends Controller
         }
     }
     // DETACH CAGE
-    public function detachCage(Customer $customer, $cageId)
+    public function detachStall(Customer $customer, $stallId)
     {
         try {
-            $cage = Cage::find($cageId);
+            $stall = Stall::find($stallId);
             $attributes['customer_id'] = null;
-            $cage->update($attributes);
-            // $customer->cages()->save($cage);
+            $stall->update($attributes);
+            // $customer->stalls()->save($stall);
 
-            return back()->with('success', 'Cages successfully removed from customer');
+            return back()->with('success', 'Stalls successfully removed from customer');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
         }

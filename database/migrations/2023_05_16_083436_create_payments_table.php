@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->double('amount');
             $table->string('receipt_number')->unique();
-            $table->bigInteger('cage_id')->nullable();
+            $table->bigInteger('stall_id')->nullable();
             $table->bigInteger('frame_id')->nullable();
             $table->bigInteger('market_id');
             $table->bigInteger('season_id');

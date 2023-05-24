@@ -1,4 +1,4 @@
-<form action="{{ route('cages.edit', $cage) }}" method="POST">
+<form action="{{ route('stalls.edit', $stall) }}" method="POST">
     @csrf
     @method('PUT')
 
@@ -7,7 +7,7 @@
         <div class="form-group">
             <label for="code">Code</label>
             <input type="text" class="form-control" id="code" placeholder="Code"required autocomplete="code"
-                value="{{ old('code', $cage->code) }}" name="code" />
+                value="{{ old('code', $stall->code) }}" name="code" />
             @error('code')
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
@@ -17,7 +17,7 @@
             <label>Location</label>
             <select class="js-example-basic-single form-control" required name="location" style="width: 100%;">
                 @foreach ($market->sections as $section)
-                    <option value="{{ $section->name }}" {{ $section->name == $cage->location ? 'selected' : '' }}>
+                    <option value="{{ $section->name }}" {{ $section->name == $stall->location ? 'selected' : '' }}>
                         {{ $section->name }}</option>
                 @endforeach
             </select>
@@ -28,8 +28,8 @@
         <div class="form-group">
             <label>Type</label>
             <select class="js-example-basic-single form-control" required name="type" style="width: 100%;">
-                <option value="Imaginary" {{ $cage->type == 'Imaginary' ? 'selected' : '' }}>Imaginary</option>
-                <option value="Real" {{ $cage->type == 'Real' ? 'selected' : '' }}>Real</option>
+                <option value="Imaginary" {{ $stall->type == 'Imaginary' ? 'selected' : '' }}>Imaginary</option>
+                <option value="Real" {{ $stall->type == 'Real' ? 'selected' : '' }}>Real</option>
             </select>
             @error('type')
                 <span class="error" style="color:red">{{ $message }}</span>
@@ -39,7 +39,7 @@
         <div class="form-group">
             <label for="size">Frame Size</label>
             <input type="text" class="form-control" id="size" autocomplete="size" placeholder="Size (Optional)"
-                value="{{ old('size', $cage->size) }}" name="size" /> @error('size')
+                value="{{ old('size', $stall->size) }}" name="size" /> @error('size')
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
         </div>

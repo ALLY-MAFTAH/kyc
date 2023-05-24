@@ -109,7 +109,7 @@
                         <div class="col text-center"style="border-right: 1px dashed #333;">
                             <i class="mdi mdi-table" style="font-size: 40px;color:rgb(244, 149, 7)"></i>
                             <div class="py-3">
-                                <b> {{ count($market->cages) }}</b>
+                                <b> {{ count($market->stalls) }}</b>
                             </div>
                             <div class="">
                                 CAGES
@@ -232,21 +232,21 @@
             <div class="card-header  text-center" style="font-size: 20px">
                 <div class="row">
                     <div class="col">
-                        Cages
+                        Stalls
                     </div>
                     <div class="col">
                         <button type="button" class="btn  ml-3 btn-primary collapsed"data-bs-toggle="collapse"
-                            data-bs-target="#addCageCollapse"> Add Cage </button>
+                            data-bs-target="#addStallCollapse"> Add Stall </button>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <div id="addCageCollapse" style="width: 100%;border-width:0px" class="accordion-collapse collapse"
-                    aria-labelledby="addCageCollapse" data-bs-parent="#addCageCollapse">
+                <div id="addStallCollapse" style="width: 100%;border-width:0px" class="accordion-collapse collapse"
+                    aria-labelledby="addStallCollapse" data-bs-parent="#addStallCollapse">
                     <div class="accordion-body">
-                        <div class="text-center" style="color:gray">Add Cage</div>
+                        <div class="text-center" style="color:gray">Add Stall</div>
                         <div class="card p-2 mt-1" style="background: var(--form-bg-color)">
-                            @include('includes.add_cage_form')
+                            @include('includes.add_stall_form')
                         </div>
                         <br>
                     </div>
@@ -266,52 +266,52 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($market->cages as $index => $cage)
+                            @foreach ($market->stalls as $index => $stall)
                                 <tr>
                                     <td class="text-center" style="max-width: 20px">{{ ++$index }}</td>
-                                    <td> {{ $cage->code }}</td>
-                                    <td> {{ $cage->location }} </td>
-                                    <td> {{ number_format($cage->price, 0, '.', ',') }} Tsh </td>
-                                    <td> {{ $cage->type }} </td>
+                                    <td> {{ $stall->code }}</td>
+                                    <td> {{ $stall->location }} </td>
+                                    <td> {{ number_format($stall->price, 0, '.', ',') }} Tsh </td>
+                                    <td> {{ $stall->type }} </td>
                                     <td>
-                                        @if ($cage->customer)
+                                        @if ($stall->customer)
                                             <a style="text-decoration: none"
-                                                href="{{ route('customers.show', ['customer' => $cage->customer, 'marketId' => $market->id]) }}">
-                                                {{ $cage->customer->first_name }}
-                                                {{ $cage->customer->middle_name }}
-                                                {{ $cage->customer->last_name }}
+                                                href="{{ route('customers.show', ['customer' => $stall->customer, 'marketId' => $market->id]) }}">
+                                                {{ $stall->customer->first_name }}
+                                                {{ $stall->customer->middle_name }}
+                                                {{ $stall->customer->last_name }}
                                             </a>
                                         @else
                                             <label class="p-1 m-0 text-white bg-danger">Empty</label>
                                         @endif
                                     </td>
-                                    <td> {{ $cage->size }} </td>
+                                    <td> {{ $stall->size }} </td>
                                     <td class="text-center">
                                         <a href="#" class="btn btn-outline-info"
-                                           data-toggle="modal" data-target="#editCageModal-{{$cage->id}}" type="button">
+                                           data-toggle="modal" data-target="#editStallModal-{{$stall->id}}" type="button">
                                             Edit
                                         </a>
                                         <a href="#" class="btn  btn-outline-danger"
-                                            onclick="if(confirm('Are you sure want to delete cage number: {{ $cage->code }}?')) document.getElementById('delete-cage-{{ $cage->id }}').submit()">
+                                            onclick="if(confirm('Are you sure want to delete stall number: {{ $stall->code }}?')) document.getElementById('delete-stall-{{ $stall->id }}').submit()">
                                             Delete
                                         </a>
-                                        <form id="delete-cage-{{ $cage->id }}" method="post"
-                                            action="{{ route('cages.delete', $cage) }}">
+                                        <form id="delete-stall-{{ $stall->id }}" method="post"
+                                            action="{{ route('stalls.delete', $stall) }}">
                                             @csrf @method('delete')
                                         </form>
                                     </td>
-                                    <div class="modal fade" id="editCageModal-{{ $cage->id }}" tabindex="-1"
+                                    <div class="modal fade" id="editStallModal-{{ $stall->id }}" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Cage</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Stall</h5>
                                                     <button type="button" style="background-color:red"
                                                         class="btn-close  btn-danger" data-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body text-start">
-                                                    @include('includes.edit_cage_form')
+                                                    @include('includes.edit_stall_form')
                                                 </div>
                                             </div>
                                         </div>
@@ -469,8 +469,8 @@
     </script>
     <script>
         $(document).ready(function() {
-            @if (session('addCageCollapse'))
-                $('#addCageCollapse').addClass('show');
+            @if (session('addStallCollapse'))
+                $('#addStallCollapse').addClass('show');
             @endif
         });
     </script>
@@ -497,8 +497,8 @@
     </script>
     <script>
         $(document).ready(function() {
-            @if (session('editCageModal'))
-                $('#editCageModal').addClass('show');
+            @if (session('editStallModal'))
+                $('#editStallModal').addClass('show');
             @endif
         });
     </script>
