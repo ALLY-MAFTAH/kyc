@@ -64,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/detach-frame/{customer}/{frameId}', [CustomerController::class, 'detachFrame'])->name('customers.detach_frame');
     Route::post('/attach-stall/{customer}', [CustomerController::class, 'attachStall'])->name('customers.attach_stall');
     Route::get('/detach-stall/{customer}/{stallId}', [CustomerController::class, 'detachStall'])->name('customers.detach_stall');
-    Route::post('send-message/{customerId}', [CustomerController::class, 'sendMessage'])->name('send-message');
+    Route::post('send-message/{customer}', [CustomerController::class, 'sendMessage'])->name('send-message');
 
     // PAYMENTS ROUTES
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');

@@ -264,25 +264,27 @@ class CustomerController extends Controller
     }
     public function sendMessage(Request $request, Customer $customer)
     {
+        try {
+            $messagingService = new MessagingService();
+            $sendMessageResponse = $messagingService->sendMessage($customer->mobile, $request->body);
 
-        $messagingService = new MessagingService();
-        $sendMessageResponse = $messagingService->sendMessage($customer->mobile, $request->body);
+            if ($sendMessageResponse['status'] == "Sent") {
 
-        if ($sendMessageResponse['status'] == "Sent") {
+                $attributes['category'] = 'Reminder';
+                $attributes['date'] = Carbon::now();
+                $attributes['msg'] = $sendMessageResponse['msg'];
+                $attributes['mobile'] = $sendMessageResponse['mobile'];
+                $attributes['customer_id'] = $customer->id;
 
-            $attributes['category'] = 'Reminder';
-            $attributes['date'] = Carbon::now();
-            $attributes['msg'] = $sendMessageResponse['msg'];
-            $attributes['mobile'] = $sendMessageResponse['mobile'];
-            $attributes['customer_id'] = $customer->id;
+                $message = Message::create($attributes);
+                $customer->messages()->save($message);
 
-            $message = Message::create($attributes);
-            $customer->messages()->save($message);
-
-            return back()->with('success', 'Message sent successful');
-        } else {
-            return back()->with('error', 'Message not sent, crosscheck your inputs');
+                return back()->with('success', 'Message sent successful');
+            } else {
+                return back()->with('error', 'Message not sent, crosscheck your inputs');
+            }
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
         }
-        return back();
     }
 }

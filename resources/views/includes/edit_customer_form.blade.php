@@ -13,7 +13,7 @@
     <div class="form-group">
         <label for="middle_name">Middle Name</label>
         <input type="text" class="form-control" id="middle_name" autofocus
-            value="{{ old('middle_name', $customer->middle_name) }}" placeholder="Middle Name"
+            value="{{ old('middle_name', $customer->middle_name) }}" placeholder="Middle Name (Optional)"
             autocomplete="middle_name" name="middle_name" />
         @error('middle_name')
             <span class="error" style="color:red">{{ $message }}</span>

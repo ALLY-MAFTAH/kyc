@@ -26,13 +26,13 @@
             <div class="col-md-6 pb-2">
                 <div class="card shadow px-2">
                     <div class="row">
-                        <div class="col-md-3 text-center">
+                        <div class="col-md-3 text-center leftProfSide">
                             <div class="my-3 mx-2 text-center"
                                 style="width: 130px; height: 130px; overflow: hidden; border-radius: 50%; border: 1px solid rgb(0, 132, 255);">
                                 <img src="{{ asset('storage/' . $customer->photo) }}" alt="" style="width: 100%;"
                                     onerror="this.onerror=null; this.src='{{ asset('assets/images/user.png') }}';">
                             </div>
-                            <div class="contBtns py-3 ml-2">
+                            <div class="contBtns py-3 ml-2 ">
                                 <button href="#" data-bs-toggle="modal"
                                     data-bs-target="#messageModal-{{ $customer->id }}"
                                     class=" text-center btn btn-outline-primary" type="button"><i
@@ -428,7 +428,7 @@
                             data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ route('send-message',$customer->id) }}">
+                        <form method="POST" action="{{ route('send-message',$customer) }}">
                             @csrf
                             <div class="text-start mb-1">
                                 <label for="body" class="col-form-label text-sm-start">{{ __('Body') }}</label>
