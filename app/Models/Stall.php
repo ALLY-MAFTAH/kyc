@@ -18,6 +18,7 @@ class Stall extends Model
         'customer_id',
         'market_id',
         'size',
+        'business',
         'type',
     ];
 

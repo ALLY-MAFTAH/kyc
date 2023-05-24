@@ -17,6 +17,7 @@ class Frame extends Model
         'price',
         'market_id',
         'customer_id',
+        'business',
         'size',
     ];
 

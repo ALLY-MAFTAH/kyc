@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->string('mobile');
+            $table->string('photo');
             $table->string('address')->nullable();
             $table->timestamps();
             $table->softDeletes();

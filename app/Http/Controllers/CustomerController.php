@@ -6,7 +6,9 @@ use App\Models\Stall;
 use App\Models\Customer;
 use App\Models\Frame;
 use App\Models\Market;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class CustomerController extends Controller
@@ -55,14 +57,29 @@ class CustomerController extends Controller
      */
     public function postCustomer(Request $request)
     {
+        $photoPath = null;
         try {
             $attributes = $this->validate($request, [
                 'nida' => ['required', 'unique:customers,nida,NULL,id,deleted_at,NULL'],
                 "first_name" => 'required',
                 "last_name" => 'required',
                 "mobile" => 'required',
-            ]);
+                'photo' => 'required',
 
+            ]);
+            $now = Carbon::now()->format('Ymd-His');
+
+            if ($request->hasFile('photo')) {
+
+                $photoPath = $request->file('photo')->storeAs(
+                    '/images',
+                    'profile-img-' . $now . '.' . $request->file('photo')->getClientOriginalExtension(),
+                    'public'
+                );
+            } else
+
+                return back()->with('error', 'Please make sure you upload customer profile picture.')->withInput()->with('addCustomerCollapse', true);
+            $attributes['photo'] = $photoPath;
             $attributes['address'] = $request->address ?? "";
             $attributes['middle_name'] = $request->middle_name ?? "";
 
@@ -94,8 +111,25 @@ class CustomerController extends Controller
                 "mobile" => 'required',
             ]);
 
+            $customerPhotoToDelete = $customer->photo;
+
+            $now = Carbon::now()->format('Ymd-His');
+
+            if ($request->hasFile('photo')) {
+                $photoPath = $request->file('photo')->storeAs(
+                    '/images',
+                    'profile-img-' . $now . '.' . $request->file('photo')->getClientOriginalExtension(),
+                    'public'
+                );
+                // Storage::disk('public')->delete($customerPhotoToDelete);
+            } else {
+                $photoPath = $customer->photo;
+            }
+            Storage::disk('public')->move($customer->photo, $photoPath);
+
             $attributes['middle_name'] = $request->middle_name ?? $customer->middle_name;
             $attributes['address'] = $request->address ?? $customer->address;
+            $attributes['photo'] = $photoPath ?? $customer->photo;
 
             $customer->update($attributes);
 
@@ -145,6 +179,7 @@ class CustomerController extends Controller
         try {
             $frame = Frame::find($request->frame_id);
             $attributes['customer_id'] = $customer->id;
+            $attributes['business'] = $request->business ?? "";
             $frame->update($attributes);
             $customer->frames()->save($frame);
 
@@ -173,7 +208,7 @@ class CustomerController extends Controller
                 }
             }
 
-            return back()->with('success', 'Frames successfully assigned to customer');
+            return back()->with('success', 'Frame successfully assigned to customer');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
         }

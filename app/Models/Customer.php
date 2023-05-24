@@ -17,6 +17,7 @@ class Customer extends Model
         'last_name',
         'nida',
         'mobile',
+        'photo',
         'address',
     ];
 

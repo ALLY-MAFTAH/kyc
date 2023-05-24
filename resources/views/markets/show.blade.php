@@ -164,6 +164,7 @@
                                 <th>Location</th>
                                 <th>Price</th>
                                 <th>Current Customer</th>
+                                <th>Business</th>
                                 <th>Size</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -187,6 +188,7 @@
                                             <label class="p-1 m-0 text-white bg-danger">Empty</label>
                                         @endif
                                     </td>
+                                    <td> {{ $frame->business }} </td>
                                     <td> {{ $frame->size }} </td>
                                     <td class="text-center">
                                         <a href="#" class="btn  btn-outline-info" data-toggle="modal"
@@ -259,6 +261,7 @@
                                 <th>Type</th>
                                 <th>Price</th>
                                 <th>Current Customer</th>
+                                <th>Business</th>
                                 <th>Size</th>
                                 <th class="text-center">Actions</th>
                             </tr>
@@ -283,6 +286,7 @@
                                             <label class="p-1 m-0 text-white bg-danger">Empty</label>
                                         @endif
                                     </td>
+                                    <td> {{ $stall->business }} </td>
                                     <td> {{ $stall->size }} </td>
                                     <td class="text-center">
                                         <a href="#" class="btn btn-outline-info" data-toggle="modal"
@@ -358,6 +362,7 @@
                         <thead class=" table-head">
                             <tr>
                                 <th class="text-center" style="max-width: 20px">#</th>
+                                <th>Profile</th>
                                 <th>NIDA</th>
                                 <th>Full Name</th>
                                 <th>Mobile Number</th>
@@ -369,6 +374,13 @@
                             @foreach ($market->customers()->get() as $index => $customer)
                                 <tr>
                                     <td class="text-center" style="max-width: 20px">{{ ++$index }}</td>
+                                    <td>
+                                        <div class="profile-image">
+                                            <img height="40px" width="40px"
+                                                src="{{ asset('storage/' . $customer->photo) }}" alt="Profile image"
+                                                onerror="this.onerror=null; this.src='{{ asset('assets/images/user.png') }}';">
+                                        </div>
+                                    </td>
                                     <td> {{ $customer->nida }}</td>
                                     <td> {{ $customer->first_name }} {{ $customer->middle_name }}
                                         {{ $customer->last_name }} </td>
@@ -500,4 +512,37 @@
             @endif
         });
     </script>
+      <script>
+        function captureImage() {
+          // Access the camera and capture video stream
+          navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+              var video = document.createElement('video');
+              var canvas = document.getElementById('canvas');
+              var context = canvas.getContext('2d');
+      
+              // Play the video stream in the video element
+              video.srcObject = stream;
+              video.play();
+      
+              // When the video is playing, capture a frame from the video stream
+              video.addEventListener('play', function () {
+                var width = video.videoWidth;
+                var height = video.videoHeight;
+                canvas.width = width;
+                canvas.height = height;
+      
+                // Draw the video frame onto the canvas
+                function drawFrame() {
+                  context.drawImage(video, 0, 0, width, height);
+                  requestAnimationFrame(drawFrame);
+                }
+                drawFrame();
+              });
+            })
+            .catch(function (error) {
+              console.log('Error accessing the camera: ', error);
+            });
+        }
+      </script>
 @endsection

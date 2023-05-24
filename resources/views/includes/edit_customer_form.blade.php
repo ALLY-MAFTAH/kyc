@@ -1,4 +1,4 @@
-<form action="{{ route('customers.edit', $customer) }}" method="POST">
+<form action="{{ route('customers.edit', $customer) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="form-group">
@@ -28,7 +28,18 @@
             <span class="error" style="color:red">{{ $message }}</span>
         @enderror
     </div>
-
+    <div class="form-group">
+        <label for="photo">Profile Picture</label>
+        <input type="file" name="photo" class="file-upload-default" />
+        <div class="input-group col-xs-12">
+            <input type="text" class="form-control file-upload-info" disabled placeholder="Capture Image" />
+            <span class="input-group-append">
+                <button class="file-upload-browse bstn btn-primary" type="button"
+                    onclick="captureImage()">Capture</button>
+            </span>
+        </div>
+    </div>
+    <canvas id="canvas" style="display: none;"></canvas>
     <div class="form-group">
         <label for="nida">NIDA</label>
         <input type="number" class="form-control" id="nida"autocomplete="nida"

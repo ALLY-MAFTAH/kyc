@@ -26,7 +26,20 @@
             <div class="col-md-6 pb-2">
                 <div class="card shadow px-2">
                     <div class="row">
-                        <div class="col-md-12  py-2">
+                        <div class="col-3 leftProfSide">
+                            <div class="ml-2 mt-3"
+                                style="width: 130px; height: 130px; overflow: hidden; border-radius: 50%; border: 1px solid rgb(0, 132, 255);">
+                                <img src="{{ asset('storage/' . $customer->photo) }}" alt="" style="width: 100%;"
+                                    onerror="this.onerror=null; this.src='{{ asset('assets/images/user.png') }}';">
+                            </div>
+                            <div class="contBtns py-3 ml-2">
+                                <button href="#" data-bs-toggle="modal"
+                                    data-bs-target="#messageModal-{{ $customer->id }}"
+                                    class=" text-center btn btn-outline-primary" type="button"><i
+                                        class="mdi mdi-message-processing" style=""></i>MESSAGE</button>
+                            </div>
+                        </div>
+                        <div class="col-md-9  py-2">
                             <div class="card p-2">
                                 <div class="row">
                                     <div class="col-5">
@@ -122,117 +135,127 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="text-center">
-                                    Assigned Frames
+                        <div id="assignFrameCollapse" style="width: 100%;border-width:0px"
+                            class="accordion-collapse collapse" aria-labelledby="assignFrameCollapse"
+                            data-parent="#assignFrameCollapse">
+                            <div class="accordion-body">
+                                <div class="text-center" style="color:gray">Assign Frame</div>
+                                <div class="card p-2 mt-2" style="background: var(--form-bg-color)">
+                                    <form action="{{ route('customers.attach_frame', $customer) }}" method="post">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="">Frame</label>
+
+                                                <select class="js-example-basic-single form-control" required
+                                                    name="frame_id" style="width: 100%;">
+                                                    <option value=""> -- </option>
+                                                    @foreach ($emptyFrames as $frame)
+                                                        <option value={{ $frame->id }}>Code:
+                                                            {{ $frame->code }} &nbsp;&nbsp;&nbsp;
+                                                            ({{ $frame->location }})
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('frame_id')
+                                                    <span class="error" style="color:red">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="">Month</label>
+                                                <select class="js-example-basic-multiple form-control"
+                                                    aria-placeholder="Month" multiple="multiple" required name="months[]"
+                                                    style="width: 100%;">
+                                                    <option value="">Month</option>
+                                                    <option value="January">January &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="February">February
+                                                        &nbsp;&nbsp;{{ date('Y') }}</option>
+                                                    <option value="March">March &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="April">April &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="May">May &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="June">June &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="July">July &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="August">August &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="September">September
+                                                        &nbsp;&nbsp;{{ date('Y') }}</option>
+                                                    <option value="October">October &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="November">November
+                                                        &nbsp;&nbsp;{{ date('Y') }}</option>
+                                                    <option value="December">December
+                                                        &nbsp;&nbsp;{{ date('Y') }}</option>
+                                                </select>
+                                                @error('months[]')
+                                                    <span class="error" style="color:red">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="">Receipt Number</label>
+                                                <input type="text" name="receipt_number" class="form-control"
+                                                    placeholder="Receipt Number" required>
+                                                @error('receipt_number')
+                                                    <span class="error" style="color:red">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="">Business</label>
+                                                <input type="text" name="business" class="form-control"
+                                                    placeholder="Business (Optional)">
+                                                @error('business')
+                                                    <span class="error" style="color:red">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2 mt-2">
+                                            <div class="text-center">
+                                                <button type="submit" class="btn  btn-outline-primary">
+                                                    {{ __('Assign') }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                                @forelse ($customerFrames as $frame)
+                                <br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @forelse ($customerFrames as $frame)
+                                <div class="col-6">
                                     <div class="card shadow mt-2">
                                         <div class="card-header d-flex justify-content-between align-items-center"
                                             style="padding:2px;padding-left:5px;color:rgb(3, 3, 113)">
                                             <span style="font-size: 15px">Code: <b>{{ $frame->code }}</b></span>
                                             <a href="{{ route('customers.detach_frame', ['customer' => $customer, 'frameId' => $frame->id]) }}"
-                                                onclick="return confirm('Are you sure you want to remove this frame?');"
+                                                onclick="return confirm('Are you sure you want to unassign this frame from this customer?');"
                                                 class="">
                                                 <i class="mdi mdi-delete-forever" style="color:red;font-size:30px"></i>
                                             </a>
                                         </div>
                                         <div class="card-body" style="padding: 6px; font-size:13px">
-                                            <div>Location: <span style="color:rgb(4, 4, 141)">{{ $frame->location }}</span>
+                                            <div>Location: <span
+                                                    style="color:rgb(4, 4, 141)">{{ $frame->location }}</span>
                                             </div>
                                             <div>Price: <span
                                                     style="color:rgb(4, 4, 141)">{{ number_format($frame->price, 0, '.', ',') }}
                                                     Tsh</span></div>
+                                            <div>Business: <span
+                                                    style="color:rgb(4, 4, 141)">{{ $frame->business }}</span></div>
                                             <div>Size: <span style="color:rgb(4, 4, 141)">{{ $frame->size }}</span></div>
                                         </div>
                                     </div>
-                                @empty
-                                    <div class="text-gray text-center pt-2" style="font-size: 13px"> 0 Frames</div>
-                                @endforelse
-
-                            </div>
-                            <div class="col-6">
-                                <div id="assignFrameCollapse" style="width: 100%;border-width:0px"
-                                    class="accordion-collapse collapse" aria-labelledby="assignFrameCollapse"
-                                    data-parent="#assignFrameCollapse">
-                                    <div class="accordion-body">
-                                        <div class="text-center" style="color:gray">Frames to Assign</div>
-                                        <div class="card p-2 mt-2" style="background: var(--form-bg-color)">
-                                            <form action="{{ route('customers.attach_frame', $customer) }}" method="post">
-                                                @csrf
-                                                <div class="form-group">
-                                                    <select class="js-example-basic-single form-control" required
-                                                        name="frame_id" style="width: 100%;">
-                                                        <option value=""> -- </option>
-                                                        @foreach ($emptyFrames as $frame)
-                                                            <option value={{ $frame->id }}>Code:
-                                                                {{ $frame->code }} &nbsp;&nbsp;&nbsp;
-                                                                ({{ $frame->location }})
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('frame_id')
-                                                        <span class="error" style="color:red">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Receipt Number</label>
-                                                    <input type="text" name="receipt_number" class="form-control"
-                                                        placeholder="Receipt Number" required>
-                                                    @error('receipt_number')
-                                                        <span class="error" style="color:red">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Month</label>
-                                                    <select class="js-example-basic-multiple form-control"
-                                                        aria-placeholder="Month" multiple="multiple" required
-                                                        name="months[]" style="width: 100%;">
-                                                        <option value="">Month</option>
-                                                        <option value="January">January &nbsp;&nbsp;{{ date('Y') }}
-                                                        </option>
-                                                        <option value="February">February
-                                                            &nbsp;&nbsp;{{ date('Y') }}</option>
-
-                                                        <option value="March">March &nbsp;&nbsp;{{ date('Y') }}
-                                                        </option>
-                                                        <option value="April">April &nbsp;&nbsp;{{ date('Y') }}
-                                                        </option>
-                                                        <option value="May">May &nbsp;&nbsp;{{ date('Y') }}
-                                                        </option>
-                                                        <option value="June">June &nbsp;&nbsp;{{ date('Y') }}
-                                                        </option>
-                                                        <option value="July">July &nbsp;&nbsp;{{ date('Y') }}
-                                                        </option>
-                                                        <option value="August">August &nbsp;&nbsp;{{ date('Y') }}
-                                                        </option>
-                                                        <option value="September">September
-                                                            &nbsp;&nbsp;{{ date('Y') }}</option>
-                                                        <option value="October">October &nbsp;&nbsp;{{ date('Y') }}
-                                                        </option>
-                                                        <option value="November">November
-                                                            &nbsp;&nbsp;{{ date('Y') }}</option>
-                                                        <option value="December">December
-                                                            &nbsp;&nbsp;{{ date('Y') }}</option>
-                                                    </select>
-                                                    @error('months[]')
-                                                        <span class="error" style="color:red">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="row mb-2 mt-2">
-                                                    <div class="text-center">
-                                                        <button type="submit" class="btn  btn-outline-primary">
-                                                            {{ __('Assign') }}
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <br>
-                                    </div>
                                 </div>
-                            </div>
+                            @empty
+                                <div class="text-gray text-center pt-2" style="font-size: 13px"> 0 Frames</div>
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -251,18 +274,107 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="text-center">
-                                    Assigned Stalls
+                        <div id="assignStallCollapse" style="width: 100%;border-width:0px"
+                            class="accordion-collapse collapse" aria-labelledby="assignStallCollapse"
+                            data-parent="#assignStallCollapse">
+                            <div class="accordion-body">
+                                <div class="text-center" style="color:gray">Assign Stall</div>
+                                <div class="card p-2 mt-2" style="background: var(--form-bg-color)">
+                                    <form action="{{ route('customers.attach_stall', $customer) }}" method="post">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="">Stall</label>
+
+                                                <select class="js-example-basic-single form-control" required
+                                                    name="stall_id" style="width: 100%;">
+                                                    <option value=""> -- </option>
+                                                    @foreach ($emptyStalls as $stall)
+                                                        <option value={{ $stall->id }}>Code:
+                                                            {{ $stall->code }} &nbsp;&nbsp;&nbsp;
+                                                            ({{ $stall->location }})
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('stall_id')
+                                                    <span class="error" style="color:red">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="">Month</label>
+                                                <select class="js-example-basic-multiple form-control"
+                                                    aria-placeholder="Month" multiple="multiple" required name="months[]"
+                                                    style="width: 100%;">
+                                                    <option value="">Month</option>
+                                                    <option value="January">January &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="February">February
+                                                        &nbsp;&nbsp;{{ date('Y') }}</option>
+                                                    <option value="March">March &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="April">April &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="May">May &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="June">June &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="July">July &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="August">August &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="September">September
+                                                        &nbsp;&nbsp;{{ date('Y') }}</option>
+                                                    <option value="October">October &nbsp;&nbsp;{{ date('Y') }}
+                                                    </option>
+                                                    <option value="November">November
+                                                        &nbsp;&nbsp;{{ date('Y') }}</option>
+                                                    <option value="December">December
+                                                        &nbsp;&nbsp;{{ date('Y') }}</option>
+                                                </select>
+                                                @error('months[]')
+                                                    <span class="error" style="color:red">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="">Receipt Number</label>
+                                                <input type="text" name="receipt_number" class="form-control"
+                                                    placeholder="Receipt Number" required>
+                                                @error('receipt_number')
+                                                    <span class="error" style="color:red">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label for="">Business</label>
+                                                <input type="text" name="business" class="form-control"
+                                                    placeholder="Business (Optional)">
+                                                @error('business')
+                                                    <span class="error" style="color:red">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2 mt-2">
+                                            <div class="text-center">
+                                                <button type="submit" class="btn  btn-outline-primary">
+                                                    {{ __('Assign') }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                                @forelse ($customerStalls as $stall)
+                                <br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @forelse ($customerStalls as $stall)
+                                <div class="col-6">
                                     <div class="card shadow mt-2">
                                         <div class="card-header d-flex justify-content-between align-items-center"
-                                            style="padding:2px;color:rgb(3, 3, 113)">
-                                            <span style="font-size: 15px">Stall No: <b>{{ $stall->code }}</b></span>
+                                            style="padding:2px;padding-left:5px;color:rgb(3, 3, 113)">
+                                            <span style="font-size: 15px">Code: <b>{{ $stall->code }}</b></span>
                                             <a href="{{ route('customers.detach_stall', ['customer' => $customer, 'stallId' => $stall->id]) }}"
-                                                onclick="return confirm('Are you sure you want to remove this stall?');"
+                                                onclick="return confirm('Are you sure you want to unassign this stall from this customer?');"
                                                 class="">
                                                 <i class="mdi mdi-delete-forever" style="color:red;font-size:30px"></i>
                                             </a>
@@ -275,53 +387,15 @@
                                                     style="color:rgb(4, 4, 141)">{{ number_format($stall->price, 0, '.', ',') }}
                                                     Tsh</span></div>
                                             <div>Type: <span style="color:rgb(4, 4, 141)">{{ $stall->type }}</span></div>
+                                            <div>Business: <span
+                                                    style="color:rgb(4, 4, 141)">{{ $stall->business }}</span></div>
                                             <div>Size: <span style="color:rgb(4, 4, 141)">{{ $stall->size }}</span></div>
                                         </div>
                                     </div>
-                                @empty
-                                    <div class="text-gray text-center pt-2" style="font-size: 13px"> 0 Stalls</div>
-                                @endforelse
-
-                            </div>
-                            <div class="col-6">
-                                <div id="assignStallCollapse" style="width: 100%;border-width:0px"
-                                    class="accordion-collapse collapse" aria-labelledby="assignStallCollapse"
-                                    data-parent="#assignStallCollapse">
-                                    <div class="accordion-body">
-                                        <div class="text-center" style="color:gray">Stalls to Assign</div>
-                                        <div class="card p-2 mt-2" style="background: var(--form-bg-color)">
-                                            <form action="{{ route('customers.attach_stall', $customer) }}"
-                                                method="post">
-                                                @csrf
-                                                <div class="form-group">
-                                                    <select class="js-example-basic-multiple form-control"
-                                                        multiple="multiple" required name="stalls[]"
-                                                        style="width: 100%;">
-                                                        @foreach ($emptyStalls as $stall)
-                                                            <option value={{ $stall->id }}>Stall No:
-                                                                {{ $stall->code }} &nbsp;&nbsp;&nbsp;
-                                                                ({{ $stall->location }})
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('stalls[]')
-                                                        <span class="error" style="color:red">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="row mb-2 mt-2">
-                                                    <div class="text-center">
-                                                        <button type="submit" class="btn  btn-outline-primary">
-                                                            {{ __('Assign') }}
-                                                        </button>
-                                                    </div>
-                                                </div>
-
-                                            </form>
-                                        </div>
-                                        <br>
-                                    </div>
                                 </div>
-                            </div>
+                            @empty
+                                <div class="text-gray text-center pt-2" style="font-size: 13px"> 0 Stalls</div>
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -344,8 +418,43 @@
                 </div>
             </div>
         </div>
-
+        <div class="modal fade" id="messageModal-{{ $customer->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Message
+                        </h5>
+                        <button type="button" style="background-color:red" class=" btn-danger btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ route('send-message') }}">
+                            @csrf
+                            <input hidden type="text" name="customer_id" value="{{ $customer->id }}">
+                            <div class="text-start mb-1">
+                                <label for="body" class="col-form-label text-sm-start">{{ __('Body') }}</label>
+                                <textarea rows="3" id="body" type="text" placeholder="Body"
+                                    class="form-control @error('body') is-invalid @enderror" name="body" autocomplete="body" required autofocus></textarea>
+                                @error('body')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="row mb-1 mt-2">
+                                <div class="text-center">
+                                    <button type="submit" class="btn  btn-outline-primary">
+                                        {{ __('Send Message') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    
 @endsection
 @section('scripts')
     <script>

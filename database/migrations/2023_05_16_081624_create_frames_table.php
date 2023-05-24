@@ -22,6 +22,7 @@ return new class extends Migration
             $table->bigInteger('customer_id')->nullable();
             $table->string('location');
             $table->string('size')->nullable();
+            $table->string('business')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

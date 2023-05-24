@@ -33,3 +33,22 @@
 .form-control-sm {
     height: 2rem !important;
 }
+
+.table td img {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.profile-image {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 40px !important;
+    height: 40px !important;
+}
+.leftProfSide {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
