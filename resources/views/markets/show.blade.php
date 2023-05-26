@@ -50,8 +50,8 @@
                                             <div>{{ $market->sub_ward }}</div>
                                             <div>{{ $market->manager_name }}</div>
                                             <div>{{ $market->manager_mobile }}</div>
-                                            <div>{{ $market->frame_price }}</div>
-                                            <div>{{ $market->stall_price }}</div>
+                                            <div>{{ number_format($market->frame_price, 0, '.', ',') }} TZS</div>
+                                            <div>{{ number_format($market->stall_price, 0, '.', ',') }} TZS</div>
                                             @if ($market->size)
                                                 <div>{{ $market->size }} </div>
                                             @else

@@ -180,8 +180,8 @@
                             <td>{{ $market->sub_ward }}</td>
                             <td>{{ $market->manager_name }}</td>
                             <td>{{ $market->manager_mobile }}</td>
-                            <td>{{ number_format($market->frame_price, 0, ',', '.') }}</td>
-                            <td>{{ $market->stall_price }}</td>
+                            <td>{{number_format($market->frame_price, 0, '.', ',') }}</td>
+                            <td>{{ number_format($market->stall_price, 0, '.', ',')}}</td>
                             <td>{{ $market->size }}</td>
                             <td class="text-center">
                                 <a href="{{ route('markets.show', $market) }}" class="btn  btn-outline-info collapsed"
