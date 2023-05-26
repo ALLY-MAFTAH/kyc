@@ -40,28 +40,35 @@ class FrameController extends Controller
      */
     public function postFrame(Request $request)
     {
+        $newCode = $request->newCode;
         try {
-            $attributes = $this->validate($request, [
-                'code' => ['required', 'unique:frames,code,NULL,id,deleted_at,NULL,market_id,' . $request->input('market_id')],
-                'location' => 'required',
-                'market_id' => 'required',
-            ]);
+            for ($i = 0; $i < $request->count; $i++) {
 
-            $attributes['size'] = $request->size ?? "";
-            $attributes['price'] = 40000;
+                $newRequest = $request->merge(['code' => $newCode]);
 
-            $frame = Frame::create($attributes);
-            $market = Market::find($request->market_id);
+                $attributes = $this->validate($newRequest, [
+                    'code' => ['required', 'unique:frames,code,NULL,id,deleted_at,NULL,market_id,' . $request->input('market_id')],
+                    'location' => 'required',
+                    'market_id' => 'required',
+                ]);
 
-            $market->frames()->save($frame);
+                $attributes['size'] = $request->size ?? "";
+                $attributes['price'] = 40000;
 
-            return back()->with('success', "Frame added successfully");
+                $frame = Frame::create($attributes);
+                $market = Market::find($request->market_id);
+
+                $market->frames()->save($frame);
+                $newCode++;
+            }
+            return back()->with('success', "Frames added successfully");
         } catch (ValidationException $exception) {
             return back()->withErrors($exception->errors())->withInput()->with('addFrameCollapse', true);
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
         }
     }
+
 
     /**
      * Update the specified resource in storage.

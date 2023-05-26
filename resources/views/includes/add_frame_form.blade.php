@@ -2,16 +2,17 @@
     @csrf
     <div class="row">
         <input type="number" name="market_id" value="{{ $market->id }}" hidden>
-        <div class="col-md-4 form-group">
+
+        <div class="col-md-3 form-group">
             <label for="code">Code</label>
-            <input type="text" class="form-control" id="code" placeholder="Code"required autocomplete="code"
-                value="{{ old('code') }}" name="code" />
+            <input type="text" class="form-control" value="{{$newFrameCode}}" id="code" placeholder="Code"required autocomplete="code"
+                value="{{ old('code') }}" name="newCode" />
             @error('code')
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
         </div>
 
-        <div class="col-md-4 form-group">
+        <div class="col-md-3 form-group">
             <label>Location</label>
             <select class="js-example-basic-single form-control" required name="location" style="width: 100%;">
                 <option value="">-- Select Location --</option>
@@ -23,12 +24,17 @@
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
         </div>
-
-
-        <div class="col-md-4 form-group">
+        <div class="col-md-3 form-group">
             <label for="size">Frame Size</label>
             <input type="text" class="form-control" id="size" autocomplete="size" placeholder="Size (Optional)"
                 value="{{ old('size') }}" name="size" /> @error('size')
+                <span class="error" style="color:red">{{ $message }}</span>
+            @enderror
+        </div>
+        <div class="col-md-3 form-group">
+            <label for="count">Number of Frames</label>
+            <input type="number" class="form-control" value="1" id="count" autocomplete="count" min="1"
+                value="{{ old('count') }}" name="count" /> @error('count')
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
         </div>

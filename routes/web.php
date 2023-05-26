@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
 
     // CUSTOMERS ROUTES
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+    Route::get('/show-customer-admin-view/{customer}', [CustomerController::class, 'showCustomerAdminView'])->name('customers.admin_show');
     Route::get('/show-customer/{customer}/{marketId}', [CustomerController::class, 'showCustomer'])->name('customers.show');
     Route::post('/add-customer', [CustomerController::class, 'postCustomer'])->name('customers.add');
     Route::put('/edit-customer/{customer}', [CustomerController::class, 'putCustomer'])->name('customers.edit');

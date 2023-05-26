@@ -105,7 +105,7 @@
                         <div class="col text-center"style="">
                             <i class="mdi mdi-cash-usd" style="font-size: 40px;color:rgb(32, 12, 251)"></i>
                             <div class="py-3">
-                                <b>{{ number_format($customer->payments->sum('amount'), 0, '.', ',') }}</b> TZS
+                                <b>{{ number_format($payments->sum('amount'), 0, '.', ',') }}</b> TZS
 
                             </div>
                             <div class="">
@@ -144,15 +144,14 @@
                                     <form action="{{ route('customers.attach_frame', $customer) }}" method="post">
                                         @csrf
                                         <div class="row">
-                                            <div class="col-md-6 form-group">
+                                            <div class="col-md-7 form-group">
                                                 <label for="">Frame</label>
-
                                                 <select class="js-example-basic-single form-control" required
                                                     name="frame_id" style="width: 100%;">
                                                     <option value=""> -- </option>
                                                     @foreach ($emptyFrames as $frame)
-                                                        <option value={{ $frame->id }}>Code:
-                                                            {{ $frame->code }} &nbsp;&nbsp;&nbsp;
+                                                        <option value={{ $frame->id }}>
+                                                            {{ $frame->code }} &nbsp;&nbsp;
                                                             ({{ $frame->location }})
                                                         </option>
                                                     @endforeach
@@ -161,7 +160,7 @@
                                                     <span class="error" style="color:red">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                            <div class="col-md-6 form-group">
+                                            <div class="col-md-5 form-group">
                                                 <label for="">Month</label>
                                                 <select class="js-example-basic-multiple form-control"
                                                     aria-placeholder="Month" multiple="multiple" required name="months[]"
@@ -198,19 +197,20 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6 form-group">
-                                                <label for="">Receipt Number</label>
-                                                <input type="text" name="receipt_number" class="form-control"
-                                                    placeholder="Receipt Number" required>
-                                                @error('receipt_number')
-                                                    <span class="error" style="color:red">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="col-md-6 form-group">
+
+                                            <div class="col-md-7 form-group">
                                                 <label for="">Business</label>
                                                 <input type="text" name="business" class="form-control"
                                                     placeholder="Business (Optional)">
                                                 @error('business')
+                                                    <span class="error" style="color:red">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-5 form-group">
+                                                <label for="">Receipt Number</label>
+                                                <input type="text" name="receipt_number" class="form-control"
+                                                    placeholder="Receipt Number" required>
+                                                @error('receipt_number')
                                                     <span class="error" style="color:red">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -283,15 +283,14 @@
                                     <form action="{{ route('customers.attach_stall', $customer) }}" method="post">
                                         @csrf
                                         <div class="row">
-                                            <div class="col-md-6 form-group">
+                                            <div class="col-md-7 form-group">
                                                 <label for="">Stall</label>
-
                                                 <select class="js-example-basic-single form-control" required
                                                     name="stall_id" style="width: 100%;">
                                                     <option value=""> -- </option>
                                                     @foreach ($emptyStalls as $stall)
-                                                        <option value={{ $stall->id }}>Code:
-                                                            {{ $stall->code }} &nbsp;&nbsp;&nbsp;
+                                                        <option value={{ $stall->id }}>
+                                                            {{ $stall->code }} &nbsp;&nbsp;
                                                             ({{ $stall->location }})
                                                         </option>
                                                     @endforeach
@@ -300,7 +299,7 @@
                                                     <span class="error" style="color:red">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                            <div class="col-md-6 form-group">
+                                            <div class="col-md-5 form-group">
                                                 <label for="">Month</label>
                                                 <select class="js-example-basic-multiple form-control"
                                                     aria-placeholder="Month" multiple="multiple" required name="months[]"
@@ -337,19 +336,19 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6 form-group">
-                                                <label for="">Receipt Number</label>
-                                                <input type="text" name="receipt_number" class="form-control"
-                                                    placeholder="Receipt Number" required>
-                                                @error('receipt_number')
-                                                    <span class="error" style="color:red">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="col-md-6 form-group">
+                                            <div class="col-md-7 form-group">
                                                 <label for="">Business</label>
                                                 <input type="text" name="business" class="form-control"
                                                     placeholder="Business (Optional)">
                                                 @error('business')
+                                                    <span class="error" style="color:red">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-5 form-group">
+                                                <label for="">Receipt Number</label>
+                                                <input type="text" name="receipt_number" class="form-control"
+                                                    placeholder="Receipt Number" required>
+                                                @error('receipt_number')
                                                     <span class="error" style="color:red">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -428,7 +427,7 @@
                             data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ route('send-message',$customer) }}">
+                        <form method="POST" action="{{ route('send-message', $customer) }}">
                             @csrf
                             <div class="text-start mb-1">
                                 <label for="body" class="col-form-label text-sm-start">{{ __('Body') }}</label>

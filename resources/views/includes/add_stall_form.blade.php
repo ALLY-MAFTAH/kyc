@@ -2,10 +2,10 @@
     @csrf
     <div class="row">
         <input type="number" name="market_id" value="{{ $market->id }}" hidden>
-        <div class="col-md-3 form-group">
+        <div class="col-md-2 form-group">
             <label for="code">Code</label>
-            <input type="text" class="form-control" id="code" value="{{ old('code') }}"
-                placeholder="Code"required autocomplete="code" name="code" />
+            <input type="text" class="form-control" value="{{$newStallCode}}" id="code" placeholder="Code"required autocomplete="code"
+                value="{{ old('code') }}" name="newCode" />
             @error('code')
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
@@ -33,14 +33,20 @@
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-2 form-group">
             <label for="size">Stall Size</label>
             <input type="text" class="form-control" id="size" autocomplete="size" value="{{ old('size') }}"
                 placeholder="Size (Optional)" name="size" /> @error('size')
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
         </div>
-
+        <div class="col-md-2 form-group">
+            <label for="count">Number of Stalls</label>
+            <input type="number" class="form-control" value="1" id="count" autocomplete="count" min="1"
+                value="{{ old('count') }}" name="count" /> @error('count')
+                <span class="error" style="color:red">{{ $message }}</span>
+            @enderror
+        </div>
     </div>
     <div class="row mb-2 mt-2">
         <div class="text-center">

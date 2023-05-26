@@ -36,25 +36,33 @@
                 <thead class="table-header">
                     <tr>
                         <th>#</th>
+                        <th>Profile</th>
                         <th>NIDA</th>
                         <th>Full Name</th>
                         <th>Mobile Number</th>
                         <th>Physical Address</th>
-                        {{-- <th class="text-center">Actions</th> --}}
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($customers as $index => $customer)
                         <tr>
                             <td>{{ ++$index }}</td>
+                            <td>
+                                <div class="profile-image">
+                                    <img height="40px" width="40px"
+                                        src="{{ asset('storage/' . $customer->photo) }}" alt="Profile image"
+                                        onerror="this.onerror=null; this.src='{{ asset('assets/images/user.png') }}';">
+                                </div>
+                            </td>
                             <td>{{ $customer->nida }}</td>
                             <td>{{ $customer->first_name }} {{ $customer->middle_name }} {{ $customer->last_name }}</td>
                             <td>{{ $customer->mobile }}</td>
                             <td>{{ $customer->address }}</td>
-                            {{-- <td class="text-center">
-                                <a href="{{ route('customers.show', $customer) }}" class="btn  btn-outline-info collapsed"
+                            <td class="text-center">
+                                <a href="{{ route('customers.admin_show', $customer) }}" class="btn  btn-outline-info"
                                     type="button">
-                                    <i class="feather icon-edit"></i> View
+                                     View
                                 </a>
                                 <a href="#" class="btn  btn-outline-danger"
                                     onclick="if(confirm('Are you sure want to delete {{ $customer->name }}?')) document.getElementById('delete-customer-{{ $customer->id }}').submit()">
@@ -64,7 +72,7 @@
                                     action="{{ route('customers.delete', $customer) }}">
                                     @csrf @method('delete')
                                 </form>
-                            </td> --}}
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

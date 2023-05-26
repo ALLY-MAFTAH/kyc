@@ -131,7 +131,7 @@
                 </div>
             </div>
         </div>
-        <br>
+        <br><hr>
         <div class="card shadow">
             <div class="card-header  text-center" style="font-size: 20px">
                 <div class="row">
@@ -227,7 +227,7 @@
                 </div>
             </div>
         </div>
-        <br>
+        <br><hr><br>
         <div class="card shadow">
             <div class="card-header  text-center" style="font-size: 20px">
                 <div class="row">
@@ -324,7 +324,7 @@
                     </table>
                 </div>
             </div>
-        </div><br>
+        </div><br><hr><br>
         <div class="card shadow">
             <div class="card-header  text-center" style="font-size: 20px">
                 <div class="row">

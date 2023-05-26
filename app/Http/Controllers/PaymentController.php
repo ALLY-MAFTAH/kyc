@@ -14,7 +14,9 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $payments = Payment::all();
+
+        return view('payments.index', compact('payments'));
     }
 
     /**
@@ -52,7 +54,6 @@ class PaymentController extends Controller
     {
         try {
             $attributes = $this->validate($request, [
-                "frame_id" => 'required',
                 "customer_id" => 'required',
                 "date" => 'required',
                 "amount" => 'required',
@@ -61,6 +62,12 @@ class PaymentController extends Controller
                 'year' => 'required',
                 "receipt_number" => 'required',
             ]);
+            if ($request->frame_id) {
+                $attributes['frame_id'] = $request->frame_id;
+            }
+            if ($request->stall_id) {
+                $attributes['stall_id'] = $request->stall_id;
+            }
 
             $payment = Payment::create($attributes);
 

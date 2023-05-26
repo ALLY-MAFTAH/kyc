@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Frame;
 use App\Models\Market;
 use App\Models\Message;
+use App\Models\Payment;
 use App\Services\MessagingService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -42,6 +43,8 @@ class CustomerController extends Controller
         $emptyFrames = Frame::where(['market_id' => $marketId, 'customer_id' => null])->get();
         $emptyStalls = Stall::where(['market_id' => $marketId, 'customer_id' => null])->get();
 
+        $payments = Payment::where(['market_id' => $marketId, 'customer_id' => $customer->id])->get();
+
         return view('customers.show', compact(
             'customer',
             'market',
@@ -49,6 +52,23 @@ class CustomerController extends Controller
             'customerStalls',
             'emptyStalls',
             'emptyFrames',
+            'payments',
+        ));
+    }
+    public function showCustomerAdminView(Customer $customer)
+    {
+
+        // dd($markets);
+
+        $customerMarkets = $customer->markets()->get();
+        $customerFrames = $customer->frames()->get();
+        $customerStalls = $customer->stalls()->get();
+
+        return view('customers.admin_show', compact(
+            'customer',
+            'customerMarkets',
+            'customerFrames',
+            'customerStalls',
         ));
     }
     /**
@@ -187,6 +207,7 @@ class CustomerController extends Controller
 
             foreach ($months as $month) {
                 $paymentRequest = new Request([
+                    "stall_id" => "",
                     "frame_id" => $frame->id,
                     "customer_id" => $customer->id,
                     "date" => now(),
@@ -218,17 +239,41 @@ class CustomerController extends Controller
     // ATTACH STALL
     public function attachStall(Request $request, Customer $customer)
     {
-        $stallIds = $request->stalls;
-
+        $months = $request->months;
         try {
-            foreach ($stallIds as $stallId) {
-                $stall = Stall::find($stallId);
-                $attributes['customer_id'] = $customer->id;
-                $stall->update($attributes);
-                $customer->stalls()->save($stall);
+            $stall = Stall::find($request->stall_id);
+            $attributes['customer_id'] = $customer->id;
+            $attributes['business'] = $request->business ?? "";
+            $stall->update($attributes);
+            $customer->stalls()->save($stall);
+
+            foreach ($months as $month) {
+                $paymentRequest = new Request([
+                    "frame_id" => "",
+                    "stall_id" => $stall->id,
+                    "customer_id" => $customer->id,
+                    "date" => now(),
+                    "amount" => $stall->price,
+                    'market_id' => $stall->market_id,
+                    'month' => $month,
+                    'year' => date('Y'),
+                    "receipt_number" => $request->receipt_number,
+                ]);
+                $paymentController = new PaymentController();
+                $payment = null;
+                $paymentResponse = $paymentController->postPayment($paymentRequest);
+
+                if ($paymentResponse['status'] == true) {
+                    $payment = $paymentResponse['data'];
+                    $customer->payments()->save($payment);
+                    $stall->payments()->save($payment);
+                    $stall->market->payments()->save($payment);
+                } else {
+                    return back()->with('error', $paymentResponse['data'])->withInput();
+                }
             }
 
-            return back()->with('success', 'Stalls successfully assigned to customer');
+            return back()->with('success', 'Stall successfully assigned to customer');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
         }

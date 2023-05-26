@@ -268,17 +268,20 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            var loader = document.getElementById('loader');
+
             // Hide the loader initially
-            document.getElementById('loader').style.display = 'none';
+            loader.style.display = 'none';
 
             // Show the loader on form submit
             document.addEventListener('submit', function() {
-                document.getElementById('loader').style.display = 'block';
+                loader.style.display = 'block';
             });
 
             // Show the loader on link clicks or page navigation
             document.addEventListener('click', function(event) {
                 var target = event.target;
+
                 var isModalButton =
                     target.closest('[data-bs-toggle="modal"]') ||
                     target.closest('[data-toggle="modal"]') ||
@@ -286,15 +289,40 @@
                     target.closest('[data-toggle="collapse"]') ||
                     target.closest('.modal');
 
+                var isDataTableNavButton = target.closest('.paginate_button') ||
+                    target.closest('.previous') ||
+                    target.closest('.next');
+
                 if (
                     (target.tagName === 'A' || target.getAttribute('href')) &&
-                    !isModalButton
+                    !isModalButton &&
+                    !isDataTableNavButton
                 ) {
-                    document.getElementById('loader').style.display = 'block';
+                    loader.style.display = 'block';
+                }
+            });
+
+            // Exclude Alt+Left Arrow key event from triggering the loader display
+            window.addEventListener('keydown', function(event) {
+                if (event.altKey && event.code === 'ArrowLeft') {
+                    if (loader.style.display === 'block') {
+                        loader.style.display = 'none';
+                    }
+                }
+            });
+
+            // Exclude next button click event from triggering the loader display
+            document.addEventListener('click', function(event) {
+                var target = event.target;
+                var dataTableNextButton = target.closest('.dataTables_paginate .next');
+
+                if (dataTableNextButton) {
+                    loader.style.display = 'none';
                 }
             });
         });
     </script>
+
     @yield('scripts')
 </body>
 

@@ -79,9 +79,9 @@
                         {{-- {{ $section->name }} --}}
                     </option>
                 @endforeach
-                <option value="Base"
-                    {{ in_array('Base', $selectedSections) ? 'selected' : '' }}>
-                    Base</option>
+                <option value="Ground"
+                    {{ in_array('Ground', $selectedSections) ? 'selected' : '' }}>
+                    Ground</option>
                 <option value="Ground Floor"
                     {{ in_array('Ground Floor', $selectedSections) ? 'selected' : '' }}>
                     Ground Floor</option>

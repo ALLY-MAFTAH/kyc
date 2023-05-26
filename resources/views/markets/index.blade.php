@@ -105,7 +105,7 @@
                                     <label>Market Sections</label>
                                     <select class="js-example-basic-multiple form-control" multiple="multiple" required
                                         name="sections[]" style="width: 100%;">
-                                        <option value="Base">Base</option>
+                                        <option value="Ground">Ground</option>
                                         <option value="Ground Floor">Ground Floor</option>
                                         <option value="First Floor">First Floor</option>
                                         <option value="Second Floor">Second Floor</option>

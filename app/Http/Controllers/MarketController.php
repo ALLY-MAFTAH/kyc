@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Frame;
 use App\Models\Market;
 use App\Models\Section;
+use App\Models\Stall;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -32,12 +34,25 @@ class MarketController extends Controller
      */
     public function showMarket(Market $market)
     {
+        $lastFrameRow = Frame::where('market_id', $market->id)
+            ->latest('created_at')
+            ->latest('id')
+            ->first();
+        $lastFrameCode = $lastFrameRow ? $lastFrameRow->code : $market->code . "/FRM/000";
+        $newFrameCode = ++$lastFrameCode;
+
+        $lastStallRow = Stall::where('market_id', $market->id)
+            ->latest('created_at')
+            ->latest('id')
+            ->first();
+        $lastStallCode = $lastStallRow ? $lastStallRow->code : $market->code . "/STL/000";
+        $newStallCode = ++$lastStallCode;
 
         $customers = Customer::whereDoesntHave('markets', function ($query) use ($market) {
             $query->where('market_id', $market->id);
         })->get();
 
-        return view('markets.show', compact('market', 'customers'));
+        return view('markets.show', compact('market', 'customers', 'newFrameCode', 'newStallCode'));
     }
 
     /**

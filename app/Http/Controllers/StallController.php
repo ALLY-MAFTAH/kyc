@@ -40,23 +40,29 @@ class StallController extends Controller
      */
     public function postStall(Request $request)
     {
+        $newCode = $request->newCode;
         try {
-            $attributes = $this->validate($request, [
-                'code' => ['required', 'unique:stalls,code,NULL,id,deleted_at,NULL,market_id,' . $request->input('market_id')],
-                'location' => 'required',
-                'type' => 'required',
-                'market_id' => 'required',
-            ]);
+            for ($i = 0; $i < $request->count; $i++) {
 
-            $attributes['size'] = $request->size ?? "";
-            $attributes['price'] = 15000;
+                $newRequest = $request->merge(['code' => $newCode]);
 
-            $stall = Stall::create($attributes);
-            $market = Market::find($request->market_id);
+                $attributes = $this->validate($newRequest, [
+                    'code' => ['required', 'unique:stalls,code,NULL,id,deleted_at,NULL,market_id,' . $request->input('market_id')],
+                    'type' => 'required',
+                    'location' => 'required',
+                    'market_id' => 'required',
+                ]);
 
-            $market->stalls()->save($stall);
+                $attributes['size'] = $request->size ?? "";
+                $attributes['price'] = 15000;
 
-            return back()->with('success', "Stall added successfully");
+                $stall = Stall::create($attributes);
+                $market = Market::find($request->market_id);
+
+                $market->stalls()->save($stall);
+                $newCode++;
+            }
+            return back()->with('success', "Stalls added successfully");
         } catch (ValidationException $exception) {
             return back()->withErrors($exception->errors())->withInput()->with('addStallCollapse', true);
         } catch (\Throwable $th) {
