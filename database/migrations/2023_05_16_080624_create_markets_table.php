@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('manager_name');
             $table->string('manager_mobile');
             $table->string('size')->nullable();
-            $table->string('frame_price')->nullable();
-            $table->string('stall_price')->nullable();
+            $table->double('frame_price')->nullable();
+            $table->double('stall_price')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
