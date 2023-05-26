@@ -244,6 +244,10 @@
                                             <div>Location: <span
                                                     style="color:rgb(4, 4, 141)">{{ $frame->location }}</span>
                                             </div>
+                                            <div>Entry Date: <span style="color:rgb(4, 4, 141)">
+                                                {{ Illuminate\Support\Carbon::parse($frame->entry_date)->format('D, d M Y') }}
+                                            </span>
+                                        </div>
                                             <div>Price: <span
                                                     style="color:rgb(4, 4, 141)">{{ number_format($frame->price, 0, '.', ',') }}
                                                     Tsh</span></div>
@@ -381,6 +385,10 @@
                                         <div class="card-body" style="padding: 6px; font-size:13px">
                                             <div>Location: <span
                                                     style="color:rgb(4, 4, 141)">{{ $stall->location }}</span>
+                                            </div>
+                                            <div>Entry Date: <span style="color:rgb(4, 4, 141)">
+                                                    {{ Illuminate\Support\Carbon::parse($stall->entry_date)->format('D, d M Y') }}
+                                                </span>
                                             </div>
                                             <div>Price: <span
                                                     style="color:rgb(4, 4, 141)">{{ number_format($stall->price, 0, '.', ',') }}

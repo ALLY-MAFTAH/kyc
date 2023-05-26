@@ -121,91 +121,111 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-header  text-center" style="font-size: 20px">
-                        <div class="row">
-                            <div class="col">
-                                Frames
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="card-body">
-
-                        <div class="row">
-                            @forelse ($customerFrames as $frame)
-                                <div class="col-6">
-                                    <div class="card shadow mt-2">
-                                        <div class="card-header d-flex justify-content-between align-items-center"
-                                            style="padding:2px;padding-left:5px;color:rgb(3, 3, 113)">
-                                            <span style="font-size: 15px">Code: <b>{{ $frame->code }}</b></span>
-
-                                        </div>
-                                        <div class="card-body" style="padding: 6px; font-size:13px">
-                                            <div>Location: <span
-                                                    style="color:rgb(4, 4, 141)">{{ $frame->location }}</span>
-                                            </div>
-                                            <div>Price: <span
-                                                    style="color:rgb(4, 4, 141)">{{ number_format($frame->price, 0, '.', ',') }}
-                                                    Tsh</span></div>
-                                            <div>Business: <span
-                                                    style="color:rgb(4, 4, 141)">{{ $frame->business }}</span></div>
-                                            <div>Size: <span style="color:rgb(4, 4, 141)">{{ $frame->size }}</span></div>
-                                            <div>Market: <span style="color:rgb(4, 4, 141)">{{ $frame->market->name }}</span></div>
-                                        </div>
-                                    </div>
+            @foreach ($customerMarkets as $market)
+                <div class="col-md-6">
+                    <div class="card shadow">
+                        <div class="card-header  text-center" style="font-size: 20px">
+                            <div class="row">
+                                <div class="col">
+                                    {{ $market->name }}
                                 </div>
-                            @empty
-                                <div class="text-gray text-center pt-2" style="font-size: 13px"> 0 Frames</div>
-                            @endforelse
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col text-center" style="font-size: 18px">
+                                            Frames
+                                        </div>
+
+                                    </div>
+                                    @forelse ($market->frames as $frame)
+                                        @if ($frame->customer_id == $customer->id)
+                                            <div class="card shadow mt-2">
+                                                <div class="card-header d-flex justify-content-between align-items-center"
+                                                    style="padding:2px;padding-left:5px;color:rgb(3, 3, 113)">
+                                                    <span style="font-size: 15px">Code: <b>{{ $frame->code }}</b></span>
+
+                                                </div>
+                                                <div class="card-body" style="padding: 6px; font-size:13px">
+                                                    <div>Location: <span
+                                                            style="color:rgb(4, 4, 141)">{{ $frame->location }}</span>
+                                                    </div>
+                                                    <div>Entry Date: <span style="color:rgb(4, 4, 141)">
+                                                            {{ Illuminate\Support\Carbon::parse($frame->entry_date)->format('D, d M Y') }}
+                                                        </span>
+                                                    </div>
+                                                    <div>Price: <span
+                                                            style="color:rgb(4, 4, 141)">{{ number_format($frame->price, 0, '.', ',') }}
+                                                            Tsh</span></div>
+                                                    <div>Business: <span
+                                                            style="color:rgb(4, 4, 141)">{{ $frame->business }}</span>
+                                                    </div>
+                                                    <div>Size: <span
+                                                            style="color:rgb(4, 4, 141)">{{ $frame->size }}</span>
+                                                    </div>
+                                                    <div>Market: <span
+                                                            style="color:rgb(4, 4, 141)">{{ $frame->market->name }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @empty
+                                        <div class="text-gray text-center pt-2" style="font-size: 13px"> 0 Frames</div>
+                                    @endforelse
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col text-center" style="font-size: 18px">
+                                            Stalls
+                                        </div>
+
+                                    </div>
+                                    @forelse ($market->stalls as $stall)
+                                        @if ($stall->customer_id == $customer->id)
+                                            <div class="card shadow mt-2">
+                                                <div class="card-header d-flex justify-content-between align-items-center"
+                                                    style="padding:2px;padding-left:5px;color:rgb(3, 3, 113)">
+                                                    <span style="font-size: 15px">Code: <b>{{ $stall->code }}</b></span>
+                                                </div>
+                                                <div class="card-body" style="padding: 6px; font-size:13px">
+                                                    <div>Location: <span
+                                                            style="color:rgb(4, 4, 141)">{{ $stall->location }}</span>
+                                                    </div>
+                                                    <div>Entry Date: <span style="color:rgb(4, 4, 141)">
+                                                            {{ Illuminate\Support\Carbon::parse($stall->entry_date)->format('D, d M Y') }}
+                                                        </span>
+                                                    </div>
+                                                    <div>Price: <span
+                                                            style="color:rgb(4, 4, 141)">{{ number_format($stall->price, 0, '.', ',') }}
+                                                            Tsh</span></div>
+                                                    <div>Type: <span
+                                                            style="color:rgb(4, 4, 141)">{{ $stall->type }}</span>
+                                                    </div>
+                                                    <div>Business: <span
+                                                            style="color:rgb(4, 4, 141)">{{ $stall->business }}</span>
+                                                    </div>
+                                                    <div>Size: <span
+                                                            style="color:rgb(4, 4, 141)">{{ $stall->size }}</span>
+                                                    </div>
+                                                    <div>Market: <span
+                                                            style="color:rgb(4, 4, 141)">{{ $stall->market->name }}</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @empty
+                                        <div class="text-gray text-center pt-2" style="font-size: 13px"> 0 Frames</div>
+                                    @endforelse
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-header  text-center" style="font-size: 20px">
-                        <div class="row">
-                            <div class="col">
-                                Stalls
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="card-body">
-
-                        <div class="row">
-                            @forelse ($customerStalls as $stall)
-                                <div class="col-6">
-                                    <div class="card shadow mt-2">
-                                        <div class="card-header d-flex justify-content-between align-items-center"
-                                            style="padding:2px;padding-left:5px;color:rgb(3, 3, 113)">
-                                            <span style="font-size: 15px">Code: <b>{{ $stall->code }}</b></span>
-                                        </div>
-                                        <div class="card-body" style="padding: 6px; font-size:13px">
-                                            <div>Location: <span
-                                                    style="color:rgb(4, 4, 141)">{{ $stall->location }}</span>
-                                            </div>
-                                            <div>Price: <span
-                                                    style="color:rgb(4, 4, 141)">{{ number_format($stall->price, 0, '.', ',') }}
-                                                    Tsh</span></div>
-                                            <div>Type: <span style="color:rgb(4, 4, 141)">{{ $stall->type }}</span></div>
-                                            <div>Business: <span
-                                                    style="color:rgb(4, 4, 141)">{{ $stall->business }}</span></div>
-                                            <div>Size: <span style="color:rgb(4, 4, 141)">{{ $stall->size }}</span></div>
-                                            <div>Market: <span style="color:rgb(4, 4, 141)">{{ $stall->market->name }}</span></div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            @empty
-                                <div class="text-gray text-center pt-2" style="font-size: 13px"> 0 Stalls</div>
-                            @endforelse
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
         <br>
 
@@ -220,7 +240,7 @@
                             data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ route('send-message',$customer) }}">
+                        <form method="POST" action="{{ route('send-message', $customer) }}">
                             @csrf
                             <div class="text-start mb-1">
                                 <label for="body" class="col-form-label text-sm-start">{{ __('Body') }}</label>

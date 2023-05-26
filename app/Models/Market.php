@@ -19,6 +19,8 @@ class Market extends Model
         'manager_name',
         'manager_mobile',
         'size',
+        'frame_price',
+        'stall_price',
     ];
 
     protected $dates = [

@@ -17,8 +17,9 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('markets.index') }}">
+        <li
+            class="nav-item {{ request()->routeIs('markets.show') || request()->routeIs('customers.show') ? 'active' : '' }}">
+            <a class="nav-link " href="{{ route('markets.index') }}">
                 <i class="mdi mdi mdi-hospital-building menu-icon"></i>
                 <span class="menu-title">Markets</span>
             </a>
@@ -35,7 +36,7 @@
                 <span class="menu-title">Stalls</span>
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {{ request()->routeIs('customers.admin_show') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('customers.index') }}">
                 <i class="mdi mdi-account-multiple menu-icon"></i>
                 <span class="menu-title">Customers</span>

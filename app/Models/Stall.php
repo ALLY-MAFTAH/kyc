@@ -20,6 +20,8 @@ class Stall extends Model
         'size',
         'business',
         'type',
+        'entry_date',
+
     ];
 
     protected $dates = [

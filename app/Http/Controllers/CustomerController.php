@@ -202,6 +202,7 @@ class CustomerController extends Controller
             $frame = Frame::find($request->frame_id);
             $attributes['customer_id'] = $customer->id;
             $attributes['business'] = $request->business ?? "";
+            $attributes['entry_date'] = now();
             $frame->update($attributes);
             $customer->frames()->save($frame);
 
@@ -244,6 +245,8 @@ class CustomerController extends Controller
             $stall = Stall::find($request->stall_id);
             $attributes['customer_id'] = $customer->id;
             $attributes['business'] = $request->business ?? "";
+            $attributes['entry_date'] = now();
+
             $stall->update($attributes);
             $customer->stalls()->save($stall);
 

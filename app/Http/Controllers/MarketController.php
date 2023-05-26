@@ -71,6 +71,8 @@ class MarketController extends Controller
                 "sub_ward" => 'required',
                 "manager_name" => 'required',
                 "manager_mobile" => 'required',
+                "frame_price" => 'required',
+                "stall_price" => 'required',
             ]);
 
             $attributes['size'] = $request->size ?? "";
@@ -81,7 +83,7 @@ class MarketController extends Controller
                 $sectionAttr['name'] = $section;
                 $sectionAttr['market_id'] = $market->id;
                 $newSection = Section::create($sectionAttr);
-                // dd($newSection->updated_at);
+
                 $market->sections()->save($newSection);
             }
             return back()->with('success', "Market created successful");
@@ -121,6 +123,8 @@ class MarketController extends Controller
                 "sub_ward" => 'required',
                 "manager_name" => 'required',
                 "manager_mobile" => 'required',
+                "frame_price" => 'required',
+                "stall_price" => 'required',
             ]);
 
             $attributes['size'] = $request->size ?? $market->size;
@@ -136,7 +140,7 @@ class MarketController extends Controller
                 $sectionAttr['name'] = $section;
                 $sectionAttr['market_id'] = $market->id;
                 $newSection = Section::create($sectionAttr);
-                // dd($newSection->updated_at);
+
                 $market->sections()->save($newSection);
             }
             return back()->with('success', "Market edited successful");

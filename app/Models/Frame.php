@@ -19,6 +19,7 @@ class Frame extends Model
         'customer_id',
         'business',
         'size',
+        'entry_date',
     ];
 
     protected $dates = [

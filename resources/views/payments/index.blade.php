@@ -51,7 +51,9 @@
                     @foreach ($payments as $index => $payment)
                         <tr>
                             <td>{{ ++$index }}</td>
-                            <td>{{ $payment->date }}</td>
+                            <td>
+                                {{ Illuminate\Support\Carbon::parse($payment->date)->format('D, d M Y') }}
+                            </td>
                             <td>{{ $payment->market->name }}</td>
                             <td>{{ $payment->customer->first_name }} {{ $payment->customer->middle_name }}
                                 {{ $payment->customer->last_name }}</td>

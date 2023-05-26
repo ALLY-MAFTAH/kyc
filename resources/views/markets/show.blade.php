@@ -37,6 +37,8 @@
                                             <div style="color:rgb(188, 186, 186)">Sub-Ward: </div>
                                             <div style="color:rgb(188, 186, 186)">Manager Name: </div>
                                             <div style="color:rgb(188, 186, 186)">Manager Phone: </div>
+                                            <div style="color:rgb(188, 186, 186)">Frame Price: </div>
+                                            <div style="color:rgb(188, 186, 186)">Stall Price: </div>
                                             <div style="color:rgb(188, 186, 186)">Size: </div>
                                         </h5>
                                     </div>
@@ -48,6 +50,8 @@
                                             <div>{{ $market->sub_ward }}</div>
                                             <div>{{ $market->manager_name }}</div>
                                             <div>{{ $market->manager_mobile }}</div>
+                                            <div>{{ $market->frame_price }}</div>
+                                            <div>{{ $market->stall_price }}</div>
                                             @if ($market->size)
                                                 <div>{{ $market->size }} </div>
                                             @else
@@ -131,7 +135,8 @@
                 </div>
             </div>
         </div>
-        <br><hr>
+        <br>
+        <hr>
         <div class="card shadow">
             <div class="card-header  text-center" style="font-size: 20px">
                 <div class="row">
@@ -227,7 +232,8 @@
                 </div>
             </div>
         </div>
-        <br><hr><br>
+        <br>
+        <hr><br>
         <div class="card shadow">
             <div class="card-header  text-center" style="font-size: 20px">
                 <div class="row">
@@ -272,8 +278,8 @@
                                     <td class="text-center" style="max-width: 20px">{{ ++$index }}</td>
                                     <td> {{ $stall->code }}</td>
                                     <td> {{ $stall->location }} </td>
-                                    <td> {{ number_format($stall->price, 0, '.', ',') }} Tsh </td>
                                     <td> {{ $stall->type }} </td>
+                                    <td> {{ number_format($stall->price, 0, '.', ',') }} Tsh </td>
                                     <td>
                                         @if ($stall->customer)
                                             <a style="text-decoration: none"
@@ -324,7 +330,8 @@
                     </table>
                 </div>
             </div>
-        </div><br><hr><br>
+        </div><br>
+        <hr><br>
         <div class="card shadow">
             <div class="card-header  text-center" style="font-size: 20px">
                 <div class="row">

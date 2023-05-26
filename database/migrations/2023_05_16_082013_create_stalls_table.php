@@ -22,6 +22,7 @@ return new class extends Migration
             $table->bigInteger('market_id');
             $table->bigInteger('customer_id')->nullable();
             $table->string('location');
+            $table->date('entry_date');
             $table->string('size')->nullable();
             $table->string('business')->nullable();
             $table->timestamps();
