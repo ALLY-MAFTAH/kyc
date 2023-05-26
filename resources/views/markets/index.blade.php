@@ -180,7 +180,7 @@
                             <td>{{ $market->sub_ward }}</td>
                             <td>{{ $market->manager_name }}</td>
                             <td>{{ $market->manager_mobile }}</td>
-                            <td>{{ $market->frame_price }}</td>
+                            <td>{{ number_format($market->frame_price, 0, ',', '.') }}</td>
                             <td>{{ $market->stall_price }}</td>
                             <td>{{ $market->size }}</td>
                             <td class="text-center">

@@ -42,6 +42,7 @@ class FrameController extends Controller
     {
         $newCode = $request->newCode;
         try {
+            $market = Market::find($request->market_id);
             for ($i = 0; $i < $request->count; $i++) {
 
                 $newRequest = $request->merge(['code' => $newCode]);
@@ -53,10 +54,9 @@ class FrameController extends Controller
                 ]);
 
                 $attributes['size'] = $request->size ?? "";
-                $attributes['price'] = 40000;
+                $attributes['price'] = $market->frame_price;
 
                 $frame = Frame::create($attributes);
-                $market = Market::find($request->market_id);
 
                 $market->frames()->save($frame);
                 $newCode++;
@@ -80,6 +80,7 @@ class FrameController extends Controller
     public function putFrame(Request $request, Frame $frame)
     {
         try {
+            $market = Market::find($request->market_id);
             $attributes = $this->validate($request, [
                 'code' => 'required | unique:frames,code,' . $frame->id,
                 'location' => 'required',
@@ -87,10 +88,9 @@ class FrameController extends Controller
             ]);
 
             $attributes['size'] = $request->size ?? $frame->size;
-            $attributes['price'] = 40000;
+            $attributes['price'] =  $market->frame_price;
 
             $frame->update($attributes);
-            $market = Market::find($request->market_id);
 
             $market->frames()->save($frame);
 

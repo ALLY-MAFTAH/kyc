@@ -42,6 +42,7 @@ class StallController extends Controller
     {
         $newCode = $request->newCode;
         try {
+            $market = Market::find($request->market_id);
             for ($i = 0; $i < $request->count; $i++) {
 
                 $newRequest = $request->merge(['code' => $newCode]);
@@ -54,10 +55,9 @@ class StallController extends Controller
                 ]);
 
                 $attributes['size'] = $request->size ?? "";
-                $attributes['price'] = 15000;
+                $attributes['price'] = $market->stall_price;
 
                 $stall = Stall::create($attributes);
-                $market = Market::find($request->market_id);
 
                 $market->stalls()->save($stall);
                 $newCode++;
@@ -80,6 +80,7 @@ class StallController extends Controller
     public function putStall(Request $request, Stall $stall)
     {
         try {
+            $market = Market::find($request->market_id);
             $attributes = $this->validate($request, [
                 'code' => 'required | unique:stalls,code,' . $stall->id,
                 'location' => 'required',
@@ -88,10 +89,9 @@ class StallController extends Controller
             ]);
 
             $attributes['size'] = $request->size ?? $stall->size;
-            $attributes['price'] = 15000;
+            $attributes['price'] = $market->stall_price;
 
             $stall->update($attributes);
-            $market = Market::find($request->market_id);
 
             $market->stalls()->save($stall);
 
