@@ -74,11 +74,10 @@ class UserController extends Controller
 
             $user->update($attributes);
 
-            alert()->success('You have successfully updated user status');
+            return back()->with('success', 'You have successfully updated user status');
         } catch (\Throwable $th) {
-            alert()->error($th->getMessage());
+            return back()->with('error', $th->getMessage());
         }
-        return back();
     }
     public function deleteUser(User $user)
     {

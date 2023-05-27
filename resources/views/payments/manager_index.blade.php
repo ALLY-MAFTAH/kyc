@@ -1,18 +1,26 @@
 @extends('layouts.app')
-@section('styles')
+@section('title')
+    Payments
 @endsection
-
 @section('content')
+@section('breadcrumbs')
     <div class="page-header flex-wrap">
-        <h3 class="mb-2"> Payments</h3>
-        <div class="d-flex">
+        <div class="breadcrumbs-item">
+            <h4 class="mb-2">
+                <a style="text-decoration: none" href="{{ route('home') }}"><i class="mdi mdi-home menu-icon"
+                        style="font-size:25px"></i></a>
+                <i class="mdi mdi-chevron-right"></i>
+                <span>Payments</span>
+            </h4>
+        </div>
+        <div class="d-flex ">
             <button type="button" class="btn  bg-white btn-icon-text border">
                 <i class="mdi mdi-download btn-icon-prepend"></i> Download </button>
             <button type="button" class="btn  bg-white btn-icon-text border ml-3">
                 <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
         </div>
-        <br>
     </div>
+@endsection
     @if (session('info'))
         <div class="alert alert-info" role="alert">
             {{ session('info') }}

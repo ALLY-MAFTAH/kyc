@@ -4,8 +4,9 @@
     Users
 @endsection
 
+@section('content')
 @section('breadcrumbs')
-<div class="page-header flex-wrap">
+    <div class="page-header flex-wrap">
         <div class="breadcrumbs-item">
             <h4 class="mb-2">
                 <a href="{{ route('home') }}"><i class="mdi mdi-home menu-icon" style="font-size:25px"></i></a>
@@ -20,9 +21,8 @@
                 <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
         </div>
     </div>
-    @endsection
-<br>
-@section('content')
+@endsection
+
     @if (session('info'))
         <div class="alert alert-info" role="alert">
             {{ session('info') }}

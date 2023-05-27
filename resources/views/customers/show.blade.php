@@ -1,10 +1,31 @@
 @extends('layouts.app')
 
 @section('title')
-    Customer
+   {{$market->name}} | Customer
 @endsection
 
 @section('content')
+@section('breadcrumbs')
+    <div class="page-header flex-wrap">
+        <div class="breadcrumbs-item">
+            <h4 class="mb-2">
+                <a style="text-decoration:none" href="{{ route('home') }}"><i class="mdi mdi-home menu-icon" style="font-size:25px"></i></a>
+                <i class="mdi mdi-chevron-right"></i>
+                <a style="text-decoration:none" href="{{ route('markets.index') }}">Markets</a>
+                <i class="mdi mdi-chevron-right"></i>
+                <a style="text-decoration:none" href="{{ route('markets.show',$market) }}">{{$market->name}}</a>
+                <i class="mdi mdi-chevron-right"></i>
+                <span style="font-size:15px">Customer: {{ $customer->first_name }} {{ $customer->middle_name }} {{ $customer->last_name }}</span>
+            </h4>
+        </div>
+        <div class="d-flex ">
+            <button type="button" class="btn  bg-white btn-icon-text border">
+                <i class="mdi mdi-download btn-icon-prepend"></i> Download </button>
+            <button type="button" class="btn  bg-white btn-icon-text border ml-3">
+                <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
+        </div>
+    </div>
+@endsection
     @if (session('info'))
         <div class="alert alert-info" role="alert">
             {{ session('info') }}
