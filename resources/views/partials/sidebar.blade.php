@@ -6,7 +6,7 @@
                 src="{{ asset('assets/images/logo-mini.svg') }}" alt="logo" /></a>
     </div>
     <ul class="nav">
-        <li class="nav-item nav-profile">
+        <li class="pl-5 pt-2 pb-3 nav-profile">
             <a href="{{ route('home') }}" class="nav-link">
                 <img src="{{ asset('assets/images/logo.png') }}" height="90px" alt="logo" />
             </a>
@@ -17,37 +17,61 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
-        <li
-            class="nav-item {{ request()->routeIs('markets.show') || request()->routeIs('customers.show') ? 'active' : '' }}">
-            <a class="nav-link " href="{{ route('markets.index') }}">
-                <i class="mdi mdi mdi-hospital-building menu-icon"></i>
-                <span class="menu-title">Markets</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('frames.index') }}">
-                <i class="mdi mdi-image-filter-frames menu-icon"></i>
-                <span class="menu-title">Frames</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('stalls.index') }}">
-                <i class="mdi mdi-table menu-icon"></i>
-                <span class="menu-title">Stalls</span>
-            </a>
-        </li>
-        <li class="nav-item {{ request()->routeIs('customers.admin_show') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('customers.index') }}">
-                <i class="mdi mdi-account-multiple menu-icon"></i>
-                <span class="menu-title">Customers</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('payments.index') }}">
-                <i class="mdi mdi-square-inc-cash menu-icon"></i>
-                <span class="menu-title">Payments</span>
-            </a>
-        </li>
+        @if (!Auth::user()->market_id)
+            <li
+                class="nav-item {{ request()->routeIs('markets.show') || request()->routeIs('customers.show') ? 'active' : '' }}">
+                <a class="nav-link " href="{{ route('markets.index') }}">
+                    <i class="mdi mdi mdi-hospital-building menu-icon"></i>
+                    <span class="menu-title">Markets</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('frames.index') }}">
+                    <i class="mdi mdi-image-filter-frames menu-icon"></i>
+                    <span class="menu-title">Frames</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('stalls.index') }}">
+                    <i class="mdi mdi-table menu-icon"></i>
+                    <span class="menu-title">Stalls</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('customers.admin_show') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('customers.index') }}">
+                    <i class="mdi mdi-account-multiple menu-icon"></i>
+                    <span class="menu-title">Customers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('payments.index') }}">
+                    <i class="mdi mdi-square-inc-cash menu-icon"></i>
+                    <span class="menu-title">Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('users.index') }}">
+                    <i class="mdi mdi-contacts menu-icon"></i>
+                    <span class="menu-title">Users</span>
+                </a>
+            </li>
+        @endif
+        @if (Auth::user()->market_id)
+            <li
+                class="nav-item {{ request()->routeIs('markets.show') || request()->routeIs('customers.show') ? 'active' : '' }}">
+                <a class="nav-link " href="{{ route('markets.show', Auth::user()->market_id) }}">
+                    <i class="mdi mdi mdi-hospital-building menu-icon"></i>
+                    <span class="menu-title">Market</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('payments.manager_index') }}">
+                    <i class="mdi mdi-square-inc-cash menu-icon"></i>
+                    <span class="menu-title">Payments</span>
+                </a>
+            </li>
+        @endif
+
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <i class="mdi mdi-file-document menu-icon"></i>
@@ -67,12 +91,6 @@
                     </li>
                 </ul>
             </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('users.index') }}">
-                <i class="mdi mdi-contacts menu-icon"></i>
-                <span class="menu-title">Users</span>
-            </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('settings.index') }}">

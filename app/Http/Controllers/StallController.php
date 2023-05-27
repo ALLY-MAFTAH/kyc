@@ -85,15 +85,12 @@ class StallController extends Controller
                 'code' => 'required | unique:stalls,code,' . $stall->id,
                 'location' => 'required',
                 'type' => 'required',
-                'market_id' => 'required',
             ]);
 
             $attributes['size'] = $request->size ?? $stall->size;
             $attributes['price'] = $market->stall_price;
 
             $stall->update($attributes);
-
-            $market->stalls()->save($stall);
 
             return back()->with('success', "Stall edited successfully");
         } catch (ValidationException $exception) {

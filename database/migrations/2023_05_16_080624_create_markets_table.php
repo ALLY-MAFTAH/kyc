@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('ward');
             $table->string('sub_ward');
-            $table->string('manager_name');
-            $table->string('manager_mobile');
             $table->string('size')->nullable();
             $table->double('frame_price')->nullable();
             $table->double('stall_price')->nullable();

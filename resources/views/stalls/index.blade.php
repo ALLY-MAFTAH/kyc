@@ -52,7 +52,7 @@
                             <td>{{ ++$index }}</td>
                             <td>{{ $stall->code }}</td>
                             <td>{{ $stall->location }}</td>
-                            <td>{{ number_format($stall->price, 0, '.', ',') }} Tsh</td>
+                            <td>{{ number_format($stall->price, 0, '.', ',') }} TZS</td>
                             <td>{{ $stall->market->name }}</td>
                             <td>
                                 @if ($stall->customer)

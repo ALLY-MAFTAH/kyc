@@ -250,7 +250,7 @@
                                         </div>
                                             <div>Price: <span
                                                     style="color:rgb(4, 4, 141)">{{ number_format($frame->price, 0, '.', ',') }}
-                                                    Tsh</span></div>
+                                                    TZS</span></div>
                                             <div>Business: <span
                                                     style="color:rgb(4, 4, 141)">{{ $frame->business }}</span></div>
                                             <div>Size: <span style="color:rgb(4, 4, 141)">{{ $frame->size }}</span></div>
@@ -392,7 +392,7 @@
                                             </div>
                                             <div>Price: <span
                                                     style="color:rgb(4, 4, 141)">{{ number_format($stall->price, 0, '.', ',') }}
-                                                    Tsh</span></div>
+                                                    TZS</span></div>
                                             <div>Type: <span style="color:rgb(4, 4, 141)">{{ $stall->type }}</span></div>
                                             <div>Business: <span
                                                     style="color:rgb(4, 4, 141)">{{ $stall->business }}</span></div>

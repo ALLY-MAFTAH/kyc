@@ -37,6 +37,7 @@
                                             <div style="color:rgb(188, 186, 186)">Sub-Ward: </div>
                                             <div style="color:rgb(188, 186, 186)">Manager Name: </div>
                                             <div style="color:rgb(188, 186, 186)">Manager Phone: </div>
+                                            <div style="color:rgb(188, 186, 186)">Manager Email: </div>
                                             <div style="color:rgb(188, 186, 186)">Frame Price: </div>
                                             <div style="color:rgb(188, 186, 186)">Stall Price: </div>
                                             <div style="color:rgb(188, 186, 186)">Size: </div>
@@ -48,8 +49,9 @@
                                             <div>{{ $market->name }}</div>
                                             <div>{{ $market->ward }}</div>
                                             <div>{{ $market->sub_ward }}</div>
-                                            <div>{{ $market->manager_name }}</div>
-                                            <div>{{ $market->manager_mobile }}</div>
+                                            <div>{{ $market->user->name }}</div>
+                                            <div>{{ $market->user->mobile }}</div>
+                                            <div>{{ $market->user->email }}</div>
                                             <div>{{ number_format($market->frame_price, 0, '.', ',') }} TZS</div>
                                             <div>{{ number_format($market->stall_price, 0, '.', ',') }} TZS</div>
                                             @if ($market->size)
@@ -180,7 +182,7 @@
                                     <td class="text-center" style="max-width: 20px">{{ ++$index }}</td>
                                     <td> {{ $frame->code }}</td>
                                     <td> {{ $frame->location }} </td>
-                                    <td> {{ number_format($frame->price, 0, '.', ',') }} Tsh </td>
+                                    <td> {{ number_format($frame->price, 0, '.', ',') }} TZS </td>
                                     <td>
                                         @if ($frame->customer)
                                             <a style="text-decoration: none"
@@ -279,7 +281,7 @@
                                     <td> {{ $stall->code }}</td>
                                     <td> {{ $stall->location }} </td>
                                     <td> {{ $stall->type }} </td>
-                                    <td> {{ number_format($stall->price, 0, '.', ',') }} Tsh </td>
+                                    <td> {{ number_format($stall->price, 0, '.', ',') }} TZS </td>
                                     <td>
                                         @if ($stall->customer)
                                             <a style="text-decoration: none"

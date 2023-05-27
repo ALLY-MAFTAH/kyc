@@ -16,8 +16,6 @@ class Market extends Model
         'name',
         'ward',
         'sub_ward',
-        'manager_name',
-        'manager_mobile',
         'size',
         'frame_price',
         'stall_price',
@@ -46,5 +44,9 @@ class Market extends Model
     public function customers()
     {
         return $this->belongsToMany(Customer::class);
+    }
+    public function user()
+    {
+        return $this->hasOne(User::class);
     }
 }

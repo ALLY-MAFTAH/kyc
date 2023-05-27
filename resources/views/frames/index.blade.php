@@ -51,7 +51,7 @@
                             <td>{{ ++$index }}</td>
                             <td>{{ $frame->code }}</td>
                             <td>{{ $frame->location }}</td>
-                            <td>{{ number_format($frame->price, 0, '.', ',') }} Tsh</td>
+                            <td>{{ number_format($frame->price, 0, '.', ',') }} TZS</td>
                             <td>{{ $frame->market->name }}</td>
                             <td>
                                 @if ($frame->customer)

@@ -146,7 +146,7 @@
                                             </div>
                                             <div>Price: <span
                                                     style="color:rgb(4, 4, 141)">{{ number_format($frame->price, 0, '.', ',') }}
-                                                    Tsh</span></div>
+                                                    TZS</span></div>
                                             <div>Size: <span style="color:rgb(4, 4, 141)">{{ $frame->size }}</span></div>
                                         </div>
                                     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -19,6 +20,12 @@ class PaymentController extends Controller
         return view('payments.index', compact('payments'));
     }
 
+    public function managerIndex()
+    {
+        $payments = Payment::where('market_id', Auth::user()->market_id)->get();
+
+        return view('payments.manager_index', compact('payments'));
+    }
     /**
      * Show the form for creating a new resource.
      *

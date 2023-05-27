@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.8" />
 
     <title>{{ config('app.name', 'KYC') }}</title>
+    @yield('styles')
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -43,7 +44,6 @@
         @include('partials.sidebar')
 
         <div class="container-fluid page-body-wrapper">
-
             @include('partials.settings-panel')
             @include('partials.navbar')
 
@@ -51,6 +51,9 @@
                 <div class="content-wrapper pb-0">
                     <div id="loader" class="loader">
                         <!-- Loader content here -->
+                    </div>
+                    <div class="breadcrumbs">
+                        @yield('breadcrumbs')
                     </div>
                     @yield('content')
                 </div>
@@ -266,62 +269,55 @@
                 .appendTo('#data-tebo2_wrapper .col-md-6:eq(0)');
         });
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var loader = document.getElementById('loader');
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var loader = document.getElementById('loader');
 
-            // Hide the loader initially
+      // Hide the loader initially
+      loader.style.display = 'none';
+
+      // Show the loader on form submit
+      document.addEventListener('submit', function() {
+        loader.style.display = 'block';
+      });
+
+      // Show the loader on link clicks or page navigation
+      document.addEventListener('click', function(event) {
+        var target = event.target;
+
+        var isModalButton =
+          target.closest('[data-bs-toggle="modal"]') ||
+          target.closest('[data-toggle="modal"]') ||
+          target.closest('[data-bs-toggle="collapse"]') ||
+          target.closest('[data-toggle="collapse"]') ||
+          target.closest('.modal');
+
+        var isDataTableNavButton = target.closest('.paginate_button') ||
+          target.closest('.previous') ||
+          target.closest('.next');
+
+        if (
+          (target.tagName === 'A' || target.getAttribute('href')) &&
+          !isModalButton &&
+          !isDataTableNavButton
+        ) {
+        //   showConfirmationDialog(event);
+        var loader = document.getElementById('loader');
+        loader.style.display = 'none';
+        }
+      });
+
+      // Exclude Alt+Left Arrow key event from triggering the loader display
+      window.addEventListener('keydown', function(event) {
+        if (event.altKey && event.code === 'ArrowLeft') {
+        //   if (loader.style.display === 'block') {
             loader.style.display = 'none';
+        //   }
+        }
+      });
+    });
 
-            // Show the loader on form submit
-            document.addEventListener('submit', function() {
-                loader.style.display = 'block';
-            });
-
-            // Show the loader on link clicks or page navigation
-            document.addEventListener('click', function(event) {
-                var target = event.target;
-
-                var isModalButton =
-                    target.closest('[data-bs-toggle="modal"]') ||
-                    target.closest('[data-toggle="modal"]') ||
-                    target.closest('[data-bs-toggle="collapse"]') ||
-                    target.closest('[data-toggle="collapse"]') ||
-                    target.closest('.modal');
-
-                var isDataTableNavButton = target.closest('.paginate_button') ||
-                    target.closest('.previous') ||
-                    target.closest('.next');
-
-                if (
-                    (target.tagName === 'A' || target.getAttribute('href')) &&
-                    !isModalButton &&
-                    !isDataTableNavButton
-                ) {
-                    loader.style.display = 'block';
-                }
-            });
-
-            // Exclude Alt+Left Arrow key event from triggering the loader display
-            window.addEventListener('keydown', function(event) {
-                if (event.altKey && event.code === 'ArrowLeft') {
-                    if (loader.style.display === 'block') {
-                        loader.style.display = 'none';
-                    }
-                }
-            });
-
-            // Exclude next button click event from triggering the loader display
-            document.addEventListener('click', function(event) {
-                var target = event.target;
-                var dataTableNextButton = target.closest('.dataTables_paginate .next');
-
-                if (dataTableNextButton) {
-                    loader.style.display = 'none';
-                }
-            });
-        });
-    </script>
+  </script>
 
     @yield('scripts')
 </body>

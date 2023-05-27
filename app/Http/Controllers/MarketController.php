@@ -8,6 +8,7 @@ use App\Models\Market;
 use App\Models\Section;
 use App\Models\Stall;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -62,17 +63,19 @@ class MarketController extends Controller
      */
     public function postMarket(Request $request)
     {
-
+        // dd($request->all());
         try {
             $attributes = $this->validate($request, [
                 'code' => ['required', 'unique:markets,code,NULL,id,deleted_at,NULL'],
                 "name" => 'required',
                 "ward" => 'required',
+                "email" => 'required',
                 "sub_ward" => 'required',
+                "stall_price" => 'required',
+                "frame_price" => 'required',
                 "manager_name" => 'required',
                 "manager_mobile" => 'required',
-                "frame_price" => 'required',
-                "stall_price" => 'required',
+                "default_password" => 'required',
             ]);
 
             $attributes['size'] = $request->size ?? "";
@@ -86,6 +89,25 @@ class MarketController extends Controller
 
                 $market->sections()->save($newSection);
             }
+
+            $userRequest = new Request([
+                "name" => $request->manager_name,
+                "mobile" => $request->manager_mobile,
+                "email" => $request->email,
+                "password" => $request->default_password,
+                'market_id' => $market->id,
+            ]);
+            $userController = new UserController();
+            $user = null;
+            $userResponse = $userController->postUser($userRequest);
+
+            if ($userResponse['status'] == true) {
+                $user = $userResponse['data'];
+                $market->user()->save($user);
+            } else {
+                return back()->with('error', $userResponse['data'])->withInput();
+            }
+
             return back()->with('success', "Market created successful");
         } catch (ValidationException $exception) {
             return back()->withErrors($exception->errors())->withInput()->with('addMarketCollapse', true);

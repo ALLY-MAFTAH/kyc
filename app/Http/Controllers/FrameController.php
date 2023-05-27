@@ -84,15 +84,13 @@ class FrameController extends Controller
             $attributes = $this->validate($request, [
                 'code' => 'required | unique:frames,code,' . $frame->id,
                 'location' => 'required',
-                'market_id' => 'required',
+
             ]);
 
             $attributes['size'] = $request->size ?? $frame->size;
             $attributes['price'] =  $market->frame_price;
 
             $frame->update($attributes);
-
-            $market->frames()->save($frame);
 
             return back()->with('success', "Frame edited successfully");
         } catch (ValidationException $exception) {
