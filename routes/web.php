@@ -78,9 +78,11 @@ Route::middleware(['auth'])->group(function () {
     // USERS ROUTES
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/show-user/{user}', [UserController::class, 'showUser'])->name('users.show');
-    Route::post('/add-user', [UserController::class, 'postUser'])->name('users.add');
+    Route::post('/add-user', [UserController::class, 'addUser'])->name('users.add');
+    Route::post('/post-user', [UserController::class, 'postUser'])->name('users.post');
     Route::put('/edit-user/{user}', [UserController::class, 'putUser'])->name('users.edit');
     Route::delete('/delete-user/{user}', [UserController::class, 'deleteUser'])->name('users.delete');
+    Route::put('/toggle-status/{user}/status', [UserController::class, 'toggleStatus'])->name('users.toggle_status');
 
     // REPORTS ROUTES
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');

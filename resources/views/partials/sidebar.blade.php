@@ -56,7 +56,7 @@
                 </a>
             </li>
         @endif
-        @if (Auth::user()->market_id)
+        @if (Auth::user()->market_id && Auth::user()->status && Auth::user()->is_manager)
             <li
                 class="nav-item {{ request()->routeIs('markets.show') || request()->routeIs('customers.show') ? 'active' : '' }}">
                 <a class="nav-link " href="{{ route('markets.show', Auth::user()->market_id) }}">

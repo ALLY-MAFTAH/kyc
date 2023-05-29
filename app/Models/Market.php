@@ -45,8 +45,8 @@ class Market extends Model
     {
         return $this->belongsToMany(Customer::class);
     }
-    public function user()
+    public function users()
     {
-        return $this->hasOne(User::class);
+        return $this->hasMany(User::class);
     }
 }

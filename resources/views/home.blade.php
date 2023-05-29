@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('title')
+Home
+@endsection
 @section('content')
     <div class="page-header flex-wrap">
         <h3 class="mb-0"> Dashboard <span class="pl-0 h6 pl-sm-2 text-muted d-inline-block">System Data Summary</span>

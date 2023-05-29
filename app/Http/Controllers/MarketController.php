@@ -14,11 +14,7 @@ use Illuminate\Validation\ValidationException;
 
 class MarketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $markets = Market::all();
@@ -27,12 +23,6 @@ class MarketController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Market  $market
-     * @return \Illuminate\Http\Response
-     */
     public function showMarket(Market $market)
     {
         $lastFrameRow = Frame::where('market_id', $market->id)
@@ -56,14 +46,9 @@ class MarketController extends Controller
         return view('markets.show', compact('market', 'customers', 'newFrameCode', 'newStallCode'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function postMarket(Request $request)
     {
-        // dd($request->all());
         try {
             $attributes = $this->validate($request, [
                 'code' => ['required', 'unique:markets,code,NULL,id,deleted_at,NULL'],
@@ -71,10 +56,10 @@ class MarketController extends Controller
                 "ward" => 'required',
                 "email" => 'required',
                 "sub_ward" => 'required',
-                "stall_price" => 'required',
-                "frame_price" => 'required',
                 "manager_name" => 'required',
                 "manager_mobile" => 'required',
+                "stall_price" => 'required',
+                "frame_price" => 'required',
                 "default_password" => 'required',
             ]);
 
@@ -116,25 +101,7 @@ class MarketController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Market  $market
-     * @return \Illuminate\Http\Response
-     */
     public function putMarket(Request $request, Market $market)
     {
         try {
@@ -143,8 +110,6 @@ class MarketController extends Controller
                 "name" => 'required',
                 "ward" => 'required',
                 "sub_ward" => 'required',
-                "manager_name" => 'required',
-                "manager_mobile" => 'required',
                 "frame_price" => 'required',
                 "stall_price" => 'required',
             ]);
@@ -167,7 +132,7 @@ class MarketController extends Controller
             }
             return back()->with('success', "Market edited successful");
         } catch (ValidationException $exception) {
-            return back()->withErrors($exception->errors())->withInput()->with('editMarketModal', true);
+            return back()->withErrors($exception->errors())->with('error', $exception->getMessage())->withInput()->with('editMarketModal', true);
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
         }
@@ -178,12 +143,7 @@ class MarketController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Market  $market
-     * @return \Illuminate\Http\Response
-     */
+
     public function deleteMarket(Market $market)
     {
         $market->delete();

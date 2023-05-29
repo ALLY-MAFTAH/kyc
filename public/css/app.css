@@ -127,3 +127,23 @@ table th:first-child {
 table th:last-child {
     border-radius: 0 5px 0 0;
 }
+
+.form-switch .form-check-input {
+    width: 3.5em !important;
+}
+
+.form-check .form-check-input {
+    float: none !important;
+
+}
+
+.form-check-input {
+    height: 25px !important;
+    /* margin-top: 0 !important; */
+    margin-bottom: -20px !important;
+    margin-top: -20px !important;
+}
+
+.form-check {
+    margin-bottom: -23px !important;
+}

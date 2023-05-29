@@ -34,7 +34,7 @@
             @enderror
         </div>
     </div>
-    <div class="form-group">
+    {{-- <div class="form-group">
         <label for="manager_name">Manager Name</label>
         <input type="text" class="form-control" id="manager_name"
             value="{{ old('manager_name', $market->manager_name) }}" autocomplete="name"
@@ -50,7 +50,7 @@
         @error('manager_mobile')
             <span class="error" style="color:red">{{ $message }}</span>
         @enderror
-    </div>
+    </div> --}}
     <div class="form-group">
         <label for="size">Market Size</label>
         <input type="text" class="form-control" id="size" value="{{ old('size', $market->size) }}"

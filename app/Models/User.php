@@ -23,7 +23,9 @@ class User extends Authenticatable
         'email',
         'password',
         'mobile',
+        'is_manager',
         'market_id',
+        'status',
     ];
     protected $dates = [
         'deleted_at',

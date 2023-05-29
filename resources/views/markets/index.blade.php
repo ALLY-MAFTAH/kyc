@@ -210,9 +210,9 @@
                             <td>{{ $market->name }}</td>
                             <td>{{ $market->ward }}</td>
                             <td>{{ $market->sub_ward }}</td>
-                            <td>{{ $market->user->name }}</td>
-                            <td>{{ $market->user->mobile }}</td>
-                            <td>{{ $market->user->email }}</td>
+                            <td>{{ $market->users()->where('is_manager',true)->first()->name }}</td>
+                            <td>{{ $market->users()->where('is_manager',true)->first()->mobile }}</td>
+                            <td>{{ $market->users()->where('is_manager',true)->first()->email }}</td>
                             <td>{{ number_format($market->frame_price, 0, '.', ',') }} TZS</td>
                             <td>{{ number_format($market->stall_price, 0, '.', ',') }} TZS</td>
                             <td>{{ $market->size }}</td>

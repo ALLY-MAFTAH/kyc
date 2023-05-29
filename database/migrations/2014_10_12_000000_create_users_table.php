@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('mobile');
             $table->bigInteger('market_id')->nullable();
             $table->string('password');
+            $table->boolean('is_manager')->default(false);
+            $table->boolean('status')->default(false);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

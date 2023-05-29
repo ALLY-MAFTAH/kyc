@@ -24,6 +24,21 @@ class UserController extends Controller
 
         return view('users.show', compact('user', 'markets'));
     }
+    public function addUser(Request $request)
+    {
+
+        // dd($request->all());
+
+        $userController = new UserController();
+        $userResponse = $userController->postUser($request);
+
+        if ($userResponse['status'] == true) {
+            $user = $userResponse['data'];
+            return back()->with('success', 'User added successful');
+        } else {
+            return back()->with('error', $userResponse['data'])->withInput();
+        }
+    }
     public function postUser(Request $request)
     {
         try {
@@ -31,11 +46,12 @@ class UserController extends Controller
             $attributes = $this->validate($request, [
                 'name' => 'required',
                 'email' => 'required |unique:users,email,except,id',
+                'is_manager' => 'required',
                 'mobile' => 'required',
+                'market_id' => 'required',
             ]);
 
             $attributes['password'] = Hash::make($request->default_password);
-            $attributes['market_id'] = $request->market_id ?? "";
 
             $user = User::create($attributes);
 
@@ -47,12 +63,12 @@ class UserController extends Controller
 
     public function putUser(Request $request, User $user)
     {
-        // dd($request->all());
 
         try {
             $attributes = $this->validateWithBag('update', $request, [
                 'name' => 'required',
                 'mobile' => 'required',
+                'is_manager' => 'required',
                 'email' => ['sometimes', Rule::unique('users')->ignore($user->id)->whereNull('deleted_at')],
                 'market_id' => ['sometimes', 'exists:markets,id'],
             ]);
@@ -74,7 +90,7 @@ class UserController extends Controller
 
             $user->update($attributes);
 
-            return back()->with('success', 'You have successfully updated user status');
+            return back()->with('success', 'User status updated successfull');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage());
         }
