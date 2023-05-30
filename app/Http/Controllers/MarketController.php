@@ -7,6 +7,7 @@ use App\Models\Frame;
 use App\Models\Market;
 use App\Models\Section;
 use App\Models\Stall;
+use App\Services\MessagingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -99,11 +100,29 @@ class MarketController extends Controller
             if ($userResponse['status'] == true) {
                 $user = $userResponse['data'];
                 $market->users()->save($user);
+
+                $body = "Hello " . $user->name . " \n" . "Your login credentials are: Email: " . $user->email . ", Password: " . $request->default_password . ". You are recommended to change this default password as soon as posible.";
+                $messagingService = new MessagingService();
+                $sendMessageResponse = $messagingService->sendMessage($user->mobile, $body);
+
+                if ($sendMessageResponse['status'] == "Sent") {
+
+                    // $attributes['category'] = 'Info';
+                    // $attributes['date'] = Carbon::now();
+                    // $attributes['msg'] = $sendMessageResponse['msg'];
+                    // $attributes['mobile'] = $sendMessageResponse['mobile'];
+                    // $attributes['customer_id'] = $customer->id;
+
+                    // $message = Message::create($attributes);
+                    // $customer->messages()->save($message);
+
+                    return back()->with('success', "Market created successful");
+                } else {
+                    return back()->with('error', 'Market created successful, but message not sent to manager, crosscheck your inputs');
+                }
             } else {
                 return back()->with('error', $userResponse['data'])->withInput();
             }
-
-            return back()->with('success', "Market created successful");
         } catch (ValidationException $exception) {
             return back()->withErrors($exception->errors())->withInput()->with('addMarketCollapse', true);
         } catch (\Throwable $th) {

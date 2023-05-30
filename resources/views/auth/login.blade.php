@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=0.8">
+
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>KYC | Login</title>
 

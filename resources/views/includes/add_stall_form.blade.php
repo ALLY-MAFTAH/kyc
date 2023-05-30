@@ -2,7 +2,7 @@
     @csrf
     <div class="row">
         <input type="number" name="market_id" value="{{ $market->id }}" hidden>
-        <div class="col-md-2 form-group">
+        <div class="col-md-3 form-group">
             <label for="code">Code</label>
             <input type="text" class="form-control" value="{{$newStallCode}}" id="code" placeholder="Code"required autocomplete="code"
                 value="{{ old('code') }}" name="newCode" />
@@ -22,7 +22,7 @@
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-2 form-group">
             <label>Type</label>
             <select class="js-example-basic-single form-control" required name="type" style="width: 100%;">
                 <option value="">-- Select Type --</option>

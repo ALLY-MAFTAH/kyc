@@ -103,7 +103,7 @@
 }
 
 .sidebar .nav .nav-item.active>.nav-link .menu-title {
-    color: blue !important;
+    color: #270a83 !important;
     text-shadow: 1px 1px 1px white;
 }
 

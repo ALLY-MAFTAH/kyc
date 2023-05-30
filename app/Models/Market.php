@@ -19,6 +19,7 @@ class Market extends Model
         'size',
         'frame_price',
         'stall_price',
+        'default_password',
     ];
 
     protected $dates = [

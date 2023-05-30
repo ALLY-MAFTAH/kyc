@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Market;
 use App\Models\User;
+use App\Services\MessagingService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -27,21 +29,38 @@ class UserController extends Controller
     public function addUser(Request $request)
     {
 
-        // dd($request->all());
-
         $userController = new UserController();
         $userResponse = $userController->postUser($request);
 
         if ($userResponse['status'] == true) {
             $user = $userResponse['data'];
-            return back()->with('success', 'User added successful');
+
+            $body = "Hello " . $user->name . " \n" . "Your login credentials are: Email: " . $user->email . ", Password: " . $user->market->default_password . ". You are recommended to change this default password as soon as posible.";
+            $messagingService = new MessagingService();
+            $sendMessageResponse = $messagingService->sendMessage($user->mobile, $body);
+
+            if ($sendMessageResponse['status'] == "Sent") {
+
+                // $attributes['category'] = 'Info';
+                // $attributes['date'] = Carbon::now();
+                // $attributes['msg'] = $sendMessageResponse['msg'];
+                // $attributes['mobile'] = $sendMessageResponse['mobile'];
+                // $attributes['customer_id'] = $customer->id;
+
+                // $message = Message::create($attributes);
+                // $customer->messages()->save($message);
+
+                return back()->with('success', 'User added successful');
+            } else {
+                return back()->with('error', 'User registered successful, but message not sent, crosscheck your inputs');
+            }
         } else {
             return back()->with('error', $userResponse['data'])->withInput();
         }
     }
     public function postUser(Request $request)
     {
-        // dd($request->all());
+
         try {
 
             $attributes = $this->validate($request, [
@@ -55,6 +74,8 @@ class UserController extends Controller
             $attributes['password'] = Hash::make($request->default_password);
 
             $user = User::create($attributes);
+
+
 
             return ['status' => true, 'data' => $user];
         } catch (\Throwable $th) {

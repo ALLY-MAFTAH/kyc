@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('size')->nullable();
             $table->double('frame_price')->nullable();
             $table->double('stall_price')->nullable();
+            $table->double('default_password');
             $table->timestamps();
             $table->softDeletes();
         });
