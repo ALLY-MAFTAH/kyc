@@ -28,9 +28,12 @@ class UserController extends Controller
     }
     public function addUser(Request $request)
     {
+        $market = Market::find($request->market_id);
+        $userRequest = $request->merge(['default_password' => $market->default_password]);
 
         $userController = new UserController();
-        $userResponse = $userController->postUser($request);
+
+        $userResponse = $userController->postUser($userRequest);
 
         if ($userResponse['status'] == true) {
             $user = $userResponse['data'];

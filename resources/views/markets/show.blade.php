@@ -9,11 +9,12 @@
     <div class="page-header flex-wrap">
         <div class="breadcrumbs-item">
             <h4 class="mb-2">
-                <a style="text-decoration:none" href="{{ route('home') }}"><i class="mdi mdi-home menu-icon" style="font-size:25px"></i></a>
+                <a style="text-decoration:none" href="{{ route('home') }}"><i class="mdi mdi-home menu-icon"
+                        style="font-size:25px"></i></a>
                 <i class="mdi mdi-chevron-right"></i>
                 <a style="text-decoration:none" href="{{ route('markets.index') }}">Markets</a>
                 <i class="mdi mdi-chevron-right"></i>
-                <span  style="font-size:15px">{{ $market->name }}</span>
+                <span style="font-size:15px">{{ $market->name }}</span>
             </h4>
         </div>
         <div class="d-flex ">
@@ -68,9 +69,9 @@
                                         <div>{{ $market->name }}</div>
                                         <div>{{ $market->ward }}</div>
                                         <div>{{ $market->sub_ward }}</div>
-                                        <div>{{ $market->users()->where('is_manager',true)->first()->name  }}</div>
-                                        <div>{{ $market->users()->where('is_manager',true)->first()->mobile  }}</div>
-                                        <div>{{ $market->users()->where('is_manager',true)->first()->email  }}</div>
+                                        <div>{{ $market->users()->where('is_manager', true)->first()->name }}</div>
+                                        <div>{{ $market->users()->where('is_manager', true)->first()->mobile }}</div>
+                                        <div>{{ $market->users()->where('is_manager', true)->first()->email }}</div>
                                         <div>{{ number_format($market->frame_price, 0, '.', ',') }} TZS</div>
                                         <div>{{ number_format($market->stall_price, 0, '.', ',') }} TZS</div>
                                         @if ($market->size)
@@ -81,11 +82,13 @@
                                             </div>
                                         @endif
                                     </h5>
-                                    <div class="pt-4 pb-2">
-                                        <button href="#" data-bs-toggle="modal"
-                                            data-bs-target="#editModal-{{ $market->id }}"
-                                            class="btn-outline-primary btn" type="button">EDIT</button>
-                                    </div>
+                                    @if (!Auth::user()->market_id)
+                                        <div class="pt-4 pb-2">
+                                            <button href="#" data-bs-toggle="modal"
+                                                data-bs-target="#editModal-{{ $market->id }}"
+                                                class="btn-outline-primary btn" type="button">EDIT</button>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

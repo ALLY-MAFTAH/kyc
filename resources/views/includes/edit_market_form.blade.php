@@ -126,6 +126,14 @@
             <span class="error" style="color:red">{{ $message }}</span>
         @enderror
     </div>
+    <div class=" form-group">
+        <label for="default_password">User Default Password</label>
+        <input type="text" class="form-control" id="default_password"autocomplete="default_password"
+            value="{{ old('default_password', $market->default_password) }}" placeholder="00" required name="default_password" />
+        @error('default_password')
+            <span class="error" style="color:red">{{ $message }}</span>
+        @enderror
+    </div>
 
     <div class="row mb-2 mt-2">
         <div class="text-center">

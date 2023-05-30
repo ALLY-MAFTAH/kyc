@@ -141,6 +141,7 @@ class MarketController extends Controller
                 "sub_ward" => 'required',
                 "frame_price" => 'required',
                 "stall_price" => 'required',
+                "default_password" => 'required',
             ]);
 
             $attributes['size'] = $request->size ?? $market->size;
