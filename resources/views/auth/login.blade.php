@@ -18,6 +18,21 @@
 
     <div class="container">
         <br>
+        @if (session('info'))
+            <div class="alert alert-info" role="alert">
+                {{ session('info') }}
+            </div>
+        @endif
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="wrapper bg-white">
             <div class="h2 text-center">
                 <img src="{{ asset('assets/images/logo.png') }}" height="140px" width="180px" alt="">

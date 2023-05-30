@@ -5,39 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Stall;
 use App\Models\Market;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class StallController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
+        if (Auth::user()->market_id) {
+            return back()->with('error', "Access dinied! Unauthorized user.");
+        }
         $stalls = Stall::all();
 
         return view('stalls.index', compact('stalls'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Stall  $stall
-     * @return \Illuminate\Http\Response
-     */
+
     public function showStall(Stall $stall)
     {
         return view('stalls.show', compact('stall'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function postStall(Request $request)
     {
         $newCode = $request->newCode;
@@ -70,13 +60,7 @@ class StallController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Stall  $stall
-     * @return \Illuminate\Http\Response
-     */
+
     public function putStall(Request $request, Stall $stall)
     {
         try {
@@ -100,12 +84,7 @@ class StallController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Stall  $stall
-     * @return \Illuminate\Http\Response
-     */
+
     public function deleteStall(Stall $stall)
     {
         $stall->delete();

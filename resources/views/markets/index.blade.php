@@ -51,6 +51,7 @@
                         <form action="{{ route('markets.add') }}" method="POST">
                             @csrf
                             <div class="py-2 my-2" style="color:gray">Market Info</div>
+                            <input type="number" name="is_manager" value="1" hidden>
                             <div class="row">
                                 <div class="col-md-3 form-group">
                                     <label for="code">Code</label>

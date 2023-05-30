@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     // MARKETS ROUTES
+
     Route::get('/markets', [MarketController::class, 'index'])->name('markets.index');
     Route::get('/show-market/{market}', [MarketController::class, 'showMarket'])->name('markets.show');
     Route::post('/add-market', [MarketController::class, 'postMarket'])->name('markets.add');

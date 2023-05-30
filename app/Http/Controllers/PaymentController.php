@@ -8,13 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
+        if (Auth::user()->market_id) {
+            return back()->with('error', "Access dinied! Unauthorized user.");
+        }
         $payments = Payment::all();
 
         return view('payments.index', compact('payments'));
@@ -22,41 +21,13 @@ class PaymentController extends Controller
 
     public function managerIndex()
     {
+
         $payments = Payment::where('market_id', Auth::user()->market_id)->get();
 
         return view('payments.manager_index', compact('payments'));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Payment $payment)
-    {
-        //
-    }
     public function postPayment(Request $request)
     {
         try {
@@ -97,21 +68,9 @@ class PaymentController extends Controller
 
             $payment->update($attributes);
 
-            alert()->success('You have successful edited payment');
+            return redirect()->back()->with('success', 'You have successful edited payment');
         } catch (\Throwable $th) {
-            alert()->error($th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
-        return redirect()->back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Payment $payment)
-    {
-        //
     }
 }

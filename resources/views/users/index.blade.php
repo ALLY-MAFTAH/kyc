@@ -130,7 +130,7 @@
                         <th>Email Address</th>
                         <th>Phone Number</th>
                         <th>Role</th>
-                        <th class="text-center">Status</th>
+                        <th class="text-center">Access</th>
                         <th></th>
                     </tr>
                 </thead>

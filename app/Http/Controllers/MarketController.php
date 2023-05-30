@@ -19,12 +19,19 @@ class MarketController extends Controller
     {
         $markets = Market::all();
 
+        if (Auth::user()->market_id) {
+            return back()->with('error', "Access dinied! Unauthorized user.");
+        }
         return view('markets.index', compact('markets'));
     }
 
 
     public function showMarket(Market $market)
     {
+
+        if (Auth::user()->market_id && Auth::user()->market_id != $market->id) {
+            return back()->with('error', "Access dinied! Unauthorized user.");
+        }
         $lastFrameRow = Frame::where('market_id', $market->id)
             ->latest('created_at')
             ->latest('id')
@@ -56,6 +63,7 @@ class MarketController extends Controller
                 "ward" => 'required',
                 "email" => 'required',
                 "sub_ward" => 'required',
+                "is_manager" => 'required',
                 "manager_name" => 'required',
                 "manager_mobile" => 'required',
                 "stall_price" => 'required',
@@ -81,6 +89,8 @@ class MarketController extends Controller
                 "email" => $request->email,
                 "password" => $request->default_password,
                 'market_id' => $market->id,
+                'is_manager' => $request->is_manager,
+                'default_password' => $request->default_password,
             ]);
             $userController = new UserController();
             $user = null;
@@ -88,7 +98,7 @@ class MarketController extends Controller
 
             if ($userResponse['status'] == true) {
                 $user = $userResponse['data'];
-                $market->user()->save($user);
+                $market->users()->save($user);
             } else {
                 return back()->with('error', $userResponse['data'])->withInput();
             }
@@ -137,12 +147,6 @@ class MarketController extends Controller
             return back()->with('error', $th->getMessage())->withInput();
         }
     }
-
-    public function update(Request $request, Market $market)
-    {
-        //
-    }
-
 
     public function deleteMarket(Market $market)
     {

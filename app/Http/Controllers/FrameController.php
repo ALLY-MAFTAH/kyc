@@ -5,39 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Frame;
 use App\Models\Market;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class FrameController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
+        if (Auth::user()->market_id) {
+            return back()->with('error', "Access dinied! Unauthorized user.");
+        }
         $frames = Frame::all();
 
         return view('frames.index', compact('frames'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Frame  $frame
-     * @return \Illuminate\Http\Response
-     */
+
     public function showFrame(Frame $frame)
     {
         return view('frames.show', compact('frame'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function postFrame(Request $request)
     {
         $newCode = $request->newCode;
@@ -70,13 +60,6 @@ class FrameController extends Controller
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Frame  $frame
-     * @return \Illuminate\Http\Response
-     */
     public function putFrame(Request $request, Frame $frame)
     {
         try {
@@ -100,12 +83,7 @@ class FrameController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Frame  $frame
-     * @return \Illuminate\Http\Response
-     */
+
     public function deleteFrame(Frame $frame)
     {
         $frame->delete();

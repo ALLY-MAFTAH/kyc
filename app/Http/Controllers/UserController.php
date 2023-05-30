@@ -41,6 +41,7 @@ class UserController extends Controller
     }
     public function postUser(Request $request)
     {
+        // dd($request->all());
         try {
 
             $attributes = $this->validate($request, [

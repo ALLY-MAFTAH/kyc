@@ -11,30 +11,29 @@ use App\Models\Payment;
 use App\Services\MessagingService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
+        if (Auth::user()->market_id) {
+            return back()->with('error', "Access dinied! Unauthorized user.");
+        }
         $customers = Customer::all();
         return view('customers.index', compact('customers'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function showCustomer(Customer $customer, $marketId)
     {
+        if (Auth::user()->market_id && Auth::user()->market_id != $marketId) {
+            return back()->with('error', "Access dinied! Unauthorized user.");
+        }
         $market = Market::find($marketId);
 
         $customerFrames = $customer->frames()->where('market_id', $marketId)->get();
@@ -58,7 +57,9 @@ class CustomerController extends Controller
     public function showCustomerAdminView(Customer $customer)
     {
 
-        // dd($markets);
+        if (Auth::user()->market_id) {
+            return back()->with('error', "Access dinied! Unauthorized user.");
+        }
 
         $customerMarkets = $customer->markets()->get();
         $customerFrames = $customer->frames()->get();
@@ -71,12 +72,8 @@ class CustomerController extends Controller
             'customerStalls',
         ));
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function postCustomer(Request $request)
     {
         $photoPath = null;
@@ -116,13 +113,7 @@ class CustomerController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
+
     public function putCustomer(Request $request, Customer $customer)
     {
         try {
@@ -163,12 +154,7 @@ class CustomerController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
+
     public function deleteCustomer(Customer $customer)
     {
         $customer->delete();
