@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'KYC Admin',
                 'mobile' => '0620650411',
+                // 'is_manager' => true,
                 'status' => true,
                 'email' => 'admin@kmc.com',
                 'password' => Hash::make('123'),
