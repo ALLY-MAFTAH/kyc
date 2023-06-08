@@ -87,47 +87,49 @@ class StallController extends Controller
     }
     public function renewStall(Request $request)
     {
+        $months = $request->months;
+        foreach ($months as $month) {
 
-        try {
-            $stall = Stall::find($request->stall_id);
-            $customer = Customer::find($request->customer_id);
-            $paymentRequest = new Request([
-                "frame_id" => "",
-                "stall_id" => $request->stall_id,
-                "customer_id" => $request->customer_id,
-                "date" => now(),
-                "amount" => $stall->price,
-                'market_id' => $stall->market_id,
-                'month' => $request->month,
-                'year' => $request->year,
-                "receipt_number" => $request->receipt_number,
-            ]);
-            $paymentController = new PaymentController();
-            $payment = null;
-            $paymentResponse = $paymentController->postPayment($paymentRequest);
+            try {
+                $stall = Stall::find($request->stall_id);
+                $customer = Customer::find($request->customer_id);
+                $paymentRequest = new Request([
+                    "stall_id" => $request->stall_id,
+                    "customer_id" => $request->customer_id,
+                    "date" => now(),
+                    "amount" => $stall->price,
+                    'market_id' => $stall->market_id,
+                    'month' => $month,
+                    'year' => $request->year,
+                    "receipt_number" => $request->receipt_number,
+                ]);
+                $paymentController = new PaymentController();
+                $payment = null;
+                $paymentResponse = $paymentController->postStallPayment($paymentRequest);
 
-            if ($paymentResponse['status'] == true) {
-                $payment = $paymentResponse['data'];
-                $customer->payments()->save($payment);
-                $stall->payments()->save($payment);
-                $stall->market->payments()->save($payment);
-            } else {
-                return back()->with('error', $paymentResponse['data'])->withInput();
+                if ($paymentResponse['status'] == true) {
+                    $payment = $paymentResponse['data'];
+                    $customer->payments()->save($payment);
+                    $stall->payments()->save($payment);
+                    $stall->market->payments()->save($payment);
+                } else {
+                    return back()->with('error', $paymentResponse['data'])->withInput();
+                }
+                $stallInAttr = [
+                    'entry_date'  => now(),
+                    "stall_id" => $stall->id,
+                    "customer_id" => $customer->id,
+                    'user_id'  => Auth::user()->id,
+                    'business'  => $request->business ?? "",
+                    "payment_id" => $payment->id,
+                ];
+
+                $stallIn = StallIn::create($stallInAttr);
+            } catch (\Throwable $th) {
+                return back()->with('error', $th->getMessage());
             }
-            $stallInAttr = [
-                'entry_date'  => now(),
-                "stall_id" => $stall->id,
-                "customer_id" => $customer->id,
-                'user_id'  => Auth::user()->id,
-                'business'  => $request->business ?? "",
-                "payment_id" => $payment->id,
-            ];
-
-            $stallIn = StallIn::create($stallInAttr);
-            return back()->with('success', 'Payment recorded successful');
-        } catch (\Throwable $th) {
-            return back()->with('error', $th->getMessage());
         }
+        return back()->with('success', 'Payment recorded successful');
     }
 
 

@@ -4,14 +4,20 @@
     </div>
     <div class="card-body px-1 py-1">
         <div class="row  my-2">
-            <div class="col" style="color:rgb(2, 2, 111)">{{ App\Models\Stall::find($selectedStallId)->code }}</div>
+            <div class="col" style="color:rgb(2, 2, 111)">
+                <label class="p-2" style="border-radius:5px; background-color:rgb(245, 237, 220)">
+                    {{ App\Models\Stall::find($selectedStallId)->code }}
+                </label>
+            </div>
             <div class="col py-0 text-end">
                 <form action="{{ route('customers.show', ['customer' => $customer, 'marketId' => $market->id]) }}"
                     method="get">
                     <input type="number" value="{{ $selectedStallId }}" name="selectedStallId" hidden>
-
+                    <input type="number" value="{{ $selectedFrameId }}" name="selectedFrameId" hidden>
+                    <input type="number" value="{{ $frameSelectedYear }}" name="frameSelectedYear" hidden>
                     Year &nbsp;&nbsp; <select onchange="this.form.submit()"
-                        class=" js-example-basic-single form-control" required name="stallSelectedYear" style="width: 40%;">
+                        class=" js-example-basic-single form-control" required name="stallSelectedYear"
+                        style="width: 40%;">
                         @php
                             $currentYear = date('Y');
                             $years = range($currentYear, $currentYear - 50);
@@ -64,13 +70,15 @@
                         <td>{{ $monthName }}</td>
                         <td class="text-center">
                             @if ($stallRecord)
-                                <label class="p-1 m-0 text-white text-center bg-success" style="width:80px;"> PAID </label>
+                                <label class="p-1 m-0 text-white text-center bg-success" style="width:80px;"> PAID
+                                </label>
                             @else
-                                <label class="p-1 m-0 text-white text-center bg-danger" style="width:80px;"> NOT PAID </label>
+                                <label class="p-1 m-0 text-white text-center bg-danger" style="width:80px;"> NOT PAID
+                                </label>
                             @endif
                         </td>
                         <td>{{ $stallRecord->user->name ?? '' }}</td>
-                        <td  class="text-center">
+                        <td class="text-center">
                             @if ($stallRecord)
                                 <label class="p-1 m-0 mdi mdi-check text-success ">
                                     {{ number_format($stallRecord->payment->amount, 0, '.', ',') }} TZS </label>
@@ -94,8 +102,8 @@
                                             @csrf
                                             <input type="text" name="customer_id" value="{{ $customer->id }}"
                                                 hidden>
-                                            <input type="text" name="month" value="{{ $monthName }}"hidden>
-                                            <input type="text" name="year" value="{{ $stallSelectedYear }}"hidden>
+                                            <input type="text" name="year"
+                                                value="{{ $stallSelectedYear }}"hidden>
                                             <input type="text" name="stall_id" value="{{ $selectedStallId }}"hidden>
                                             <div class=" ">
                                                 Payment for:
@@ -110,6 +118,64 @@
                                             <div class="pb-1 ">Month: {{ $monthName }}, {{ $stallSelectedYear }}
                                             </div>
                                             <hr>
+                                            <div class="form-group">
+                                                <label for="">Month</label>
+                                                <select class="js-example-basic-multiple form-control"
+                                                    multiple="multiple" required name="months[]" style="width: 100%;">
+                                                    <option value="">Month</option>
+                                                    <option
+                                                        value="January"{{ $monthName == 'January' ? 'selected' : '' }}>
+                                                        January
+                                                        &nbsp;&nbsp;{{ $stallSelectedYear }}
+                                                    </option>
+                                                    <option
+                                                        value="February"{{ $monthName == 'February' ? 'selected' : '' }}>
+                                                        February
+                                                        &nbsp;&nbsp;{{ $stallSelectedYear }}</option>
+                                                    <option
+                                                        value="March"{{ $monthName == 'March' ? 'selected' : '' }}>
+                                                        March &nbsp;&nbsp;{{ $stallSelectedYear }}
+                                                    </option>
+                                                    <option
+                                                        value="April"{{ $monthName == 'April' ? 'selected' : '' }}>
+                                                        April &nbsp;&nbsp;{{ $stallSelectedYear }}
+                                                    </option>
+                                                    <option value="May"{{ $monthName == 'May' ? 'selected' : '' }}>
+                                                        May
+                                                        &nbsp;&nbsp;{{ $stallSelectedYear }}
+                                                    </option>
+                                                    <option value="June"{{ $monthName == 'June' ? 'selected' : '' }}>
+                                                        June &nbsp;&nbsp;{{ $stallSelectedYear }}
+                                                    </option>
+                                                    <option value="July"{{ $monthName == 'July' ? 'selected' : '' }}>
+                                                        July &nbsp;&nbsp;{{ $stallSelectedYear }}
+                                                    </option>
+                                                    <option
+                                                        value="August"{{ $monthName == 'August' ? 'selected' : '' }}>
+                                                        August &nbsp;&nbsp;{{ $stallSelectedYear }}
+                                                    </option>
+                                                    <option
+                                                        value="September"{{ $monthName == 'September' ? 'selected' : '' }}>
+                                                        September
+                                                        &nbsp;&nbsp;{{ $stallSelectedYear }}</option>
+                                                    <option
+                                                        value="October"{{ $monthName == 'October' ? 'selected' : '' }}>
+                                                        October
+                                                        &nbsp;&nbsp;{{ $stallSelectedYear }}
+                                                    </option>
+                                                    <option
+                                                        value="November"{{ $monthName == 'November' ? 'selected' : '' }}>
+                                                        November
+                                                        &nbsp;&nbsp;{{ $stallSelectedYear }}</option>
+                                                    <option
+                                                        value="December"{{ $monthName == 'December' ? 'selected' : '' }}>
+                                                        December
+                                                        &nbsp;&nbsp;{{ $stallSelectedYear }}</option>
+                                                </select>
+                                                @error('months[]')
+                                                    <span class="error" style="color:red">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                             <div class=" form-group">
                                                 <label for="">Business</label>
                                                 <input type="text" name="business" class="form-control"

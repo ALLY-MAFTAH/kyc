@@ -172,7 +172,7 @@
                     </div>
                     <div class="row ">
                         @forelse ($customerFrames as $frame)
-                            <div class="col-6 pl-1 pr-1">
+                            <div class="col-md-6 pl-1 pr-1">
                                 <div class="card shadow mt-2">
                                     <div class="card-header d-flex justify-content-between align-items-center"
                                         style="padding:2px;padding-left:5px;color:rgb(3, 3, 113)">
@@ -206,8 +206,12 @@
                                                 method="get">
                                                 <input type="number" value="{{ $frame->id }}"
                                                     name="selectedFrameId" hidden>
+                                                <input type="number" value="{{ $selectedStallId }}"
+                                                    name="selectedStallId" hidden>
                                                 <input type="number" value="{{ $frameSelectedYear }}"
                                                     name="frameSelectedYear" hidden>
+                                                <input type="number" value="{{ $stallSelectedYear }}"
+                                                    name="stallSelectedYear" hidden>
                                                 <button href="#" data-id="{{ $frame->id }}" type="submit"
                                                     class="btn-outline-warning btn" type="button">Show
                                                     Records</button>
@@ -255,7 +259,7 @@
                     </div>
                     <div class="row">
                         @forelse ($customerStalls as $stall)
-                            <div class="col-6 pl-1 pr-1">
+                            <div class="col-md-6 pl-1 pr-1">
                                 <div class="card shadow mt-2">
                                     <div class="card-header d-flex justify-content-between align-items-center"
                                         style="padding:2px;padding-left:5px;color:rgb(3, 3, 113)">
@@ -295,9 +299,21 @@
                                                 style="color:rgb(4, 4, 141)">{{ $stall->user->name ?? ('' ?? '') }}</span>
                                         </div>
                                         <div class="py-2 text-right">
-                                            <button href="#" data-id="{{ $stall }}"
-                                                class="btn-outline-warning btn" type="button">Show
-                                                Records</button>
+                                            <form id="showStallRecord-{{ $stall->id }}"
+                                                action="{{ route('customers.show', ['customer' => $stall->customer, 'marketId' => $market->id]) }}"
+                                                method="get">
+                                                <input type="number" value="{{ $stall->id }}"
+                                                    name="selectedStallId" hidden>
+                                                <input type="number" value="{{ $selectedFrameId }}"
+                                                    name="selectedFrameId" hidden>
+                                                <input type="number" value="{{ $stallSelectedYear }}"
+                                                    name="stallSelectedYear" hidden>
+                                                <input type="number" value="{{ $frameSelectedYear }}"
+                                                    name="frameSelectedYear" hidden>
+                                                <button href="#" data-id="{{ $stall->id }}" type="submit"
+                                                    class="btn-outline-warning btn" type="button">Show
+                                                    Records</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

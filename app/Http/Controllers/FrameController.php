@@ -86,46 +86,48 @@ class FrameController extends Controller
     }
     public function renewFrame(Request $request)
     {
-        try {
-            $frame = Frame::find($request->frame_id);
-            $customer = Customer::find($request->customer_id);
-            $paymentRequest = new Request([
-                "stall_id" => "",
-                "frame_id" => $request->frame_id,
-                "customer_id" => $request->customer_id,
-                "date" => now(),
-                "amount" => $frame->price,
-                'market_id' => $frame->market_id,
-                'month' => $request->month,
-                'year' => $request->year,
-                "receipt_number" => $request->receipt_number,
-            ]);
-            $paymentController = new PaymentController();
-            $payment = null;
-            $paymentResponse = $paymentController->postPayment($paymentRequest);
+        $months = $request->months;
+        foreach ($months as $month) {
 
-            if ($paymentResponse['status'] == true) {
-                $payment = $paymentResponse['data'];
-                $customer->payments()->save($payment);
-                $frame->payments()->save($payment);
-                $frame->market->payments()->save($payment);
-            } else {
-                return back()->with('error', $paymentResponse['data'])->withInput();
+            try {
+                $frame = Frame::find($request->frame_id);
+                $customer = Customer::find($request->customer_id);
+                $paymentRequest = new Request([
+                    "frame_id" => $request->frame_id,
+                    "customer_id" => $request->customer_id,
+                    "date" => now(),
+                    "amount" => $frame->price,
+                    'market_id' => $frame->market_id,
+                    'month' => $month,
+                    'year' => $request->year,
+                    "receipt_number" => $request->receipt_number,
+                ]);
+                $paymentController = new PaymentController();
+                $payment = null;
+                $paymentResponse = $paymentController->postFramePayment($paymentRequest);
+
+                if ($paymentResponse['status'] == true) {
+                    $payment = $paymentResponse['data'];
+                    $customer->payments()->save($payment);
+                    $frame->payments()->save($payment);
+                    $frame->market->payments()->save($payment);
+                } else {
+                    return back()->with('error', $paymentResponse['data'])->withInput();
+                }
+                $frameInAttr = [
+                    'entry_date'  => now(),
+                    "frame_id" => $frame->id,
+                    "customer_id" => $customer->id,
+                    'user_id'  => Auth::user()->id,
+                    'business'  => $request->business ?? "",
+                    "payment_id" => $payment->id,
+                ];
+                $frameIn = FrameIn::create($frameInAttr);
+            } catch (\Throwable $th) {
+                return back()->with('error', $th->getMessage());
             }
-            $frameInAttr = [
-                'entry_date'  => now(),
-                "frame_id" => $frame->id,
-                "customer_id" => $customer->id,
-                'user_id'  => Auth::user()->id,
-                'business'  => $request->business ?? "",
-                "payment_id" => $payment->id,
-            ];
-
-            $frameIn = FrameIn::create($frameInAttr);
-            return back()->with('success', 'Payment recorded successful');
-        } catch (\Throwable $th) {
-            return back()->with('error', $th->getMessage());
         }
+        return back()->with('success', 'Payment recorded successful');
     }
 
     public function deleteFrame(Frame $frame)

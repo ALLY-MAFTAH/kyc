@@ -211,7 +211,6 @@ class CustomerController extends Controller
 
             foreach ($months as $month) {
                 $paymentRequest = new Request([
-                    "stall_id" => "",
                     "frame_id" => $frame->id,
                     "customer_id" => $customer->id,
                     "date" => now(),
@@ -223,7 +222,7 @@ class CustomerController extends Controller
                 ]);
                 $paymentController = new PaymentController();
                 $payment = null;
-                $paymentResponse = $paymentController->postPayment($paymentRequest);
+                $paymentResponse = $paymentController->postFramePayment($paymentRequest);
 
                 if ($paymentResponse['status'] == true) {
                     $payment = $paymentResponse['data'];
@@ -266,7 +265,6 @@ class CustomerController extends Controller
 
             foreach ($months as $month) {
                 $paymentRequest = new Request([
-                    "frame_id" => "",
                     "stall_id" => $stall->id,
                     "customer_id" => $customer->id,
                     "date" => now(),
@@ -278,7 +276,7 @@ class CustomerController extends Controller
                 ]);
                 $paymentController = new PaymentController();
                 $payment = null;
-                $paymentResponse = $paymentController->postPayment($paymentRequest);
+                $paymentResponse = $paymentController->postStallPayment($paymentRequest);
 
                 if ($paymentResponse['status'] == true) {
                     $payment = $paymentResponse['data'];
