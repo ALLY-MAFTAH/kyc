@@ -17,10 +17,11 @@ class Stall extends Model
         'price',
         'customer_id',
         'market_id',
-        'size',
-        'business',
-        'type',
         'entry_date',
+        'size',
+        'type',
+        'business',
+        'user_id',
 
     ];
 
@@ -36,8 +37,20 @@ class Stall extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+    public function stallIns()
+    {
+        return $this->hasMany(StallIn::class);
+    }
+    public function stallOuts()
+    {
+        return $this->hasMany(StallOut::class);
     }
 }

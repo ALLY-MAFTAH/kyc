@@ -54,4 +54,28 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Market::class, 'market_id');
     }
+    public function frameIns()
+    {
+        return $this->hasMany(FrameIn::class);
+    }
+    public function stallIns()
+    {
+        return $this->hasMany(StallIn::class);
+    }
+    public function frames()
+    {
+        return $this->hasMany(Frame::class);
+    }
+    public function stalls()
+    {
+        return $this->hasMany(Stall::class);
+    }
+    public function frameOuts()
+    {
+        return $this->hasMany(FrameOut::class);
+    }
+    public function stallOuts()
+    {
+        return $this->hasMany(StallOut::class);
+    }
 }

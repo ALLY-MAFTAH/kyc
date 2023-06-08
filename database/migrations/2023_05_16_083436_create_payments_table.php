@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('receipt_number');
             $table->integer('year');
             $table->string('month');
+            $table->unique(['stall_id', 'customer_id', 'year', 'month']);
+            $table->unique(['frame_id', 'customer_id', 'year', 'month']);
             $table->timestamps();
             $table->softDeletes();
         });

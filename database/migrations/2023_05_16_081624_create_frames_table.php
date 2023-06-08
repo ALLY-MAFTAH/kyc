@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('entry_date')->nullable();
             $table->string('size')->nullable();
             $table->string('business')->nullable();
+            $table->string('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

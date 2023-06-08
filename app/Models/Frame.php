@@ -17,9 +17,10 @@ class Frame extends Model
         'price',
         'market_id',
         'customer_id',
-        'business',
-        'size',
         'entry_date',
+        'size',
+        'business',
+        'user_id',
     ];
 
     protected $dates = [
@@ -30,6 +31,10 @@ class Frame extends Model
     {
         return $this->belongsTo(Market::class, 'market_id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id');
@@ -38,4 +43,14 @@ class Frame extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function frameIns()
+    {
+        return $this->hasMany(FrameIn::class);
+    }
+    public function frameOuts()
+    {
+        return $this->hasMany(FrameOut::class);
+    }
+
 }

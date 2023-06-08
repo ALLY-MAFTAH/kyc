@@ -77,9 +77,6 @@ class UserController extends Controller
             $attributes['password'] = Hash::make($request->default_password);
 
             $user = User::create($attributes);
-
-
-
             return ['status' => true, 'data' => $user];
         } catch (\Throwable $th) {
             return ['status' => false, 'data' => $th->getMessage()];
@@ -93,7 +90,7 @@ class UserController extends Controller
             $attributes = $this->validateWithBag('update', $request, [
                 'name' => 'required',
                 'mobile' => 'required',
-                'is_manager' => 'required',
+                // 'is_manager' => 'required',
                 'email' => ['sometimes', Rule::unique('users')->ignore($user->id)->whereNull('deleted_at')],
                 'market_id' => ['sometimes', 'exists:markets,id'],
             ]);

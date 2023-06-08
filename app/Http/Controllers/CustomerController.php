@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Stall;
 use App\Models\Customer;
 use App\Models\Frame;
+use App\Models\FrameIn;
+use App\Models\FrameOut;
 use App\Models\Market;
 use App\Models\Message;
 use App\Models\Payment;
+use App\Models\StallIn;
+use App\Models\StallOut;
 use App\Services\MessagingService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,8 +33,9 @@ class CustomerController extends Controller
 
 
 
-    public function showCustomer(Customer $customer, $marketId)
+    public function showCustomer(Request $request, Customer $customer, $marketId)
     {
+
         if (Auth::user()->market_id && Auth::user()->market_id != $marketId) {
             return back()->with('error', "Access dinied! Unauthorized user.");
         }
@@ -44,6 +49,12 @@ class CustomerController extends Controller
 
         $payments = Payment::where(['market_id' => $marketId, 'customer_id' => $customer->id])->get();
 
+        $frameSelectedYear = $request->get('frameSelectedYear', date('Y'));
+        $selectedFrameId = $request->get('selectedFrameId', $customerFrames->first()->id??0);
+
+        $stallSelectedYear = $request->get('stallSelectedYear', date('Y'));
+        $selectedStallId = $request->get('selectedStallId', $customerFrames->first()->id??0);
+
         return view('customers.show', compact(
             'customer',
             'market',
@@ -52,6 +63,10 @@ class CustomerController extends Controller
             'emptyStalls',
             'emptyFrames',
             'payments',
+            'frameSelectedYear',
+            'stallSelectedYear',
+            'selectedFrameId',
+            'selectedStallId',
         ));
     }
     public function showCustomerAdminView(Customer $customer)
@@ -189,6 +204,8 @@ class CustomerController extends Controller
             $attributes['customer_id'] = $customer->id;
             $attributes['business'] = $request->business ?? "";
             $attributes['entry_date'] = now();
+            $attributes['user_id'] = Auth::user()->id;
+
             $frame->update($attributes);
             $customer->frames()->save($frame);
 
@@ -216,6 +233,16 @@ class CustomerController extends Controller
                 } else {
                     return back()->with('error', $paymentResponse['data'])->withInput();
                 }
+                $frameInAttr = [
+                    'entry_date'  => now(),
+                    "frame_id" => $frame->id,
+                    "customer_id" => $customer->id,
+                    'user_id'  => Auth::user()->id,
+                    'business'  => $request->business ?? "",
+                    "payment_id" => $payment->id,
+                ];
+
+                $frameIn = FrameIn::create($frameInAttr);
             }
 
             return back()->with('success', 'Frame successfully assigned to customer');
@@ -232,6 +259,7 @@ class CustomerController extends Controller
             $attributes['customer_id'] = $customer->id;
             $attributes['business'] = $request->business ?? "";
             $attributes['entry_date'] = now();
+            $attributes['user_id'] = Auth::user()->id ;
 
             $stall->update($attributes);
             $customer->stalls()->save($stall);
@@ -260,6 +288,16 @@ class CustomerController extends Controller
                 } else {
                     return back()->with('error', $paymentResponse['data'])->withInput();
                 }
+                $stallInAttr = [
+                    'entry_date'  => now(),
+                    "stall_id" => $stall->id,
+                    "customer_id" => $customer->id,
+                    'user_id'  => Auth::user()->id,
+                    'business'  => $request->business ?? "",
+                    "payment_id" => $payment->id,
+                ];
+
+                $stallIn = StallIn::create($stallInAttr);
             }
 
             return back()->with('success', 'Stall successfully assigned to customer');
@@ -275,7 +313,22 @@ class CustomerController extends Controller
             $frame = Frame::find($frameId);
             $attributes['customer_id'] = null;
             $frame->update($attributes);
-            // $customer->frames()->save($frame);
+
+            $frameOutAttr = [
+                'entry_date'  => now(),
+                "frame_id" => $frame->id,
+                "customer_id" => $customer->id,
+                'user_id'  => Auth::user()->id,
+                'leaving_date' => now(),
+            ];
+            $frameOut = FrameOut::create($frameOutAttr);
+
+            $oldFrameIns = FrameIn::where(['frame_id' => $frame->id, 'customer_id' => $customer->id, 'is_active' => true])->get();
+            foreach ($oldFrameIns as $oldFrameIn) {
+
+                $oldFrameInAttr['is_active'] = false;
+                $oldFrameIn->update($oldFrameInAttr);
+            }
 
             return back()->with('success', 'Frames successfully removed from customer');
         } catch (\Throwable $th) {
@@ -289,7 +342,22 @@ class CustomerController extends Controller
             $stall = Stall::find($stallId);
             $attributes['customer_id'] = null;
             $stall->update($attributes);
-            // $customer->stalls()->save($stall);
+
+            $stallOutAttr = [
+                'entry_date'  => now(),
+                "stall_id" => $stall->id,
+                "customer_id" => $customer->id,
+                'user_id'  => Auth::user()->id,
+                'leaving_date' => now(),
+            ];
+            $stallOut = StallOut::create($stallOutAttr);
+
+            $oldStallIns = StallIn::where(['stall_id' => $stall->id, 'customer_id' => $customer->id, 'is_active' => true])->get();
+            foreach ($oldStallIns as $oldStallIn) {
+
+                $oldStallInAttr['is_active'] = false;
+                $oldStallIn->update($oldStallInAttr);
+            }
 
             return back()->with('success', 'Stalls successfully removed from customer');
         } catch (\Throwable $th) {

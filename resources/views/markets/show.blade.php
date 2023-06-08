@@ -69,9 +69,27 @@
                                         <div>{{ $market->name }}</div>
                                         <div>{{ $market->ward }}</div>
                                         <div>{{ $market->sub_ward }}</div>
-                                        <div>{{ $market->users()->where('is_manager', true)->first()->name }}</div>
-                                        <div>{{ $market->users()->where('is_manager', true)->first()->mobile }}</div>
-                                        <div>{{ $market->users()->where('is_manager', true)->first()->email }}</div>
+                                        <div>
+                                            @if ($market->users()->where('is_manager', true)->first() == null)
+                                                <span style="color:red">No Manager</span>
+                                            @else
+                                                {{ $market->users()->where('is_manager', true)->first()->name }}
+                                            @endif
+                                        </div>
+                                        <div>
+                                            @if ($market->users()->where('is_manager', true)->first() == null)
+                                                -
+                                            @else
+                                                {{ $market->users()->where('is_manager', true)->first()->mobile }}
+                                            @endif
+                                        </div>
+                                        <div>
+                                            @if ($market->users()->where('is_manager', true)->first() == null)
+                                                -
+                                            @else
+                                                {{ $market->users()->where('is_manager', true)->first()->email }}
+                                            @endif
+                                        </div>
                                         <div>{{ number_format($market->frame_price, 0, '.', ',') }} TZS</div>
                                         <div>{{ number_format($market->stall_price, 0, '.', ',') }} TZS</div>
                                         @if ($market->size)
@@ -151,7 +169,7 @@
 
                         </div>
                         <div class="">
-                            CONTRIBUTION
+                            COLLECTION
                         </div>
                     </div>
                 </div>

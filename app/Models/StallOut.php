@@ -6,22 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Payment extends Model
+class StallOut extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
-        'date',
-        'amount',
-        'receipt_number',
-        'stall_id',
-        'frame_id',
-        'market_id',
         'customer_id',
-        'month',
-        'year',
-
+        'stall_id',
+        'user_id',
+        'leaving_date',
     ];
 
     protected $dates = [
@@ -32,24 +26,12 @@ class Payment extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
-    public function frame()
-    {
-        return $this->belongsTo(Frame::class, 'frame_id');
-    }
     public function stall()
     {
         return $this->belongsTo(Stall::class, 'stall_id');
     }
-    public function market()
+    public function user()
     {
-        return $this->belongsTo(Market::class, 'market_id');
-    }
-    public function frameIn()
-    {
-        return $this->hasOne(FrameIn::class);
-    }
-    public function stallIn()
-    {
-        return $this->hasOne(StallIn::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -118,7 +118,9 @@
 .table-head {
     background: linear-gradient(90deg, rgba(128, 63, 10, 0.226), rgba(31, 92, 145, 0.21), rgba(31, 92, 145, 0.21), rgba(31, 92, 145, 0.21), rgba(31, 92, 145, 0.21), rgba(31, 92, 145, 0.21), rgba(128, 63, 10, 0.2262));
     box-shadow: #090505;
+    border: none !important;
 }
+
 
 table th:first-child {
     border-radius: 5px 0 0 0;

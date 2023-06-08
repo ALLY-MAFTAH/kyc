@@ -25,8 +25,16 @@
                 <span class="error" style="color:red">{{ $message }}</span>
             @enderror
         </div>
-
-
+        @if ($frame->customer_id)
+            <div class="form-group">
+                <label for="business">Business</label>
+                <input type="text" class="form-control" id="business" autocomplete="business"
+                    placeholder="Business (Optional)" value="{{ old('business', $frame->business) }}" name="business" />
+                @error('business')
+                    <span class="error" style="color:red">{{ $message }}</span>
+                @enderror
+            </div>
+        @endif
         <div class="form-group">
             <label for="size">Frame Size</label>
             <input type="text" class="form-control" id="size" autocomplete="size" placeholder="Size (Optional)"

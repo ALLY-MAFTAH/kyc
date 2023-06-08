@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/frames', [FrameController::class, 'index'])->name('frames.index');
     Route::get('/show-frame/{frame}', [FrameController::class, 'showFrame'])->name('frames.show');
     Route::post('/add-frame', [FrameController::class, 'postFrame'])->name('frames.add');
+    Route::post('/renew_frame', [FrameController::class, 'renewFrame'])->name('frames.renew_frame');
     Route::put('/edit-frame/{frame}', [FrameController::class, 'putFrame'])->name('frames.edit');
     Route::delete('/delete-frame/{frame}', [FrameController::class, 'deleteFrame'])->name('frames.delete');
 
@@ -51,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/stalls', [StallController::class, 'index'])->name('stalls.index');
     Route::get('/show-stall/{stall}', [StallController::class, 'showStall'])->name('stalls.show');
     Route::post('/add-stall', [StallController::class, 'postStall'])->name('stalls.add');
+    Route::post('/renew_stall', [StallController::class, 'renewStall'])->name('stalls.renew_stall');
     Route::put('/edit-stall/{stall}', [StallController::class, 'putStall'])->name('stalls.edit');
     Route::delete('/delete-stall/{stall}', [StallController::class, 'deleteStall'])->name('stalls.delete');
 

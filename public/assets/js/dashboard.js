@@ -147,7 +147,7 @@
           label: "# of Votes",
           data: [12, 19, 3, 5, 2, 3],
           backgroundColor: ["#e2f8f8"],
-          borderColor: ["#00cccd"],
+          borderColor: ["#06b806"],
           borderWidth: 1,
           pointRadius: 0,
           fill: true, // 3: no fill
@@ -187,8 +187,8 @@
         {
           label: "# of Votes",
           data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: ["#00cccd33"],
-          borderColor: ["#00cccd"],
+          backgroundColor: ["#06b80633"],
+          borderColor: ["#06b806"],
           borderWidth: 1,
           pointRadius: 0,
           fill: true, // 3: no fill
@@ -229,7 +229,7 @@
           label: "# of Votes",
           data: [13, 2, 15, 3, 19, 12],
           backgroundColor: ["#e2f8f8"],
-          borderColor: ["#00cccd"],
+          borderColor: ["#06b806"],
           borderWidth: 1,
           pointRadius: 0,
           fill: true, // 3: no fill
@@ -269,8 +269,8 @@
         {
           label: "# of Votes",
           data: [13, 2, 15, 3, 19, 12],
-          backgroundColor: ["#00cccd33"],
-          borderColor: ["#00cccd"],
+          backgroundColor: ["#06b80633"],
+          borderColor: ["#06b806"],
           borderWidth: 1,
           pointRadius: 0,
           fill: true, // 3: no fill
@@ -475,7 +475,7 @@
           label: "# of Votes",
           data: [12, 19, 3, 15, 2, 12],
           backgroundColor: ["#e2f8f8"],
-          borderColor: ["#00cccd"],
+          borderColor: ["#06b806"],
           borderWidth: 1,
           pointRadius: 0,
           fill: true, // 3: no fill
@@ -515,8 +515,8 @@
         {
           label: "# of Votes",
           data: [12, 19, 3, 15, 2, 12],
-          backgroundColor: ["#00cccd33"],
-          borderColor: ["#00cccd"],
+          backgroundColor: ["#06b80633"],
+          borderColor: ["#06b806"],
           borderWidth: 1,
           pointRadius: 0,
           fill: true, // 3: no fill

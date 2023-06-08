@@ -45,4 +45,20 @@ class Customer extends Model
     {
         return $this->hasMany(Message::class);
     }
+    public function frameIns()
+    {
+        return $this->hasMany(FrameIn::class);
+    }
+    public function stallIns()
+    {
+        return $this->hasMany(StallIn::class);
+    }
+    public function frameOuts()
+    {
+        return $this->hasMany(FrameOut::class);
+    }
+    public function stallOuts()
+    {
+        return $this->hasMany(StallOut::class);
+    }
 }

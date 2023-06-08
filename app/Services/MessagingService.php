@@ -9,14 +9,7 @@ use Illuminate\Support\Facades\Http;
 
 class MessagingService
 {
-    /**
-     * Send SMS through Next SMS API
-     *
-     * @param string $receiver
-     * @param string $body
-     *
-     * @return \Illuminate\Http\Client\Response|null
-     */
+
     public function sendMessage($receiver, $body)
     {
         $from = 'NEXTSMS';
