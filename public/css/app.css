@@ -22,7 +22,6 @@
     background-color: rgba(131, 171, 247, 0.434);
     margin-right: 2px;
     margin-left: 2px;
-
 }
 
 .btn {
@@ -102,7 +101,7 @@
     align-items: center;
 }
 
-.sidebar .nav .nav-item.active>.nav-link .menu-title {
+.sidebar .nav .nav-item.active > .nav-link .menu-title {
     color: #270a83 !important;
     text-shadow: 1px 1px 1px white;
 }
@@ -116,11 +115,19 @@
 }
 
 .table-head {
-    background: linear-gradient(90deg, rgba(128, 63, 10, 0.226), rgba(31, 92, 145, 0.21), rgba(31, 92, 145, 0.21), rgba(31, 92, 145, 0.21), rgba(31, 92, 145, 0.21), rgba(31, 92, 145, 0.21), rgba(128, 63, 10, 0.2262));
+    background: linear-gradient(
+        90deg,
+        rgba(128, 63, 10, 0.226),
+        rgba(31, 92, 145, 0.21),
+        rgba(31, 92, 145, 0.21),
+        rgba(31, 92, 145, 0.21),
+        rgba(31, 92, 145, 0.21),
+        rgba(31, 92, 145, 0.21),
+        rgba(128, 63, 10, 0.2262)
+    );
     box-shadow: #090505;
     border: none !important;
 }
-
 
 table th:first-child {
     border-radius: 5px 0 0 0;
@@ -136,7 +143,6 @@ table th:last-child {
 
 .form-check .form-check-input {
     float: none !important;
-
 }
 
 .form-check-input {
@@ -149,8 +155,13 @@ table th:last-child {
 .form-check {
     margin-bottom: -23px !important;
 }
-.sum-card
-{
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
+.navbar
+    .navbar-menu-wrapper
+    .navbar-nav
+    .nav-item.dropdown
+    .navbar-dropdown
+    .dropdown-item {
+
+    padding: 11px 12px !important;
+
 }

@@ -21,10 +21,11 @@
             </h4>
         </div>
         <div class="d-flex ">
-            <button type="button" class="btn  bg-white btn-icon-text border">
-                <i class="mdi mdi-download btn-icon-prepend"></i> Download </button>
-            <button type="button" class="btn  bg-white btn-icon-text border ml-3">
-                <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
+            <div class="d-flex ">
+                <button onclick="saveWebpage()" type="button" class="btn  bg-white btn-icon-text border">
+                    <i class="mdi mdi-download btn-icon-prepend"></i> Download </button>
+                <button onclick="printDiv('printable-content')"  type="button" class="btn  bg-white btn-icon-text border ml-3">
+                    <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
         </div>
     </div>
 @endsection

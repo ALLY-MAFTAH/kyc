@@ -99,8 +99,9 @@
                     @method('PUT')
                     <input type="text" value="{{ Auth::user()->id }}" name="user_id" hidden>
                     <div class="text-start mb-1">
-                        <label for="old_password" class="col-form-label text-sm-start">{{ __('Old Password') }}</label>
-                        <input  id="old_password" type="password" placeholder="Old Password"
+                        <label for="old_password"
+                            class="col-form-label text-sm-start">{{ __('Old Password') }}</label>
+                        <input id="old_password" type="password" placeholder="Old Password"
                             class="form-control @error('old_password') is-invalid @enderror" name="old_password"
                             autocomplete="old_password" required autofocus>
                         @error('old_password')
@@ -110,8 +111,9 @@
                         @enderror
                     </div>
                     <div class="text-start mb-1">
-                        <label for="new_password" class="col-form-label text-sm-start">{{ __('New Password') }}</label>
-                        <input  id="new_password" type="password" placeholder="New Password"
+                        <label for="new_password"
+                            class="col-form-label text-sm-start">{{ __('New Password') }}</label>
+                        <input id="new_password" type="password" placeholder="New Password"
                             class="form-control @error('new_password') is-invalid @enderror" name="new_password"
                             autocomplete="new_password" required autofocus>
                         @error('new_password')
@@ -121,17 +123,18 @@
                         @enderror
                     </div>
                     <div class="text-start mb-1">
-                        <label for="confirm_new_password" class="col-form-label text-sm-start">{{ __('Confirm New Password') }}</label>
-                        <input  id="confirm_new_password" type="password" placeholder="Confirm New Password"
-                            class="form-control @error('confirm_new_password') is-invalid @enderror" name="confirm_new_password"
-                            autocomplete="confirm_new_password" required autofocus>
+                        <label for="confirm_new_password"
+                            class="col-form-label text-sm-start">{{ __('Confirm New Password') }}</label>
+                        <input id="confirm_new_password" type="password" placeholder="Confirm New Password"
+                            class="form-control @error('confirm_new_password') is-invalid @enderror"
+                            name="confirm_new_password" autocomplete="confirm_new_password" required autofocus>
                         @error('confirm_new_password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
-                    <div class="row mb-1 mt-2">
+                    <div class="row mb-1 mt-4">
                         <div class="text-center">
                             <button type="submit" class="btn  btn-outline-primary">
                                 {{ __('Submit') }}

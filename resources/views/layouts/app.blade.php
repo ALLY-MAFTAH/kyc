@@ -55,7 +55,9 @@
                     <div class="breadcrumbs">
                         @yield('breadcrumbs')
                     </div>
-                    @yield('content')
+                    <div id="printable-content">
+                        @yield('content')
+                    </div>
                 </div>
                 @include('partials.footer')
 
@@ -315,7 +317,48 @@
             });
         });
     </script>
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+    <script>
+        function saveWebpage() {
+            var pageTitle = document.title;
+            var pageUrl = window.location.href;
+            var html = document.documentElement.outerHTML;
+            var now = new Date();
+            var dateString = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
 
+            var blob = new Blob([html], {
+                type: "text/html;charset=utf-8"
+            });
+            saveAs(blob, dateString + " " + pageTitle + ".html");
+        }
+
+        function saveAs(blob, filename) {
+            if (navigator.msSaveBlob) {
+                // IE10+
+                navigator.msSaveBlob(blob, filename);
+            } else {
+                var link = document.createElement("a");
+                // Browsers that support HTML5 download attribute
+                if (link.download !== undefined) {
+                    var url = URL.createObjectURL(blob);
+                    link.setAttribute("href", url);
+                    link.setAttribute("download", filename);
+                    link.style.visibility = "hidden";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            }
+        }
+    </script>
     @yield('scripts')
 </body>
 
