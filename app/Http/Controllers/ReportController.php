@@ -14,15 +14,15 @@ class ReportController extends Controller
 {
     public function marketsReport()
     {
-        return view('reports.markets');
+        return view('reports.markets_report');
     }
     public function customersReport()
     {
-        return view('reports.customers');
+        return view('reports.customersreport');
     }
     public function paymentsReport()
     {
-        return view('reports.payments');
+        return view('reports.paymentsreport');
     }
     public function generateMarketsReport(Request $request)
     {

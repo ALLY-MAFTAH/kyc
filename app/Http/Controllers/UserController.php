@@ -103,6 +103,29 @@ class UserController extends Controller
         }
     }
 
+    public function changePassword(Request $request)
+    {
+        $oldPassword=$request->old_password;
+        $newPassword=$request->new_password;
+        $confirmNewPassword=$request->confirm_new_password;
+
+        $user=User::find($request->user_id);
+
+        try {
+            if (!Hash::check($oldPassword, $user->password)) {
+                return back()->with('error','Old password not correct')->with('changePasswordModal',true)->withInput();
+            }
+            elseif ($newPassword!=$confirmNewPassword) {
+                return back()->with('error','New password and confirm password do not match')->with('changePasswordModal',true)->withInput();
+            } else {
+                $attributes['password']=Hash::make($newPassword);
+                $user->update($attributes);
+            }
+            return back()->with('success', 'Password changed successfull');
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
+    }
     public function toggleStatus(Request $request, User $user)
     {
         try {

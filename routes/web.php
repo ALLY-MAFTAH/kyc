@@ -27,7 +27,7 @@ Route::middleware(['auth'])->group(function () {
 
     // MARKETS ROUTES
 
-    Route::get('/markets', [MarketController::class, 'index'])->name('markets.index');
+    Route::get('/all-markets', [MarketController::class, 'index'])->name('markets.index');
     Route::get('/show-market/{market}', [MarketController::class, 'showMarket'])->name('markets.show');
     Route::post('/add-market', [MarketController::class, 'postMarket'])->name('markets.add');
     Route::put('/edit-market/{market}', [MarketController::class, 'putMarket'])->name('markets.edit');
@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/delete-stall/{stall}', [StallController::class, 'deleteStall'])->name('stalls.delete');
 
     // CUSTOMERS ROUTES
-    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+    Route::get('/all-customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('/show-customer-admin-view/{customer}', [CustomerController::class, 'showCustomerAdminView'])->name('customers.admin_show');
     Route::get('/show-customer/{customer}/{marketId}', [CustomerController::class, 'showCustomer'])->name('customers.show');
     Route::post('/add-customer', [CustomerController::class, 'postCustomer'])->name('customers.add');
@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('send-message/{customer}', [CustomerController::class, 'sendMessage'])->name('send-message');
 
     // PAYMENTS ROUTES
-    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+    Route::get('/all-payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::get('/manager-view-payments', [PaymentController::class, 'managerIndex'])->name('payments.manager_index');
     Route::get('/show-payment/{payment}', [PaymentController::class, 'showPayment'])->name('payments.show');
     Route::post('/add-payment', [PaymentController::class, 'postPayment'])->name('payments.add');
@@ -80,13 +80,14 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/delete-payment/{payment}', [PaymentController::class, 'deletePayment'])->name('payments.delete');
 
     // USERS ROUTES
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/all-users', [UserController::class, 'index'])->name('users.index');
     Route::get('/show-user/{user}', [UserController::class, 'showUser'])->name('users.show');
     Route::post('/add-user', [UserController::class, 'addUser'])->name('users.add');
     Route::post('/post-user', [UserController::class, 'postUser'])->name('users.post');
     Route::put('/edit-user/{user}', [UserController::class, 'putUser'])->name('users.edit');
     Route::delete('/delete-user/{user}', [UserController::class, 'deleteUser'])->name('users.delete');
     Route::put('/toggle-status/{user}/status', [UserController::class, 'toggleStatus'])->name('users.toggle_status');
+    Route::put('/change-password', [UserController::class, 'changePassword'])->name('users.change_password');
 
     // REPORTS ROUTES
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
