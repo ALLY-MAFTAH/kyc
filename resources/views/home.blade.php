@@ -48,7 +48,7 @@
                         <i class="card-icon-indicator mdi mdi-hospital-building bg-inverse-icon-success"></i>
                     </div>
                     <h6 class="text-white">
-                        {{ $allFrames->count() . ' total frames, ' . $allStalls->count() . ' total stalls' }}
+                        {{ $allFrames->count() . ' Total frames, ' . $allStalls->count() . ' Total stalls' }}
                     </h6>
                 </div>
             </div>

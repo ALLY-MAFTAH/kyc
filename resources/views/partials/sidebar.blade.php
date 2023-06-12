@@ -81,13 +81,13 @@
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/ui-features/buttons.html">Customers Report</a>
+                        <a class="nav-link" href="{{ route('reports.markets') }}">Markets Report</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/ui-features/dropdowns.html">Markets Report</a>
+                        <a class="nav-link" href="{{ route('reports.customers') }}">Customers Report</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/ui-features/typography.html">Payments Report</a>
+                        <a class="nav-link" href="{{ route('reports.payments') }}">Payments Report</a>
                     </li>
                 </ul>
             </div>

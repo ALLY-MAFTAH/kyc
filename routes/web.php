@@ -90,6 +90,14 @@ Route::middleware(['auth'])->group(function () {
 
     // REPORTS ROUTES
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/markets-report', [ReportController::class, 'marketsReport'])->name('reports.markets');
+    Route::get('/customers-report', [ReportController::class, 'customersReport'])->name('reports.customers');
+    Route::get('/payments-report', [ReportController::class, 'paymentsReport'])->name('reports.payments');
+
+    Route::get('/generate-markets-report', [ReportController::class, 'generateMarketsReport'])->name('reports.generate_markets_report');
+    Route::get('/generate-customers-report', [ReportController::class, 'generateCustomersReport'])->name('reports.generate_customer_report');
+    Route::get('/generate-payments-report', [ReportController::class, 'generatePaymentsReport'])->name('reports.generate_payments_report');
+
     Route::get('/show-report/{report}', [ReportController::class, 'showReport'])->name('reports.show');
     Route::post('/add-report', [ReportController::class, 'postReport'])->name('reports.add');
     Route::put('/edit-report/{report}', [ReportController::class, 'putReport'])->name('reports.edit');

@@ -24,6 +24,7 @@
 
     var list_of_wards = [
 
+        'All',
         'Bunju',
         'Goba',
         'Wazi',
@@ -35,7 +36,6 @@
         'Mzimuni',
         'Mwananyamala',
         'Makumbusho',
-        'Makurumla',
         'Msasani',
         'Mikocheni',
         'Mbweni',
@@ -43,10 +43,8 @@
         'Magomeni',
         'Kunduchi',
         'Kinondoni',
-        'Kimara',
         'Kijitonyama',
         'Kigogo',
-        'Kibamba',
         'Kawe',
         'Hananasif',];
     var list_of_streets = [

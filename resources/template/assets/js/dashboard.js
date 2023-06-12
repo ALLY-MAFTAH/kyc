@@ -13,6 +13,16 @@
         },
       });
     }
+    if ($("#inline-datepicker").length) {
+      $("#inline-datepicker").datepicker({
+        enableOnReadonly: true,
+        todayHighlight: true,
+        templates: {
+          leftArrow: '<i class="mdi mdi-chevron-left"></i>',
+          rightArrow: '<i class="mdi mdi-chevron-right"></i>',
+        },
+      });
+    }
     // flot chart bar script
     $(function () {
       var data = [
