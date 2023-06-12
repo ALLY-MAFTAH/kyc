@@ -149,3 +149,8 @@ table th:last-child {
 .form-check {
     margin-bottom: -23px !important;
 }
+.sum-card
+{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}

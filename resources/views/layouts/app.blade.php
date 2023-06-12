@@ -35,6 +35,13 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}" />
 
+    {{-- DASHBOARD --}}
+    <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" />
+
 
     @yield('styles')
 
@@ -65,19 +72,18 @@
     </div>
     <!-- container-scroller -->
 
-    {{-- <script src="{{asset('assets/vendors/flot/jquery.flot.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/vendors/flot/jquery.flot.resize.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/vendors/flot/jquery.flot.categories.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/vendors/flot/jquery.flot.fillbetween.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/vendors/flot/jquery.flot.stack.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/vendors/flot/jquery.flot.pie.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/vendors/chart.js/Chart.min.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script> --}}
-    {{-- <script src="{{asset('assets/js/dashboard.js')}}"></script> --}}
+    <script src="{{ asset('assets/vendors/flot/jquery.flot.js') }}"></script>
+    <script src="{{ asset('assets/vendors/flot/jquery.flot.resize.js') }}"></script>
+    <script src="{{ asset('assets/vendors/flot/jquery.flot.categories.js') }}"></script>
+    <script src="{{ asset('assets/vendors/flot/jquery.flot.fillbetween.js') }}"></script>
+    <script src="{{ asset('assets/vendors/flot/jquery.flot.stack.js') }}"></script>
+    <script src="{{ asset('assets/vendors/flot/jquery.flot.pie.js') }}"></script>
+    <script src="{{ asset('assets/vendors/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
 
 
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
     <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
@@ -88,6 +94,22 @@
     <script src="{{ asset('assets/js/file-upload.js') }}"></script>
     <script src="{{ asset('assets/js/typeahead.js') }}"></script>
     <script src="{{ asset('assets/js/select2.js') }}"></script>
+
+
+        {{-- DASHBOARD --}}
+        <script src="{{ 'assets/vendors/js/vendor.bundle.base.js' }}"></script>
+        <script src="{{ 'assets/vendors/chart.js/Chart.min.js' }}"></script>
+        <script src="{{ 'assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js' }}"></script>
+        <script src="{{ 'assets/vendors/flot/jquery.flot.js' }}"></script>
+        <script src="{{ 'assets/vendors/flot/jquery.flot.resize.js' }}"></script>
+        <script src="{{ 'assets/vendors/flot/jquery.flot.categories.js' }}"></script>
+        <script src="{{ 'assets/vendors/flot/jquery.flot.fillbetween.js' }}"></script>
+        <script src="{{ 'assets/vendors/flot/jquery.flot.stack.js' }}"></script>
+        <script src="{{ 'assets/vendors/flot/jquery.flot.pie.js' }}"></script>
+        <script src="{{ 'assets/js/off-canvas.js' }}"></script>
+        <script src="{{ 'assets/js/hoverable-collapse.js' }}"></script>
+        <script src="{{ 'assets/js/misc.js' }}"></script>
+        <script src="{{ 'assets/js/dashboard.js' }}"></script>
 
     {{-- DATA TABLE --}}
 
@@ -105,6 +127,8 @@
     <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.colVis.min.js"></script>
+
+
 
     <script>
         $(document).ready(function() {

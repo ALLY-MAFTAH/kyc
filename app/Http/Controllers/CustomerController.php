@@ -21,7 +21,6 @@ use Illuminate\Validation\ValidationException;
 
 class CustomerController extends Controller
 {
-
     public function index()
     {
         if (Auth::user()->market_id) {
@@ -30,8 +29,6 @@ class CustomerController extends Controller
         $customers = Customer::all();
         return view('customers.index', compact('customers'));
     }
-
-
 
     public function showCustomer(Request $request, Customer $customer, $marketId)
     {
@@ -53,7 +50,7 @@ class CustomerController extends Controller
         $selectedFrameId = $request->get('selectedFrameId', $customerFrames->first()->id??0);
 
         $stallSelectedYear = $request->get('stallSelectedYear', date('Y'));
-        $selectedStallId = $request->get('selectedStallId', $customerFrames->first()->id??0);
+        $selectedStallId = $request->get('selectedStallId', $customerStalls->first()->id??0);
 
         return view('customers.show', compact(
             'customer',
@@ -149,7 +146,7 @@ class CustomerController extends Controller
                     'profile-img-' . $now . '.' . $request->file('photo')->getClientOriginalExtension(),
                     'public'
                 );
-                // Storage::disk('public')->delete($customerPhotoToDelete);
+                Storage::disk('public')->delete($customerPhotoToDelete);
             } else {
                 $photoPath = $customer->photo;
             }
