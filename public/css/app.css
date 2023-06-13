@@ -161,7 +161,10 @@ table th:last-child {
     .nav-item.dropdown
     .navbar-dropdown
     .dropdown-item {
-
     padding: 11px 12px !important;
-
+}
+.alert-success {
+    color: #006a14 !important;
+    background-color: #ccf5d0 !important;
+    border-color: #b8f1de !important;
 }
