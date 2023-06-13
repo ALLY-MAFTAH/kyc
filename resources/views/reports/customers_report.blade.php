@@ -40,14 +40,13 @@
         {{ session('error') }}
     </div>
 @endif
-{{-- <div class="card shadow">
+<div class="card shadow">
     <div class="card-header">Customize your report</div>
     <div class="card-body">
         <form method="GET" action="{{ route('reports.generate_markets_report') }}">
             @csrf
             <div class="row">
-                <input type="hidden" name="from_date" id="from_date">
-                <input type="hidden" name="to_date" id="to_date">
+
                 <div class="col-sm-3 form-group">
                     <label for="from">Report Title</label>
                     <div class="">
@@ -60,37 +59,19 @@
                         @enderror
                     </div>
                 </div>
+
                 <div class="col-sm-3 form-group">
-                    <label for="to">Subtitle</label>
-                    <div class="">
-                        <input id="subtitle" type="text"
-                            class="form-control @error('subtitle') is-invalid @enderror" name="subtitle"
-                            value="Customers Report"required autocomplete="subtitle" autofocus>
-                        @error('subtitle')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-sm-3 form-group">
-                    <label for="ward">Ward</label>
-                    <div id="wards">
-                        <input class="typeahead" id="ward" type="text" placeholder="Ward"required
-                            value="{{ old('ward') }}" autocomplete="ward" name="ward" /> @error('ward')
-                            <span class="error" style="color:red">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-sm-3 form-group">
-                    <label for="street">Sub-Ward</label>
-                    <div id="streets">
-                        <input type="text" class="typeahead" id="street" name="sub_ward"
-                            value="{{ old('sub_ward') }}" autocomplete="street" placeholder="Sub-Ward"required />
-                        @error('sub_ward')
-                            <span class="error" style="color:red">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    <label>Market</label>
+                    <select class="js-example-basic-single form-control" required name="market"
+                        style="width: 100%;">
+                        <option value="All">All</option>
+                        @foreach ($markets as $market)
+                        <option value="{{$market->id}}">{{$market->name}}</option>
+                        @endforeach
+                    </select>
+                    @error('market')
+                        <span class="error" style="color:red">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             <div class="row">
@@ -145,7 +126,7 @@
         </form>
 
     </div>
-</div> --}}
+</div>
 @endsection
 @section('scripts')
 <script>

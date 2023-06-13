@@ -18,11 +18,12 @@ class ReportController extends Controller
     }
     public function customersReport()
     {
-        return view('reports.customersreport');
+        $markets=Market::all();
+        return view('reports.customers_report',compact('markets'));
     }
     public function paymentsReport()
     {
-        return view('reports.paymentsreport');
+        return view('reports.payments_report');
     }
     public function generateMarketsReport(Request $request)
     {
