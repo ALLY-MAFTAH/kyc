@@ -102,10 +102,82 @@ class ReportController extends Controller
                 // ->download("kmc"); // other available method: store('path/to/file.pdf') to save to disk, download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
             // }
         } catch (\Throwable $th) {
-            dd($th->getMessage());
+            return back()->with('error',$th->getMessage());
         }
     }
     public function generateCustomersReport(Request $request)
+    {
+        $sortBy = $request->sort_by;
+        $orientation = $request->input('orientation');
+        $marketId = $request->input('market_id');
+
+        $heading="Kinondoni Municipal Council";
+        $title = $heading;
+        $subtitle = $request->title ?? 'Markets Reports';
+        $meta = [
+            'Year' => date('Y'),
+            'Sorted By' => $sortBy,
+        ];
+
+        try {
+            $columns = [
+                'NIDA' => 'nida',
+                'First Name' => 'first_name',
+                'Middle Name' => 'middle_name',
+                'Last Name' => 'last_name',
+                'Mobile Number' => 'mobile',
+                'Physical Address' => 'address',
+                'Market' => function ($customer) {
+
+                    foreach ($customer->markets as $market) {
+
+                        return $market->name.", \n";
+                    }
+
+                },
+                'Frames' => function ($customer) {
+
+                    foreach ($customer->frames as $frame) {
+
+                        return $frame->code."\n".$frame->market->name;
+                    }
+
+                },
+                'Stalls' => function ($customer) {
+
+                    foreach ($customer->stalls as $stall) {
+
+                        return $stall->code."\n".$stall->market->name;
+                    }
+
+                },
+
+            ];
+
+             if ($marketId != "All") {
+                $customers = Customer::whereHas('markets', function ($markets) use($sortBy,$marketId){
+                    $markets->where('id',$marketId)->orderBy($sortBy);
+                });
+
+            } else {
+                $customers = Customer::orderBy($sortBy);
+            }
+
+            $reportInstance = new PdfReport();
+            // $reportInstance = new ExcelReport();
+            // $reportInstance = new CSVReport  ();
+
+            return $reportInstance
+                ->of($title,$subtitle, $meta, $customers, $columns)
+                ->setOrientation($orientation)
+                ->stream(); // other available method: store('path/to/file.pdf') to save to disk, download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
+                // ->download("kmc"); // other available method: store('path/to/file.pdf') to save to disk, download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
+            // }
+        } catch (\Throwable $th) {
+            return back()->with('error',$th->getMessage());
+        }
+    }
+    public function generatePaymentssReport(Request $request)
     {
         $fromDate = Carbon::createFromFormat('Y-m-d', $request->from_date, 'UTC')->setTimezone('Africa/Dar_es_salaam');
         $toDate = Carbon::createFromFormat('Y-m-d', $request->to_date, 'UTC')->setTimezone('Africa/Dar_es_salaam');
@@ -203,7 +275,8 @@ class ReportController extends Controller
                 ->stream(); // other available method: store('path/to/file.pdf') to save to disk, download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
             // }
         } catch (\Throwable $th) {
-            dd($th->getMessage());
+            return back()->with('error',$th->getMessage());
+
         }
     }
 }

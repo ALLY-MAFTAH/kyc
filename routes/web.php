@@ -96,7 +96,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/payments-report', [ReportController::class, 'paymentsReport'])->name('reports.payments');
 
     Route::get('/generate-markets-report', [ReportController::class, 'generateMarketsReport'])->name('reports.generate_markets_report');
-    Route::get('/generate-customers-report', [ReportController::class, 'generateCustomersReport'])->name('reports.generate_customer_report');
+    Route::get('/generate-customers-report', [ReportController::class, 'generateCustomersReport'])->name('reports.generate_customers_report');
     Route::get('/generate-payments-report', [ReportController::class, 'generatePaymentsReport'])->name('reports.generate_payments_report');
 
     Route::get('/show-report/{report}', [ReportController::class, 'showReport'])->name('reports.show');
