@@ -61,19 +61,24 @@ class ReportController extends Controller
                     }
                 },
                 'Manager Phone' => function ($market) {
-                    if (
-                        $market
-                            ->users()
-                            ->where('is_manager', true)
-                            ->first() == null
-                    ) {
+                    if ($market->users()->where('is_manager', true)->first() == null)
+                    {
                         return 'No Manager';
                     } else {
-                        return $market
-                            ->users()
-                            ->where('is_manager', true)
-                            ->first()->mobile;
+                        return $market->users()->where('is_manager', true)->first()->mobile;
                     }
+                },
+                'Total Frames' => function ($market) {
+                        return $market->frames()->count();
+                },
+                'Empty Frames' => function ($market) {
+                        return $market->frames()->where("customer_id",null) ->count();
+                },
+                'Total Stall' => function ($market) {
+                        return $market->stalls()->count();
+                },
+                'Empty Stall' => function ($market) {
+                        return $market->stalls()->where("customer_id",null) ->count();
                 },
                 'Ward' => 'ward',
                 'Sub-Ward' => 'sub_ward',
