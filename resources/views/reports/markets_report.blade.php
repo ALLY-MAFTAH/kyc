@@ -15,7 +15,7 @@
                 <span>Markets Report</span>
             </h4>
         </div>
-       
+
     </div>
 @endsection
 
@@ -34,11 +34,41 @@
         {{ session('error') }}
     </div>
 @endif
-<div class="card shadow">
-    <div class="card-header">Customize your report</div>
-    <div class="card-body">
-        <form method="GET" action="{{ route('reports.generate_markets_report') }}">
-            @csrf
+<form method="GET" action="{{ route('reports.generate_markets_report') }}">
+    @csrf
+    <div class="card shadow">
+        <div class="card-header row">
+            <div class="col-7">
+                Customize your report
+            </div>
+            <div class="col-5">
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-sm-3 form-group">
+                        <div class="form-check">
+                            <label style="cursor: pointer" class="form-check-label">
+                                <input type="radio" class="form-check-input" name="file_type" id="file_type1"
+                                    value="PDF" checked /> PDF </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 form-group ">
+                        <div class="form-check">
+                            <label style="cursor: pointer" class="form-check-label">
+                                <input type="radio" class="form-check-input" name="file_type" id="file_type2"
+                                    value="CSV" /> CSV </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <div class="form-check">
+                            <label style="cursor: pointer" class="form-check-label">
+                                <input type="radio" class="form-check-input" name="file_type" id="file_type3"
+                                    value="EXCEL" /> EXCEL </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
             <div class="row">
                 <div class="col-sm-3 form-group">
                     <label for="from">Report Title</label>
@@ -92,10 +122,10 @@
                     </button>
                 </div>
             </div>
-        </form>
 
+        </div>
     </div>
-</div>
+</form>
 @endsection
 @section('scripts')
 <script>

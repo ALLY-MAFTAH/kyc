@@ -75,7 +75,6 @@
     <script src="{{ asset('assets/vendors/flot/jquery.flot.pie.js') }}"></script>
     <script src="{{ asset('assets/vendors/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
     <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/typeahead.js/typeahead.bundle.min.js') }}"></script>
@@ -102,8 +101,6 @@
     <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.colVis.min.js"></script>
-
-
 
     <script>
         $(document).ready(function() {
@@ -317,6 +314,15 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '#reportBtn', function() {
+                console.log("EEEEEEEEEEEEEEEEEE");
+                $('#loader').hide();
+            });
+        });
+    </script>
+
     <script>
         function printDiv(divName) {
             var printContents = document.getElementById(divName).innerHTML;

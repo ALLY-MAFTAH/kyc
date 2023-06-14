@@ -106,7 +106,7 @@
                     <div class="border-none">
                         <p class="text-black">Notifications</p>
                     </div>
-                    <ul class="mt-4 pl-0">
+                    {{-- <ul class="mt-4 pl-0">
                         <li><a class="nav-link" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">
@@ -116,7 +116,7 @@
                                 @csrf
                             </form>
                         </li>
-                    </ul>
+                    </ul> --}}
                 </div>
             </div>
         </li>

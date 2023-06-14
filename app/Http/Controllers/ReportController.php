@@ -7,6 +7,7 @@ use App\Models\Market;
 use App\Models\Report;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Jimmyjs\ReportGenerator\ReportMedia\CSVReport;
 use Jimmyjs\ReportGenerator\ReportMedia\ExcelReport;
 use Jimmyjs\ReportGenerator\ReportMedia\PdfReport;
 
@@ -107,9 +108,11 @@ class ReportController extends Controller
     }
     public function generateCustomersReport(Request $request)
     {
+        // dd($request->all());
         $sortBy = $request->sort_by;
         $orientation = $request->input('orientation');
         $marketId = $request->input('market_id');
+        $fileType = $request->input('file_type');
 
         $heading="Kinondoni Municipal Council";
         $title = $heading;
@@ -135,44 +138,58 @@ class ReportController extends Controller
                     }
 
                 },
-                'Frames' => function ($customer) {
-
-                    foreach ($customer->frames as $frame) {
-
-                        return $frame->code."\n".$frame->market->name;
-                    }
-
-                },
-                'Stalls' => function ($customer) {
-
-                    foreach ($customer->stalls as $stall) {
-
-                        return $stall->code."\n".$stall->market->name;
-                    }
-
-                },
-
             ];
 
+            if ($request->has('with_frames')) {
+                $columns['Frames'] =  function ($customer) {
+                    $frameList = array();
+                    foreach ($customer->frames as $frame) {
+                        $frameList[] = $frame->code;
+                    }
+                    $frameString = implode(",\n", $frameList);
+                    return htmlspecialchars($frameString);
+                };
+            }
+            if ($request->has('with_stalls')) {
+                $columns['Stalls'] =  function ($customer) {
+                    $stallList = array();
+                    foreach ($customer->stalls as $stall) {
+                        $stallList[] = $stall->code;
+                    }
+                    $stallString = implode(",\n", $stallList);
+                    return htmlspecialchars($stallString);
+                };
+            }
              if ($marketId != "All") {
-                $customers = Customer::whereHas('markets', function ($markets) use($sortBy,$marketId){
-                    $markets->where('id',$marketId)->orderBy($sortBy);
+                $customers = Customer::whereHas('markets', function ($markets) use ($sortBy, $marketId) {
+                    $markets->where('markets.id', $marketId)->orderBy($sortBy);
                 });
 
             } else {
                 $customers = Customer::orderBy($sortBy);
             }
 
-            $reportInstance = new PdfReport();
-            // $reportInstance = new ExcelReport();
-            // $reportInstance = new CSVReport  ();
-
-            return $reportInstance
+            if ($fileType=="PDF") {
+                $reportInstance = new PdfReport();
+                return $reportInstance
                 ->of($title,$subtitle, $meta, $customers, $columns)
                 ->setOrientation($orientation)
-                ->stream(); // other available method: store('path/to/file.pdf') to save to disk, download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
-                // ->download("kmc"); // other available method: store('path/to/file.pdf') to save to disk, download('filename') to download pdf / make() that will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
-            // }
+                ->stream();
+            } elseif($fileType=="CSV") {
+                $reportInstance = new CSVReport  ();
+                return $reportInstance
+                ->of($title,$subtitle, $meta, $customers, $columns)
+                ->setOrientation($orientation)
+                ->download($subtitle);
+            } else {
+                $reportInstance = new ExcelReport();
+                return $reportInstance
+                ->of($title,$subtitle, $meta, $customers, $columns)
+                ->setOrientation($orientation)
+                ->download($subtitle);
+
+            }
+
         } catch (\Throwable $th) {
             return back()->with('error',$th->getMessage());
         }

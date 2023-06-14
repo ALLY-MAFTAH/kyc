@@ -9,7 +9,7 @@
         <div class="d-flex ">
             <button onclick="saveWebpage()" type="button" class="btn  bg-white btn-icon-text border">
                 <i class="mdi mdi-download btn-icon-prepend"></i> Download </button>
-            <button onclick="printDiv('printable-content')"  type="button" class="btn  bg-white btn-icon-text border ml-3">
+            <button onclick="printDiv('printable-content')" type="button" class="btn  bg-white btn-icon-text border ml-3">
                 <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
             @if (Auth::user()->market_id && Auth::user()->status && Auth::user()->is_manager)
                 <button onclick="goToMarket(event)" data-id="{{ Auth::user()->market_id }}" type="button"
@@ -304,6 +304,8 @@
     </div>
 @endsection
 @section('scripts')
+    {{-- <script src="{{ asset('assets/js/dashboard.js') }}"></script> --}}
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
