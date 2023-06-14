@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Stall;
 use App\Models\Market;
 use App\Models\StallIn;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -125,6 +126,9 @@ class StallController extends Controller
                 ];
 
                 $stallIn = StallIn::create($stallInAttr);
+                $payment->stallIn()->save($stallIn);
+                $user=User::find(Auth::user()->id);
+                $user->stallIns()->save($stallIn);
             } catch (\Throwable $th) {
                 return back()->with('error', $th->getMessage());
             }

@@ -37,40 +37,14 @@
 <form method="GET" action="{{ route('reports.generate_customers_report') }}">
     @csrf
     <div class="card shadow">
-        <div class="card-header row">
-            <div class="col-7">
-                Customize your report
-            </div>
-            <div class="col-5">
-                <div class="row">
-                    <div class="col-3"></div>
-                    <div class="col-sm-3 form-group">
-                        <div class="form-check">
-                            <label style="cursor: pointer" class="form-check-label">
-                                <input type="radio" class="form-check-input" name="file_type" id="file_type1"
-                                    value="PDF" checked /> PDF </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 form-group ">
-                        <div class="form-check">
-                            <label style="cursor: pointer" class="form-check-label">
-                                <input type="radio" class="form-check-input" name="file_type" id="file_type2"
-                                    value="CSV" /> CSV </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 form-group">
-                        <div class="form-check">
-                            <label style="cursor: pointer" class="form-check-label">
-                                <input type="radio" class="form-check-input" name="file_type" id="file_type3"
-                                    value="EXCEL" /> EXCEL </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="card-header">
+
+            Customize your report
+
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-3 form-group">
+                <div class="col-sm-4 form-group">
                     <label for="from">Report Title</label>
                     <div class="">
                         <input id="title" type="text" class="form-control @error('title') is-invalid @enderror"
@@ -82,7 +56,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-sm-3 form-group">
+                <div class="col-sm-4 form-group">
                     <label>Market</label>
                     <select class="js-example-basic-single form-control" required name="market_id" style="width: 100%;">
                         <option value="All">All</option>
@@ -105,7 +79,7 @@
                         <span class="error" style="color:red">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-sm-2 form-group">
+                <div class="col-sm-4 form-group">
                     <label>Sort By</label>
                     <select class="js-example-basic-single form-control" required name="sort_by" style="width: 100%;">
                         <option value="nida">NIDA</option>
@@ -115,17 +89,52 @@
                         <span class="error" style="color:red">{{ $message }}</span>
                     @enderror
                 </div>
-
-                <div class="col-sm-2 form-group pt-2">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" name="with_frames" /> With Frames </label>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div>Additional Columns</div>
+                    <div class="row">
+                        <div class="col-sm-4 form-group pt-2">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="with_frames" /> With Frames
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group pt-2">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="with_stalls" /> With Stalls
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-2 form-group pt-2">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" name="with_stalls" /> With Stalls </label>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div>File Type</div>
+                    <div class="row pt-2">
+                        <div class="col-sm-4 form-group">
+                            <div class="form-check">
+                                <label style="cursor: pointer" class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="file_type" id="file_type1"
+                                        value="PDF" checked /> PDF </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group ">
+                            <div class="form-check">
+                                <label style="cursor: pointer" class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="file_type" id="file_type2"
+                                        value="CSV" /> CSV </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <div class="form-check">
+                                <label style="cursor: pointer" class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="file_type" id="file_type3"
+                                        value="EXCEL" /> EXCEL </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -142,11 +151,5 @@
 </form>
 @endsection
 @section('scripts')
-<script>
-    $(document).ready(function() {
-        @if (session('addCustomerCollapse'))
-            $('#addCustomerCollapse').addClass('show');
-        @endif
-    });
-</script>
+
 @endsection

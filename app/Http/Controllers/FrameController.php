@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Frame;
 use App\Models\FrameIn;
 use App\Models\Market;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -123,6 +124,9 @@ class FrameController extends Controller
                     "payment_id" => $payment->id,
                 ];
                 $frameIn = FrameIn::create($frameInAttr);
+                $payment->frameIn()->save($frameIn);
+                $user=User::find(Auth::user()->id);
+                $user->frameIns()->save($frameIn);
             } catch (\Throwable $th) {
                 return back()->with('error', $th->getMessage());
             }

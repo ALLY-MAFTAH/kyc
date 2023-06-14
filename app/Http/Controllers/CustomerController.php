@@ -12,6 +12,7 @@ use App\Models\Message;
 use App\Models\Payment;
 use App\Models\StallIn;
 use App\Models\StallOut;
+use App\Models\User;
 use App\Services\MessagingService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -239,6 +240,10 @@ class CustomerController extends Controller
                 ];
 
                 $frameIn = FrameIn::create($frameInAttr);
+                $payment->frameIn()->save($frameIn);
+                $user=User::find(Auth::user()->id);
+                $user->frameIns()->save($frameIn);
+                // $user->frameIns()->save($frameIn);
             }
 
             return back()->with('success', 'Frame successfully assigned to customer');
@@ -293,6 +298,9 @@ class CustomerController extends Controller
                 ];
 
                 $stallIn = StallIn::create($stallInAttr);
+                $payment->stallIn()->save($stallIn);
+                $user=User::find(Auth::user()->id);
+                $user->stallIns()->save($stallIn);
             }
 
             return back()->with('success', 'Stall successfully assigned to customer');
