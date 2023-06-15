@@ -44,11 +44,11 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-3 form-group">
+                <div class="col-sm-4 form-group">
                     <label for="from">Report Title</label>
                     <div class="">
                         <input id="title" type="text" class="form-control @error('title') is-invalid @enderror"
-                            name="title" value="Frame/Stall Payments Report "required autocomplete="title" autofocus>
+                            name="title" value="Frame & Stall Payments Report "required autocomplete="title" autofocus>
                         @error('title')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -56,7 +56,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-sm-3 form-group">
+                <div class="col-sm-4 form-group">
                     <label>Market</label>
                     <select class="js-example-basic-single form-control" required name="market_id" style="width: 100%;">
                         <option value="All">All</option>
@@ -65,6 +65,20 @@
                         @endforeach
                     </select>
                     @error('market')
+                        <span class="error" style="color:red">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label>Customer</label>
+                    <select class="js-example-basic-single form-control" required name="customer_id"
+                        style="width: 100%;">
+                        <option value="All">All</option>
+                        @foreach ($customers as $customer)
+                            <option value="{{ $customer->id }}">{{ $customer->first_name }}
+                                {{ $customer->middle_name }} {{ $customer->last_name }}</option>
+                        @endforeach
+                    </select>
+                    @error('customer')
                         <span class="error" style="color:red">{{ $message }}</span>
                     @enderror
                 </div>
@@ -81,21 +95,8 @@
                         <span class="error" style="color:red">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-sm-3 form-group">
-                    <label>Customer</label>
-                    <select class="js-example-basic-single form-control" required name="customer_id"
-                        style="width: 100%;">
-                        <option value="All">All</option>
-                        @foreach ($customers as $customer)
-                            <option value="{{ $customer->id }}">{{ $customer->first_name }}
-                                {{ $customer->middle_name }} {{ $customer->last_name }}</option>
-                        @endforeach
-                    </select>
-                    @error('customer')
-                        <span class="error" style="color:red">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="col-md-3 form-group">
+
+                <div class="col-md-4 form-group">
                     <label for="">Month</label>
                     <select class="js-example-basic-single form-control" aria-placeholder="Month" required
                         name="month" style="width: 100%;">
@@ -129,7 +130,7 @@
                         <span class="error" style="color:red">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-sm-3 form-group">
+                <div class="col-md-4 form-group">
                     <label>Year</label>
                     <select class="js-example-basic-single form-control" required name="year" style="width: 100%;">
                         @php
@@ -146,13 +147,11 @@
                         <span class="error" style="color:red">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-sm-3 form-group">
+                <div class="col-md-4 form-group">
                     <label>Sort By</label>
                     <select class="js-example-basic-single form-control" required name="sort_by" style="width: 100%;">
                         <option value="market_id">Market</option>
                         <option value="customer_id">Cutomer</option>
-                        <option value="month">Month</option>
-                        <option value="year">Year</option>
                     </select>
                     @error('sort_by')
                         <span class="error" style="color:red">{{ $message }}</span>

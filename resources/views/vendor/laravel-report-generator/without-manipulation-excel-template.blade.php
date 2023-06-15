@@ -78,7 +78,7 @@
             <?php
             $__env = isset($__env) ? $__env : null;
             ?>
-            @foreach($query->take($limit ?: null)->cursor() as $result)
+            @foreach($query->take($limit ?: null) as $result)
                 <?php
                     if ($groupByArr != []) {
                         $isOnSameGroup = true;
