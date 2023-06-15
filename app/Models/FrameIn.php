@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class FrameIn extends Model
 {
@@ -40,4 +41,17 @@ class FrameIn extends Model
     {
         return $this->belongsTo(Payment::class, 'payment_id');
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            foreach ($model->getAttributes() as $key => $value) {
+                if (is_string($value)) {
+                    $model->setAttribute($key, Str::upper($value));
+                }
+            }
+        });
+    }
+
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -61,4 +62,18 @@ class Customer extends Model
     {
         return $this->hasMany(StallOut::class);
     }
+
+    protected static function boot()
+{
+    parent::boot();
+
+    static::saving(function ($model) {
+        foreach ($model->getAttributes() as $key => $value) {
+            if (is_string($value)) {
+                $model->setAttribute($key, Str::upper($value));
+            }
+        }
+    });
+}
+
 }

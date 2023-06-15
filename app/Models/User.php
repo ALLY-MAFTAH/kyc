@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -78,4 +79,22 @@ class User extends Authenticatable
     {
         return $this->hasMany(StallOut::class);
     }
+
+    protected static function boot()
+{
+    parent::boot();
+
+    static::saving(function ($model) {
+        $attributesToUppercase = $model->getAttributes();
+
+        $attributesToExclude = ['email', 'password']; // Add the attributes you want to exclude from uppercase conversion
+
+        foreach ($attributesToUppercase as $key => $value) {
+            if (!in_array($key, $attributesToExclude) && is_string($value)) {
+                $model->setAttribute($key, Str::upper($value));
+            }
+        }
+    });
+}
+
 }
