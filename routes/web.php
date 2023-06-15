@@ -94,10 +94,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/markets-report', [ReportController::class, 'marketsReport'])->name('reports.markets');
     Route::get('/customers-report', [ReportController::class, 'customersReport'])->name('reports.customers');
     Route::get('/payments-report', [ReportController::class, 'paymentsReport'])->name('reports.payments');
+    Route::get('/frame-stall-report', [ReportController::class, 'customerPaymentsReport'])->name('reports.frame_stall');
 
     Route::get('/generate-markets-report', [ReportController::class, 'generateMarketsReport'])->name('reports.generate_markets_report');
     Route::get('/generate-customers-report', [ReportController::class, 'generateCustomersReport'])->name('reports.generate_customers_report');
     Route::get('/generate-payments-report', [ReportController::class, 'generatePaymentsReport'])->name('reports.generate_payments_report');
+    Route::get('/generate-frame-stall-report', [ReportController::class, 'generateFrameStallReport'])->name('reports.generate_frame_stall_report');
 
     Route::get('/show-report/{report}', [ReportController::class, 'showReport'])->name('reports.show');
     Route::post('/add-report', [ReportController::class, 'postReport'])->name('reports.add');

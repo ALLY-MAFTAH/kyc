@@ -108,7 +108,8 @@
 
 .sidebar .nav .nav-item.active {
     background: white !important;
-    margin-right: 30px !important;
+    margin-right: 10px !important;
+    padding-right: 10px !important;
     border-top-right-radius: 5px !important;
     border-bottom-right-radius: 5px !important;
     box-shadow: 1px 1px 1px #270a83;

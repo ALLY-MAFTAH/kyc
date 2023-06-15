@@ -111,6 +111,9 @@
         .tr-bordered {
             border: 0.15px solid rgb(119, 119, 119);
         }
+        .td-bordered {
+            border: 0.15px solid rgb(119, 119, 119);
+        }
 
         .bg-gray {
             background-color: #b9cde3;
@@ -159,17 +162,12 @@
             <div class="middle pb-5 subtitle" style="white-space: pre-wrap;">{{ $headers['subtitle'] }}</div>
             @if ($showMeta)
                 <div class="head-content">
-                    <table cellpadding="0" cellspacing="0" width="100%">
-                        <?php $metaCtr = 0; ?>
+                    <table cellpadding="0" cellspacing="0" width="50%">
+
                         @foreach ($headers['meta'] as $name => $value)
-                            @if ($metaCtr % 2 == 0)
-                                <tr>
-                            @endif
+
                             <td><span style="color:#808080;">{{ $name }}</span>: {{ ucwords($value) }}</td>
-                            @if ($metaCtr % 2 == 1)
-                                </tr>
-                            @endif
-                            <?php $metaCtr++; ?>
+
                         @endforeach
                     </table>
                 </div>
@@ -198,9 +196,10 @@
                 <?php
                 $__env = isset($__env) ? $__env : null;
                 ?>
-                @foreach ($query->when($limit, function ($qry) use ($limit) {
+                {{-- @foreach ($query->when($limit, function ($qry) use ($limit) {
             $qry->take($limit);
-        })->cursor() as $result)
+        })->cursor() as $result) --}}
+                @foreach ($query as $result)
                     <?php
                     if ($limit != null && $ctr == $limit + 1) {
                         return false;

@@ -89,6 +89,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('reports.payments') }}">Payments Report</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('reports.frame_stall') }}">Frames & Stalls Report</a>
+                    </li>
                 </ul>
             </div>
         </li>

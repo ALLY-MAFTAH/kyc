@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Customer Payments Report
+    Frames & Stalls Report
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
                 <a style="text-decoration: none" href="{{ route('home') }}"><i class="mdi mdi-home menu-icon"
                         style="font-size:25px"></i></a>
                 <i class="mdi mdi-chevron-right"></i>
-                <span>Customer Payments Report</span>
+                <span>Frames & Stalls Report</span>
             </h4>
         </div>
 
@@ -34,7 +34,7 @@
         {{ session('error') }}
     </div>
 @endif
-<form method="GET" action="{{ route('reports.generate_payments_report') }}">
+<form method="GET" action="{{ route('reports.generate_frame_stall_report') }}" onsubmit="return validateForm()">
     @csrf
     <div class="card shadow">
         <div class="card-header">
@@ -48,7 +48,7 @@
                     <label for="from">Report Title</label>
                     <div class="">
                         <input id="title" type="text" class="form-control @error('title') is-invalid @enderror"
-                            name="title" value="Customers Report"required autocomplete="title" autofocus>
+                            name="title" value="Frame/Stall Payments Report "required autocomplete="title" autofocus>
                         @error('title')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -56,21 +56,6 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-sm-3 form-group">
-                    <label>From</label>
-                    <input class=" form-control" required name="from_date" type="date">
-                    @error('from_date')
-                        <span class="error" style="color:red">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="col-sm-3 form-group">
-                    <label>To</label>
-                    <input class=" form-control" required name="to_date" type="date">
-                    @error('to_date')
-                        <span class="error" style="color:red">{{ $message }}</span>
-                    @enderror
-                </div>
-
                 <div class="col-sm-3 form-group">
                     <label>Market</label>
                     <select class="js-example-basic-single form-control" required name="market_id" style="width: 100%;">
@@ -114,7 +99,7 @@
                     <label for="">Month</label>
                     <select class="js-example-basic-single form-control" aria-placeholder="Month" required
                         name="month" style="width: 100%;">
-                        <option value="All">All</option>
+                        <option value="All Months">All</option>
                         <option value="January">January
                         </option>
                         <option value="February">February
@@ -151,7 +136,7 @@
                             $currentYear = date('Y');
                             $years = range($currentYear, $currentYear - 50);
                         @endphp
-                        <option value="All">All</option>
+                        {{-- <option value="All">All</option> --}}
                         @foreach ($years as $year)
                             <option value="{{ $year }}">
                                 {{ $year }}</option>
@@ -164,13 +149,8 @@
                 <div class="col-sm-3 form-group">
                     <label>Sort By</label>
                     <select class="js-example-basic-single form-control" required name="sort_by" style="width: 100%;">
-                        <option value="date">Date</option>
                         <option value="market_id">Market</option>
                         <option value="customer_id">Cutomer</option>
-                        <option value="frame_id">Frame</option>
-                        <option value="stall_id">Stall</option>
-                        <option value="amount_id">Amount</option>
-                        <option value="receipt_number">Receipt Number</option>
                         <option value="month">Month</option>
                         <option value="year">Year</option>
                     </select>
@@ -181,16 +161,24 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <div>Additional Columns</div>
+                    <div>Show Data For</div>
                     <div class="row">
                         <div class="col-sm-4 form-group pt-2">
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" name="show_total" /> Show Total Amount
+                                    <input id="check_frames" type="checkbox" class="form-check-input" name="frames"
+                                        checked /> Frames
                                 </label>
                             </div>
                         </div>
-
+                        <div class="col-sm-4 form-group pt-2">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input id="check_stalls" type="checkbox" class="form-check-input" name="stalls"
+                                        checked /> Stalls
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-2"></div>
@@ -234,4 +222,17 @@
 </form>
 @endsection
 @section('scripts')
+<script>
+    function validateForm() {
+        const framesCheckbox = document.getElementById('check_frames');
+        const stallsCheckbox = document.getElementById('check_stalls');
+
+        if (!framesCheckbox.checked && !stallsCheckbox.checked) {
+            alert('Please select at least one checkbox in "Show Data For" section.');
+            return false;
+        }
+
+        return true;
+    }
+</script>
 @endsection
