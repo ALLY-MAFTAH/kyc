@@ -29,6 +29,12 @@ class ReportController extends Controller
         $customers = Customer::all();
         return view('reports.payments_report', compact('markets', 'customers'));
     }
+    public function customerPaymentsReport()
+    {
+        $markets = Market::all();
+        $customers = Customer::all();
+        return view('reports.customer_payments_report', compact('markets', 'customers'));
+    }
     public function generateMarketsReport(Request $request)
     {
         $sortBy = $request->sort_by;
