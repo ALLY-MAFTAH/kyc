@@ -143,9 +143,9 @@
                             <td>{{ $user->mobile }}</td>
                             <td>
                                 @if ($user->market_id && $user->is_manager)
-                                    MANAGER - {{ $user->market->name }}
+                                    MANAGER - {{ $user->market->name??"" }}
                                     @elseif ($user->market_id)
-                                   ASSISTANT - {{ $user->market->name }}
+                                   ASSISTANT - {{ $user->market->name??"" }}
                                 @else
                                 SUPER ADMIN
                                 @endif
