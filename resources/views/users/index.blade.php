@@ -17,7 +17,7 @@
         <div class="d-flex ">
             <button onclick="saveWebpage()" type="button" class="btn  bg-white btn-icon-text border">
                 <i class="mdi mdi-download btn-icon-prepend"></i> Download </button>
-            <button onclick="printDiv('printable-content')"  type="button" class="btn  bg-white btn-icon-text border ml-3">
+            <button onclick="printDiv('printable-content')" type="button" class="btn  bg-white btn-icon-text border ml-3">
                 <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
             <button type="button" class="btn  ml-3 btn-primary collapsed"data-bs-toggle="collapse"
                 data-bs-target="#addUserCollapse"> Add User </button>
@@ -122,7 +122,8 @@
             </div>
         </div>
         <div class="table-responsive-lg">
-            <table id="data-tebo1" class="dt-responsive nowrap shadow rounded-3  table table-hover"style="width: 100%">
+            <table id="data-tebo1"
+                class="dt-responsive nowrap shadow rounded-3  table table-hover"style="width: 100%">
                 <thead class=" table-head">
                     <tr>
                         <th class="text-center" style="max-width: 20px">#</th>
@@ -143,28 +144,28 @@
                             <td>{{ $user->mobile }}</td>
                             <td>
                                 @if ($user->market_id && $user->is_manager)
-                                    MANAGER - {{ $user->market->name??"" }}
-                                    @elseif ($user->market_id)
-                                   ASSISTANT - {{ $user->market->name??"" }}
+                                    MANAGER - {{ $user->market->name ?? '' }}
+                                @elseif ($user->market_id)
+                                    ASSISTANT - {{ $user->market->name ?? '' }}
                                 @else
-                                SUPER ADMIN
+                                    SUPER ADMIN
                                 @endif
                             </td>
                             <td class="text-center">
                                 @if ($user->market_id)
-                                <form id="toggle-status-form-{{ $user->id }}" method="POST"
-                                    action="{{ route('users.toggle_status', $user) }}">
-                                    <div class="form-check form-switch ">
-                                        <input type="hidden" name="status" value="0">
-                                        <input type="checkbox" name="status"
-                                            id="status-switch-{{ $user->id }}" class="form-check-input "
-                                            @if ($user->status) checked @endif
-                                            @if ($user->trashed()) disabled @endif value="1"
-                                            onclick="this.form.submit()" />
-                                    </div>
-                                    @csrf
-                                    @method('PUT')
-                                </form>
+                                    <form id="toggle-status-form-{{ $user->id }}" method="POST"
+                                        action="{{ route('users.toggle_status', $user) }}">
+                                        <div class="form-check form-switch ">
+                                            <input type="hidden" name="status" value="0">
+                                            <input type="checkbox" name="status"
+                                                id="status-switch-{{ $user->id }}" class="form-check-input "
+                                                @if ($user->status) checked @endif
+                                                @if ($user->trashed()) disabled @endif value="1"
+                                                onclick="this.form.submit()" />
+                                        </div>
+                                        @csrf
+                                        @method('PUT')
+                                    </form>
                                 @endif
                             </td>
                             <td class="text-center ">
@@ -238,6 +239,22 @@
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="text-start mb-1">
+                                                    <label class="col-form-label" for="">Role</label>
+                                                    <select class="js-example-basic-single form-control" required
+                                                        name="is_manager" style="width: 100%;">
+                                                        <option value="1"
+                                                            {{ $user->is_manager == 1 ? 'selected' : '' }}>MANAGER
+                                                        </option>
+                                                        <option value="0"
+                                                            {{ $user->is_manager == 0 ? 'selected' : '' }}>ASSISTANT
+                                                            MANAGER
+                                                        </option>
+                                                    </select>
+                                                    @error('market_id')
+                                                        <span class="error" style="color:red">{{ $message }}</span>
                                                     @enderror
                                                 </div>
                                                 <div class="text-start mb-1">

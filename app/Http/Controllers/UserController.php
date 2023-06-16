@@ -63,7 +63,6 @@ class UserController extends Controller
     }
     public function postUser(Request $request)
     {
-
         try {
 
             $attributes = $this->validate($request, [
@@ -85,16 +84,22 @@ class UserController extends Controller
 
     public function putUser(Request $request, User $user)
     {
-
         try {
             $attributes = $this->validateWithBag('update', $request, [
                 'name' => 'required',
                 'mobile' => 'required',
-                // 'is_manager' => 'required',
+                'is_manager' => 'required',
                 'email' => ['sometimes', Rule::unique('users')->ignore($user->id)->whereNull('deleted_at')],
                 'market_id' => ['sometimes', 'exists:markets,id'],
             ]);
-
+            if ($request->is_manager=="1") {
+                // dd($request->is_manager);
+                $managers=User::where(['is_manager'=>1,'market_id'=>$request->market_id])->get();
+                foreach ($managers as $manager) {
+                    $attr['is_manager']=0;
+                    $manager->update($attr);
+                }
+            }
             $user->update($attributes);
 
             return back()->with('success', 'User edited successful');
@@ -151,5 +156,5 @@ class UserController extends Controller
             return back()->with('error', $th->getMessage());
         }
     }
-    
+
 }

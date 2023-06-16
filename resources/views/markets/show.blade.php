@@ -71,7 +71,9 @@
                                         <div>{{ $market->sub_ward }}</div>
                                         <div>
                                             @if ($market->users()->where('is_manager', true)->first() == null)
-                                                <span style="color:red">No Manager</span>
+                                                <span style="color:red">No Manager</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                <a style="text-decoration: none" href="#" data-bs-toggle="modal" data-bs-target="#addManagerModal">Add</a>
                                             @else
                                                 {{ $market->users()->where('is_manager', true)->first()->name }}
                                             @endif
@@ -458,6 +460,73 @@
         </div>
     </div><br>
 
+    <div class="modal fade" id="addManagerModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Market Manager</h5>
+                    <button type="button" style="background-color:red" class="btn-close  btn-danger"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <form method="POST" action="{{ route('markets.add_manager',$market) }}">
+                        @csrf
+                        <div class="">
+                            <input type="number" name="is_manager" value="1" hidden>
+                            <div class="form-group">
+                                <label for="name" class="text-sm-start">{{ __('Name') }}
+                                </label> <span class="text-danger"> </span>
+                                <div class="">
+                                    <input id="name" type="text" placeholder="Name"
+                                        class="form-control @error('name') is-invalid @enderror" name="name"
+                                        value="{{ old('name') }}"required autocomplete="name" autofocus>
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile">Mobile
+                                    Number</label>
+                                <input type="number" class="form-control" id="mobile"autocomplete="phone"
+                                    value="{{ old('mobile') }}" placeholder="Eg; 0712345678" maxlength="10"
+                                    pattern="0[0-9]{9}"required name="mobile" />
+                                @error('mobile')
+                                    <span class="error" style="color:red">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="email"
+                                    class=" text-sm-start">{{ __('Email Address') }}</label>
+                                <span class="text-danger"></span>
+                                <div class="">
+                                    <input id="email" type="text" placeholder="me@me.com" required
+                                        class="form-control @error('email') is-invalid @enderror" name="email"
+                                        value="{{ old('email') }}" autocomplete="email" autofocus>
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-1 mt-2">
+                            <div class="text-center">
+                                <button type="submit" class="btn  btn-outline-primary">
+                                    {{ __('Submit') }}
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="editModal-{{ $market->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">

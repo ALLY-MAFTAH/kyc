@@ -7,9 +7,11 @@ use App\Models\Frame;
 use App\Models\Market;
 use App\Models\Section;
 use App\Models\Stall;
+use App\Models\User;
 use App\Services\MessagingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -168,6 +170,26 @@ class MarketController extends Controller
         }
     }
 
+    public function addManager(Request $request, Market $market){
+
+        try {
+            $attributes = $this->validate($request, [
+                'name' => 'required',
+                'email' => 'required |unique:users,email,except,id',
+                'is_manager' => 'required',
+                'mobile' => 'required',
+            ]);
+
+            $attributes['market_id'] = $market->id;
+            $attributes['password'] = Hash::make($market->default_password);
+
+            $user = User::create($attributes);
+
+            return back()->with('success', "Manager added successful");
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
+    }
     public function deleteMarket(Market $market)
     {
         $market->delete();
