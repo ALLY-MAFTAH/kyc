@@ -21,11 +21,11 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('mobile');
             $table->string('photo');
+            $table->boolean('status')->default(0);
             $table->string('address')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
-
 
     }
 

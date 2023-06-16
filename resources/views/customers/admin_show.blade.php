@@ -265,6 +265,21 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="editModal-{{ $customer->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Customer</h5>
+                    <button type="button" style="background-color:red" class="btn-close  btn-danger"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    @include('includes.edit_customer_form')
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('scripts')
     <script>
