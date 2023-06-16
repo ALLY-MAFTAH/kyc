@@ -7,6 +7,7 @@ use App\Models\Stall;
 use App\Models\Market;
 use App\Models\StallIn;
 use App\Models\User;
+use App\Services\MessagingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -133,6 +134,10 @@ class StallController extends Controller
                 return back()->with('error', $th->getMessage());
             }
         }
+        $monthsString = implode(", ", $months);
+        $messageBody = "Habari ".$customer->full_name.".\n"."Umefanikiwa kulipia kizimba namba: ".$stall->code." katika ".$stall->market->name.". Malipo ni kwa ajili ya mwezi ".$monthsString." mwaka ".$request->year.".\nTarehe: ".date('d M, Y');
+        $messagingService = new MessagingService();
+        $messageResponse = $messagingService->sendMessage($customer->mobile,$messageBody);
         return back()->with('success', 'Payment recorded successful');
     }
 

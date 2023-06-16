@@ -14,28 +14,28 @@ use Jimmyjs\ReportGenerator\ReportMedia\CSVReport;
 use Jimmyjs\ReportGenerator\ReportMedia\ExcelReport;
 use Jimmyjs\ReportGenerator\ReportMedia\PdfReport;
 
-class ReportController extends Controller
+class AdminReportController extends Controller
 {
     public function marketsReport()
     {
-        return view('reports.markets_report');
+        return view('reports.admin.markets_report');
     }
     public function customersReport()
     {
         $markets = Market::all();
-        return view('reports.customers_report', compact('markets'));
+        return view('reports.admin.customers_report', compact('markets'));
     }
     public function paymentsReport()
     {
         $markets = Market::all();
         $customers = Customer::all();
-        return view('reports.payments_report', compact('markets', 'customers'));
+        return view('reports.admin.payments_report', compact('markets', 'customers'));
     }
     public function customerPaymentsReport()
     {
         $markets = Market::all();
         $customers = Customer::all();
-        return view('reports.frame_stall_report', compact('markets', 'customers'));
+        return view('reports.admin.frame_stall_report', compact('markets', 'customers'));
     }
     public function generateMarketsReport(Request $request)
     {

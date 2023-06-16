@@ -73,7 +73,6 @@ class CustomerController extends Controller
         if (Auth::user()->market_id) {
             return back()->with('error', "Access dinied! Unauthorized user.");
         }
-
         $customerMarkets = $customer->markets()->get();
         $customerFrames = $customer->frames()->get();
         $customerStalls = $customer->stalls()->get();
@@ -85,8 +84,6 @@ class CustomerController extends Controller
             'customerStalls',
         ));
     }
-
-
     public function postCustomer(Request $request)
     {
         $photoPath = null;
@@ -118,6 +115,9 @@ class CustomerController extends Controller
             $customer = Customer::create($attributes);
             $customer->markets()->attach($request->market_id);
 
+            $messageBody = "Habari ".$customer->full_name.".\n"."Umefanikiwa kusajiliwa katika orodha ya wafanyabiashara wa masoko ya Manispaa ya Kinondoni.";
+            $messagingService = new MessagingService();
+            $messageResponse = $messagingService->sendMessage($customer->mobile,$messageBody);
             return back()->with('success', "Customer added successful");
         } catch (ValidationException $exception) {
             return back()->withErrors($exception->errors())->withInput()->with('addCustomerCollapse', true);
@@ -243,9 +243,14 @@ class CustomerController extends Controller
                 $payment->frameIn()->save($frameIn);
                 $user=User::find(Auth::user()->id);
                 $user->frameIns()->save($frameIn);
-                // $user->frameIns()->save($frameIn);
             }
+            $attr['status']=1;
+            $customer->update($attr);
 
+            $monthsString = implode(", ", $months);
+            $messageBody = "Habari ".$customer->full_name.".\n"."Umefanikiwa kukodishwa fremu namba: ".$frame->code." katika ".$frame->market->name.". Na malipo kwa ajili ya mwezi ".$monthsString." mwaka ".$request->year." yamepokelewa.\nTarehe: ".date('d M, Y');
+            $messagingService = new MessagingService();
+            $messageResponse = $messagingService->sendMessage($customer->mobile,$messageBody);
             return back()->with('success', 'Frame successfully assigned to customer');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
@@ -302,7 +307,13 @@ class CustomerController extends Controller
                 $user=User::find(Auth::user()->id);
                 $user->stallIns()->save($stallIn);
             }
+            $attr['status']=1;
+            $customer->update($attr);
 
+            $monthsString = implode(", ", $months);
+            $messageBody = "Habari ".$customer->full_name.".\n"."Umefanikiwa kukodishwa kizimba namba: ".$stall->code." katika ".$stall->market->name.". Na malipo kwa ajili ya mwezi ".$monthsString." mwaka ".$request->year." yamepokelewa.\nTarehe: ".date('d M, Y');
+            $messagingService = new MessagingService();
+            $messageResponse = $messagingService->sendMessage($customer->mobile,$messageBody);
             return back()->with('success', 'Stall successfully assigned to customer');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
@@ -312,6 +323,7 @@ class CustomerController extends Controller
     // DETACH FRAME
     public function detachFrame(Customer $customer, $frameId)
     {
+
         try {
             $frame = Frame::find($frameId);
             $attributes['customer_id'] = null;
@@ -333,6 +345,10 @@ class CustomerController extends Controller
                 $oldFrameIn->update($oldFrameInAttr);
             }
 
+            if ($customer->stalls()->count()==0&&$customer->frames()->count()==0) {
+                $attr['status']=0;
+                $customer->update($attr);
+            }
             return back()->with('success', 'Frames successfully removed from customer');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
@@ -361,7 +377,10 @@ class CustomerController extends Controller
                 $oldStallInAttr['is_active'] = false;
                 $oldStallIn->update($oldStallInAttr);
             }
-
+            if ($customer->stalls()->count()==0&&$customer->frames()->count()==0) {
+                $attr['status']=0;
+                $customer->update($attr);
+            }
             return back()->with('success', 'Stalls successfully removed from customer');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage())->withInput();
@@ -388,6 +407,21 @@ class CustomerController extends Controller
             } else {
                 return back()->with('error', 'Message not sent, crosscheck your inputs');
             }
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
+    }
+
+    public function toggleStatus(Request $request, Customer $customer)
+    {
+        try {
+            $attributes = $this->validate($request, [
+                'status' => ['required', 'boolean'],
+            ]);
+
+            $customer->update($attributes);
+
+            return back()->with('success', 'Customer status updated successfull');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage());
         }

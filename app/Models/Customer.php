@@ -20,6 +20,7 @@ class Customer extends Model
         'mobile',
         'photo',
         'address',
+        'status',
     ];
 
     protected $dates = [

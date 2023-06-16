@@ -69,10 +69,10 @@
                         <td>{{ $customer->mobile }}</td>
                         <td>{{ $customer->address }}</td>
                         <td>
-                            @if ($customer->frames || $customer->stalls)
-                                <b style="color:green; font-weight:bold">Yes</b>
+                            @if ($customer->frames()->count()==0 || $customer->stalls()->count()==0)
+                            <b style="color:red; font-weight:bold">No</b>
                             @else
-                                <b style="color:red; font-weight:bold">No</b>
+                            <b style="color:green; font-weight:bold">Yes</b>
                             @endif
                         </td>
                         <td class="text-center">

@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\Stall;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -24,11 +25,96 @@ class HomeController extends Controller
 
     public function index()
     {
+        if (Auth::user()->market_id) {
+            $currentYear = date('Y');
+            $allMarkets = Market::all();
+            $allFrames = Frame::all();
+            $allStalls = Stall::all();
+            $allCustomers = Customer::where('status',1)->get();
+            $allUsers = User::all();
+
+            $graphData = [
+                'labels' => [],
+                'data' => [],
+            ];
+
+            $totalMarketsCollection = 0;
+            foreach ($allMarkets as $market) {
+                $collectionAmount = $market->payments()
+                    ->where('year', $currentYear)
+                    ->sum('amount');
+                $totalMarketsCollection = $totalMarketsCollection + $collectionAmount;
+                $graphData['labels'][] = $market->name;
+                $graphData['data'][] = $collectionAmount;
+            }
+
+            $totalFramesCollection=0;
+            foreach ($allFrames as $frame) {
+                $frameCollectionAmount = $frame->payments()
+                    ->where('year', $currentYear)
+                    ->sum('amount');
+                $totalFramesCollection = $totalFramesCollection + $frameCollectionAmount;
+
+            }
+            $totalStallsCollection=0;
+            foreach ($allStalls as $stall) {
+                $stallCollectionAmount = $stall->payments()
+                    ->where('year', $currentYear)
+                    ->sum('amount');
+                $totalStallsCollection = $totalStallsCollection + $stallCollectionAmount;
+
+            }
+
+            $topFiveCustomers = Customer::withSum(['payments' => function ($query) use ($currentYear) {
+            $query->where('year', $currentYear);
+              }], 'amount')
+              ->having('payments_sum_amount', '>', 0)
+              ->orderByDesc('payments_sum_amount')
+              ->take(5)
+              ->get();
+
+              $frameMarkets = Market::withCount(['frames as empty_frames_count' => function ($query) {
+                $query->whereNull('customer_id');
+            }])->get();
+              $stallMarkets = Market::withCount(['stalls as empty_stalls_count' => function ($query) {
+                $query->whereNull('customer_id');
+            }])->get();
+
+            $frameChartData = [
+                ['Market', 'Empty Frames'],
+            ];
+            $stallChartData = [
+                ['Market', 'Empty Stalls'],
+            ];
+
+            foreach ($frameMarkets as $market) {
+                $frameChartData[] = [$market->name, $market->empty_frames_count];
+
+            }
+            foreach ($stallMarkets as $market) {
+                $stallChartData[] = [$market->name, $market->empty_stalls_count];
+            }
+            return view('home.manager_dashboard', compact(
+                'allMarkets',
+                'allUsers',
+                'allFrames',
+                'allStalls',
+                'allCustomers',
+                'totalMarketsCollection',
+                'totalFramesCollection',
+                'totalStallsCollection',
+                'graphData',
+                'frameChartData',
+                'stallChartData',
+                'topFiveCustomers',
+            ));
+
+        } else {
         $currentYear = date('Y');
         $allMarkets = Market::all();
         $allFrames = Frame::all();
         $allStalls = Stall::all();
-        $allCustomers = Customer::all();
+        $allCustomers = Customer::where('status',1)->get();
         $allUsers = User::all();
 
         $graphData = [
@@ -92,7 +178,7 @@ class HomeController extends Controller
         foreach ($stallMarkets as $market) {
             $stallChartData[] = [$market->name, $market->empty_stalls_count];
         }
-        return view('home', compact(
+        return view('home.admin_dashboard', compact(
             'allMarkets',
             'allUsers',
             'allFrames',
@@ -106,5 +192,6 @@ class HomeController extends Controller
             'stallChartData',
             'topFiveCustomers',
         ));
+    }
     }
 }
