@@ -280,7 +280,7 @@
                                             </div>
                                             <div class="col-4 text-end">
                                                 <div
-                                                    style="padding-right:10px;color:rgb(70, 63, 111);background:rgb(201, 198, 198)">
+                                                    style="padding-right:5px;font-size:12px;color:rgb(70, 63, 111);background:rgb(201, 198, 198)">
                                                     {{ $stall->type }}
                                                 </div>
                                             </div>

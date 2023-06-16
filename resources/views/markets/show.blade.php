@@ -418,6 +418,7 @@
                             <th>Full Name</th>
                             <th>Mobile Number</th>
                             <th>Address</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
@@ -438,10 +439,26 @@
                                 <td> {{ $customer->mobile }} </td>
                                 <td> {{ $customer->address }} </td>
                                 <td class="text-center">
+                                    <form id="toggle-status-form-{{ $customer->id }}" method="POST"
+                                        action="{{ route('customers.toggle_status', $customer) }}">
+                                        <div class="form-check form-switch ">
+                                            <input type="hidden" name="status" value="0">
+                                            <input type="checkbox" name="status"
+                                                id="status-switch-{{ $customer->id }}" class="form-check-input "
+                                                @if ($customer->status) checked @endif
+                                                @if ($customer->trashed()) disabled @endif value="1"
+                                                onclick="this.form.submit()" />
+                                        </div>
+                                        @csrf
+                                        @method('PUT')
+                                    </form>
+                                </td>
+                                <td class="text-center">
+
                                     <a href="{{ route('customers.show', ['customer' => $customer, 'marketId' => $market->id]) }}"
                                         class="btn  btn-outline-info" type="button"> View
                                     </a>
-                                    <a href="#" class="btn  btn-outline-danger" type="button"
+                                    {{-- <a href="#" class="btn  btn-outline-danger" type="button"
                                         onclick="if(confirm('Are you sure want to remove this customer from this market ? ')) document.getElementById('remove-customer-from-market-{{ $customer->id }}').submit()">
                                         Remove
                                     </a>
@@ -449,7 +466,7 @@
                                         action="{{ route('customers.remove_from_market', $customer) }}">
                                         @csrf
                                         <input type="number" name="market_id" value="{{ $market->id }}" hidden>
-                                    </form>
+                                    </form> --}}
                                 </td>
                             </tr>
                         @endforeach

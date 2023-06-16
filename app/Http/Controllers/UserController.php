@@ -140,7 +140,12 @@ class UserController extends Controller
 
             $user->update($attributes);
 
-            return back()->with('success', 'User status updated successfull');
+            if ($user->status==1) {
+                return back()->with('success', "Access Granted: The user's system access has been successfully granted.");
+            } else {
+                return back()->with('success', "Access Revoked: The user's system access has been successfully revoked.");
+            }
+
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage());
         }

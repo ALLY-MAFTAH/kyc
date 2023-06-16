@@ -7,6 +7,7 @@ use App\Models\Frame;
 use App\Models\FrameIn;
 use App\Models\Market;
 use App\Models\User;
+use App\Services\MessagingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -131,6 +132,10 @@ class FrameController extends Controller
                 return back()->with('error', $th->getMessage());
             }
         }
+        $monthsString = implode(", ", $months);
+            $messageBody = "Habari ".$customer->full_name.".\n"."Umefanikiwa kulipia fremu namba: ".$frame->code." katika ".$frame->market->name.". Malipo ni kwa ajili ya mwezi ".$monthsString." mwaka ".$request->year.".\nTarehe: ".date('d M, Y');
+            $messagingService = new MessagingService();
+            $messageResponse = $messagingService->sendMessage($customer->mobile,$messageBody);
         return back()->with('success', 'Payment recorded successful');
     }
 
