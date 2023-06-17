@@ -47,7 +47,7 @@
                         <input type="email" name="email" placeholder="Email Address" required
                             class="@error('email') is-invalid @enderror">
                     </div>
-                    @error('password')
+                    @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -62,7 +62,7 @@
                             <span class="far fa-eye-slash"></span>
                         </a>
                     </div>
-                    @error('email')
+                    @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

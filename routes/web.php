@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 
 /*
@@ -18,6 +19,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+
+Route::get('/reset-password', [ResetPasswordController::class, 'index'])->name('password.request');
+Route::post('/send-reset-link', [ResetPasswordController::class, 'validatePasswordRequest'])->name('password.email');
+Route::get('/password/reset/{token}', [ResetPasswordController::class, 'reset'])->name('password.reset');
+Route::post('/password/reset-confirm', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 
 Route::middleware(['auth'])->group(function () {
 

@@ -40,7 +40,10 @@
 </head>
 
 <body>
-    <div class="container-scroller">
+    @guest
+        <div></div>
+        @else
+        <div class="container-scroller">
         @include('partials.sidebar')
 
         <div class="container-fluid page-body-wrapper">
@@ -64,6 +67,7 @@
             </div>
         </div>
     </div>
+    @endguest
     <!-- container-scroller -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
