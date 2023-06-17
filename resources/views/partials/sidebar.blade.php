@@ -6,7 +6,7 @@
                 src="{{ asset('assets/images/logo-mini.svg') }}" alt="logo" /></a>
     </div>
     <ul class="nav">
-        <li class="pl-5 pt-2 pb-3 nav-profile">
+        <li class="pl-5 pt-2 pb-3 nav-item nav-profile">
             <a href="{{ route('home') }}" class="nav-link">
                 <img src="{{ asset('assets/images/logo.png') }}" height="90px" alt="logo" />
             </a>
