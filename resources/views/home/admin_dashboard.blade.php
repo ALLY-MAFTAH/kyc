@@ -11,10 +11,6 @@
                 <i class="mdi mdi-download btn-icon-prepend"></i> Download </button>
             <button onclick="printDiv('printable-content')" type="button" class="btn  bg-white btn-icon-text border ml-3">
                 <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
-            @if (Auth::user()->market_id && Auth::user()->status && Auth::user()->is_manager)
-                <button onclick="goToMarket(event)" data-id="{{ Auth::user()->market_id }}" type="button"
-                    class="btn ml-3 btn-primary collapsed"> Manage Market </button>
-            @endif
         </div>
         <br>
     </div>
@@ -222,7 +218,6 @@
                             <thead class="bg-light">
                                 <tr>
                                     <th>Customer</th>
-                                    <th>Markets</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
@@ -241,14 +236,6 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
-                                            @foreach ($customer->markets as $market)
-                                                <div>
-                                                    {{ $market->name }},
-                                                </div>
-                                            @endforeach
-                                        </td>
-
                                         <td class="h6">
                                             {{ number_format($customer->payments_sum_amount, 0, '.', ',') }}
                                             TZS</td>
@@ -378,10 +365,4 @@
         }
     </script>
 
-    <script>
-        function goToMarket(event) {
-            var id = event.target.dataset.id;
-            window.location.href = '/show-market/' + id;
-        }
-    </script>
 @endsection

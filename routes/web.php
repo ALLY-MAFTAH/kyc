@@ -32,9 +32,9 @@ Route::middleware(['auth'])->group(function () {
 
 
     // MARKETS ROUTES
-
     Route::get('/all-markets', [MarketController::class, 'index'])->name('markets.index');
-    Route::get('/show-market/{market}', [MarketController::class, 'showMarket'])->name('markets.show');
+    Route::get('/admin-show-market/{market}', [MarketController::class, 'showMarket'])->name('markets.show');
+    Route::get('/manager-show-market/{market}', [MarketController::class, 'showMarket']);
     Route::post('/add-market', [MarketController::class, 'postMarket'])->name('markets.add');
     Route::post('/add-manager/{market}', [MarketController::class, 'addManager'])->name('markets.add_manager');
     Route::put('/edit-market/{market}', [MarketController::class, 'putMarket'])->name('markets.edit');

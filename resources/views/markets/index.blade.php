@@ -261,7 +261,7 @@
 <script>
     function goToMarketTr(event) {
         var id = event.target.parentNode.dataset.id;
-        window.location.href = '/show-market/' + id;
+        window.location.href = '/admin-show-market/' + id;
     }
 </script>
 <script>

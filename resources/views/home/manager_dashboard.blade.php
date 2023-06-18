@@ -40,17 +40,35 @@
                     <div class="d-flex justify-content-between align-items-start">
                         <div class="color-card">
                             <p class="mb-0 color-card-head">
-                            <h4>Markets</h4>
+                            <h4>Frames</h4>
                             </p>
-                            <h2 class="text-white">{{ $allMarkets->count() }}</span>
+                            <h2 class="text-white">{{ $allFrames->count() }}</span>
                             </h2>
                         </div>
-                        <i class="card-icon-indicator mdi mdi-hospital-building bg-inverse-icon-success"></i>
+                        <i class="card-icon-indicator mdi mdi-image-filter-frames bg-inverse-icon-success"></i>
                     </div>
                     <h6 class="text-white">
-                        {{ $allFrames->count() . ' Total frames, ' . $allStalls->count() . ' Total stalls' }}
+                        {{ $emptyFrames->count() . ' Empty frames'}}
                     </h6>
                 </div>
+            </div>
+        </div>
+        <div class="pl-0 col-xl-3 col-md-6 stretch-card grid-margin grid-margin-sm-0 pb-sm-2">
+            <div class="card " style="background: rgb(0, 166, 255)">
+                <div class="card-body px-3 py-2">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="color-card">
+                            <p class="mb-0 color-card-head">
+                            <h4>Stalls</h4>
+                            </p>
+                            <h2 class="text-white"> {{ $allStalls->count() }}
+                            </h2>
+                        </div>
+                        <i class="card-icon-indicator mdi mdi-table bg-inverse-icon-warning"></i>
+                    </div>
+                    <h6 class="text-white">
+                        {{ $emptyStalls->count() . ' Empty stalls'}}
+                    </h6>                </div>
             </div>
         </div>
         <div class="pl-0 col-xl-3 col-md-6 stretch-card grid-margin grid-margin-sm-0 pb-sm-2">
@@ -71,23 +89,6 @@
             </div>
         </div>
         <div class="pl-0 col-xl-3 col-md-6 stretch-card grid-margin grid-margin-sm-0 pb-sm-2">
-            <div class="card " style="background: rgb(0, 166, 255)">
-                <div class="card-body px-3 py-2">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div class="color-card">
-                            <p class="mb-0 color-card-head">
-                            <h4>Users</h4>
-                            </p>
-                            <h2 class="text-white"> {{ $allUsers->count() }}
-                            </h2>
-                        </div>
-                        <i class="card-icon-indicator mdi mdi-contacts bg-inverse-icon-warning"></i>
-                    </div>
-                    <h6 class="text-white">Admin, managers & assistant managers</h6>
-                </div>
-            </div>
-        </div>
-        <div class="pl-0 col-xl-3 col-md-6 stretch-card grid-margin grid-margin-sm-0 pb-sm-2">
             <div class="card bg-success">
                 <div class="card-body px-3 py-2">
                     <div class="d-flex justify-content-between align-items-start">
@@ -95,7 +96,7 @@
                             <p class="mb-0 color-card-head">
                             <h4>Collection</h4>
                             </p>
-                            <h2 class="text-white">{{ number_format($totalMarketsCollection, 0, '.', ',') }} <span
+                            <h2 class="text-white">{{ number_format($totalMarketCollection, 0, '.', ',') }} <span
                                     class="h5">TZS</span>
                             </h2>
                         </div>
@@ -173,7 +174,7 @@
                                     <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
                                         <div>
                                             <h3 class="m-0 survey-value pt-2">
-                                                {{ number_format(699855000, 0, '.', ',') }}<span class="h5">TZS</span>
+                                                {{ number_format($totalMarketCollection, 0, '.', ',') }}<span class="h5">TZS</span>
                                             </h3>
                                             <p class="text-danger m-0">{{ number_format(499855000, 0, '.', ',') }}<span
                                                     class="h6"> TZS</span> behind the target</p>
@@ -205,7 +206,7 @@
                     <div class="col-4">
                         <p class="mb-0 text-muted">Total Collected Amount</p>
                         <h5 class="d-inline-block survey-value pt-2 mb-0">
-                            {{ number_format($totalMarketsCollection, 0, '.', ',') }} <span class="h5">TZS</span>
+                            {{ number_format($totalMarketCollection, 0, '.', ',') }} <span class="h5">TZS</span>
                         </h5>
 
                     </div>
@@ -222,7 +223,6 @@
                             <thead class="bg-light">
                                 <tr>
                                     <th>Customer</th>
-                                    <th>Markets</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
@@ -241,15 +241,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
-                                            @foreach ($customer->markets as $market)
-                                                <div>
-                                                    {{ $market->name }},
-                                                </div>
-                                            @endforeach
-                                        </td>
-
-                                        <td class="h6">
+                                        <td class="h6 pr-2">
                                             {{ number_format($customer->payments_sum_amount, 0, '.', ',') }}
                                             TZS</td>
                                     </tr>
@@ -265,50 +257,25 @@
                             </tbody>
                         </table>
                     </div>
-                    <a class="text-black mt-3 d-block pl-4" href="{{ route('customers.index') }}">
-                        <span class="font-weight-medium h6">View all customers</span>
-                        <i class="mdi mdi-chevron-right"></i></a>
+
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row pt-2">
-        <div class="col-xl-6 col-md-6 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title font-weight-medium"> Empty Frames by Market</div>
-                </div>
-                <div class="card-body">
 
-                    <div id="frame_chart_div" style="width: 100%; height: 400px;"></div>
-
-                    <a class="text-black d-block font-weight-medium h6" href="{{ route('frames.index') }}">View all <i
-                            class="mdi mdi-chevron-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-6 col-md-6 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title font-weight-medium"> Empty Stalls by Market</div>
-                </div>
-                <div class="card-body">
-                    <div id="stall_chart_div" style="width: 100%; height: 400px;"></div>
-
-                    <a class="text-black d-block font-weight-medium h6" href="{{ route('stalls.index') }}">View all <i
-                            class="mdi mdi-chevron-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 @section('scripts')
     {{-- <script src="{{ asset('assets/js/dashboard.js') }}"></script> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+    <script>
+        function goToMarket(event) {
+            var id = event.target.dataset.id;
+            window.location.href = '/manager-show-market/' + id;
+        }
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var graphData = @json($graphData);
@@ -339,49 +306,5 @@
                 }
             });
         });
-    </script>
-
-    <script type="text/javascript">
-        google.charts.load('current', {
-            'packages': ['corechart']
-        });
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable(@json($frameChartData));
-
-            var options = {
-                // title: 'Empty Frames by Market',
-                pieHole: 0.4,
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('frame_chart_div'));
-            chart.draw(data, options);
-        }
-    </script>
-    <script type="text/javascript">
-        google.charts.load('current', {
-            'packages': ['corechart']
-        });
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable(@json($stallChartData));
-
-            var options = {
-                // title: 'Empty Frames by Market',
-                pieHole: 0.4,
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('stall_chart_div'));
-            chart.draw(data, options);
-        }
-    </script>
-
-    <script>
-        function goToMarket(event) {
-            var id = event.target.dataset.id;
-            window.location.href = '/show-market/' + id;
-        }
     </script>
 @endsection

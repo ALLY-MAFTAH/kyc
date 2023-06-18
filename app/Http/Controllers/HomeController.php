@@ -26,27 +26,28 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->market_id) {
+
+            $thisMarket = Market::find(Auth::user()->market_id);
             $currentYear = date('Y');
-            $allMarkets = Market::all();
-            $allFrames = Frame::all();
-            $allStalls = Stall::all();
-            $allCustomers = Customer::where('status',1)->get();
-            $allUsers = User::all();
+            $allFrames = Frame::where('market_id',Auth::user()->market_id)->get();
+            $allStalls = Stall::where('market_id',Auth::user()->market_id)->get();
+            $allCustomers = $thisMarket->customers()->where(['status'=>1])->get();
+
+            $emptyFrames=Frame::where(['market_id'=>Auth::user()->market_id,'customer_id'=>null])->get();
+            $emptyStalls=Stall::where(['market_id'=>Auth::user()->market_id,'customer_id'=>null])->get();
 
             $graphData = [
                 'labels' => [],
                 'data' => [],
             ];
 
-            $totalMarketsCollection = 0;
-            foreach ($allMarkets as $market) {
-                $collectionAmount = $market->payments()
+            $totalMarketCollection = 0;
+                $collectionAmount = $thisMarket->payments()
                     ->where('year', $currentYear)
                     ->sum('amount');
-                $totalMarketsCollection = $totalMarketsCollection + $collectionAmount;
-                $graphData['labels'][] = $market->name;
+                $totalMarketCollection = $totalMarketCollection + $collectionAmount;
+                $graphData['labels'][] = $thisMarket->name;
                 $graphData['data'][] = $collectionAmount;
-            }
 
             $totalFramesCollection=0;
             foreach ($allFrames as $frame) {
@@ -65,7 +66,8 @@ class HomeController extends Controller
 
             }
 
-            $topFiveCustomers = Customer::withSum(['payments' => function ($query) use ($currentYear) {
+            $topFiveCustomers = $thisMarket->customers()
+           ->withSum(['payments' => function ($query) use ($currentYear) {
             $query->where('year', $currentYear);
               }], 'amount')
               ->having('payments_sum_amount', '>', 0)
@@ -73,39 +75,16 @@ class HomeController extends Controller
               ->take(5)
               ->get();
 
-              $frameMarkets = Market::withCount(['frames as empty_frames_count' => function ($query) {
-                $query->whereNull('customer_id');
-            }])->get();
-              $stallMarkets = Market::withCount(['stalls as empty_stalls_count' => function ($query) {
-                $query->whereNull('customer_id');
-            }])->get();
-
-            $frameChartData = [
-                ['Market', 'Empty Frames'],
-            ];
-            $stallChartData = [
-                ['Market', 'Empty Stalls'],
-            ];
-
-            foreach ($frameMarkets as $market) {
-                $frameChartData[] = [$market->name, $market->empty_frames_count];
-
-            }
-            foreach ($stallMarkets as $market) {
-                $stallChartData[] = [$market->name, $market->empty_stalls_count];
-            }
             return view('home.manager_dashboard', compact(
-                'allMarkets',
-                'allUsers',
+                'emptyStalls',
+                'emptyFrames',
                 'allFrames',
                 'allStalls',
                 'allCustomers',
-                'totalMarketsCollection',
+                'totalMarketCollection',
                 'totalFramesCollection',
                 'totalStallsCollection',
                 'graphData',
-                'frameChartData',
-                'stallChartData',
                 'topFiveCustomers',
             ));
 
