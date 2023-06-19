@@ -105,9 +105,10 @@ class CustomerController extends Controller
                     'profile-img-' . $now . '.' . $request->file('photo')->getClientOriginalExtension(),
                     'public'
                 );
-            } else
+            } else{
 
                 return back()->with('error', 'Please make sure you upload customer profile picture.')->withInput()->with('addCustomerCollapse', true);
+            }
             $attributes['photo'] = $photoPath;
             $attributes['address'] = $request->address ?? "";
             $attributes['middle_name'] = $request->middle_name ?? "";
@@ -248,7 +249,7 @@ class CustomerController extends Controller
             $customer->update($attr);
 
             $monthsString = implode(", ", $months);
-            $messageBody = "Habari ".$customer->full_name.".\n"."Umefanikiwa kukodishwa fremu namba: ".$frame->code." katika ".$frame->market->name.". Na malipo kwa ajili ya mwezi ".$monthsString." mwaka ".$request->year." yamepokelewa.\nTarehe: ".date('d M, Y');
+            $messageBody = "Habari ".$customer->full_name.".\n"."Umefanikiwa kupangishwa fremu na: ".$frame->code." katika ".$frame->market->name.". Na malipo kwa ajili ya ".$monthsString." ".date('Y')." yamepokelewa.\nTar: ".date('d M, Y');
             $messagingService = new MessagingService();
             $messageResponse = $messagingService->sendMessage($customer->mobile,$messageBody);
             return back()->with('success', 'Frame successfully assigned to customer');
@@ -311,7 +312,7 @@ class CustomerController extends Controller
             $customer->update($attr);
 
             $monthsString = implode(", ", $months);
-            $messageBody = "Habari ".$customer->full_name.".\n"."Umefanikiwa kukodishwa kizimba namba: ".$stall->code." katika ".$stall->market->name.". Na malipo kwa ajili ya mwezi ".$monthsString." mwaka ".$request->year." yamepokelewa.\nTarehe: ".date('d M, Y');
+            $messageBody = "Habari ".$customer->full_name.".\n"."Umefanikiwa kupangishwa kizimba na: ".$stall->code." katika ".$stall->market->name.". Na malipo kwa ajili ya ".$monthsString." ".date('Y')." yamepokelewa.\nTar: ".date('d M, Y');
             $messagingService = new MessagingService();
             $messageResponse = $messagingService->sendMessage($customer->mobile,$messageBody);
             return back()->with('success', 'Stall successfully assigned to customer');
