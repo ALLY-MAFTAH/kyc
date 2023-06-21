@@ -20,7 +20,7 @@
         <div class="d-flex ">
             <button onclick="saveWebpage()" type="button" class="btn  bg-white btn-icon-text border">
                 <i class="mdi mdi-download btn-icon-prepend"></i> Download </button>
-            <button onclick="printDiv('printable-content')"  type="button" class="btn  bg-white btn-icon-text border ml-3">
+            <button onclick="printDiv('printable-content')" type="button" class="btn  bg-white btn-icon-text border ml-3">
                 <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
         </div>
     </div>
@@ -71,9 +71,11 @@
                                         <div>{{ $market->sub_ward }}</div>
                                         <div>
                                             @if ($market->users()->where('is_manager', true)->first() == null)
-                                                <span style="color:red">No Manager</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <span style="color:red">No
+                                                    Manager</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                                                <a style="text-decoration: none" href="#" data-bs-toggle="modal" data-bs-target="#addManagerModal">Add</a>
+                                                <a style="text-decoration: none" href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#addManagerModal">Add</a>
                                             @else
                                                 {{ $market->users()->where('is_manager', true)->first()->name }}
                                             @endif
@@ -227,8 +229,8 @@
                                 <td> {{ number_format($frame->price, 0, '.', ',') }} TZS </td>
                                 <td>
                                     @if ($frame->customer)
-                                        <a style="text-decoration: none"
-                                            href="{{ route('customers.show', ['customer' => $frame->customer, 'marketId' => $market->id]) }}">
+                                        <a class="frame-customer-link text-primary"class="" type="button"
+                                            data-customerId="{{ $frame->customer->id }}"data-marketId="{{ $frame->market->id }}">
                                             {{ $frame->customer->first_name }}
                                             {{ $frame->customer->middle_name }}
                                             {{ $frame->customer->last_name }}
@@ -326,8 +328,8 @@
                                 <td> {{ number_format($stall->price, 0, '.', ',') }} TZS </td>
                                 <td>
                                     @if ($stall->customer)
-                                        <a style="text-decoration: none"
-                                            href="{{ route('customers.show', ['customer' => $stall->customer, 'marketId' => $market->id]) }}">
+                                        <a class="stall-customer-link text-primary"class="" type="button"
+                                            data-customerId="{{ $stall->customer->id }}"data-marketId="{{ $stall->market->id }}">
                                             {{ $stall->customer->first_name }}
                                             {{ $stall->customer->middle_name }}
                                             {{ $stall->customer->last_name }}
@@ -455,9 +457,13 @@
                                 </td>
                                 <td class="text-center">
 
-                                    <a href="{{ route('customers.show', ['customer' => $customer, 'marketId' => $market->id]) }}"
-                                        class="btn  btn-outline-info" type="button"> View
-                                    </a>
+                                    <form action="{{ route('customers.show') }}" method="GET">
+                                        <input type="number" name="market_id" value="{{ $market->id }}" hidden>
+                                        <input type="number" name="customer_id" value="{{ $customer->id }}" hidden>
+                                        <button class="btn btn-outline-info" type="submit"></i> View
+                                        </button>
+                                    </form>
+
                                     {{-- <a href="#" class="btn  btn-outline-danger" type="button"
                                         onclick="if(confirm('Are you sure want to remove this customer from this market ? ')) document.getElementById('remove-customer-from-market-{{ $customer->id }}').submit()">
                                         Remove
@@ -487,7 +493,7 @@
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-start">
-                    <form method="POST" action="{{ route('markets.add_manager',$market) }}">
+                    <form method="POST" action="{{ route('markets.add_manager', $market) }}">
                         @csrf
                         <div class="">
                             <input type="number" name="is_manager" value="1" hidden>
@@ -516,8 +522,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="email"
-                                    class=" text-sm-start">{{ __('Email Address') }}</label>
+                                <label for="email" class=" text-sm-start">{{ __('Email Address') }}</label>
                                 <span class="text-danger"></span>
                                 <div class="">
                                     <input id="email" type="text" placeholder="me@me.com" required
@@ -683,6 +688,28 @@
             .catch(function(error) {
                 console.log('Error accessing the camera: ', error);
             });
+    }
+</script>
+<script>
+    var customerLinks = document.getElementsByClassName('frame-customer-link');
+    for (var i = 0; i < customerLinks.length; i++) {
+        customerLinks[i].addEventListener('click', function(e) {
+            e.preventDefault();
+            var customerId = this.getAttribute('data-customerId');
+            var marketId = this.getAttribute('data-marketId');
+            window.location.href = '/show-customer/?market_id=' + marketId + '&customer_id=' + customerId;
+        });
+    }
+</script>
+<script>
+    var customerLinks = document.getElementsByClassName('stall-customer-link');
+    for (var i = 0; i < customerLinks.length; i++) {
+        customerLinks[i].addEventListener('click', function(e) {
+            e.preventDefault();
+            var customerId = this.getAttribute('data-customerId');
+            var marketId = this.getAttribute('data-marketId');
+            window.location.href = '/show-customer/?market_id=' + marketId + '&customer_id=' + customerId;
+        });
     }
 </script>
 @endsection

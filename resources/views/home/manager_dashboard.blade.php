@@ -273,7 +273,7 @@
     <script>
         function goToMarket(event) {
             var id = event.target.dataset.id;
-            window.location.href = '/manager-show-market/' + id;
+            window.location.href = '/show-market/?market_id=' + id;
         }
     </script>
     <script>

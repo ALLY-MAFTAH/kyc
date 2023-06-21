@@ -10,8 +10,10 @@
                 </label>
             </div>
             <div class="col py-0 text-end">
-                <form action="{{ route('customers.show', ['customer' => $customer, 'marketId' => $market->id]) }}"
+                <form action="{{ route('customers.show') }}"
                     method="get">
+                    <input type="number" name="market_id" value="{{ $market->id }}" hidden>
+                    <input type="number" name="customer_id" value="{{ $customer->id }}" hidden>
                     <input type="number" value="{{ $selectedStallId }}" name="selectedStallId" hidden>
                     <input type="number" value="{{ $selectedFrameId }}" name="selectedFrameId" hidden>
                     <input type="number" value="{{ $frameSelectedYear }}" name="frameSelectedYear" hidden>

@@ -16,7 +16,7 @@
         <div class="d-flex ">
             <button onclick="saveWebpage()" type="button" class="btn  bg-white btn-icon-text border">
                 <i class="mdi mdi-download btn-icon-prepend"></i> Download </button>
-            <button onclick="printDiv('printable-content')"  type="button" class="btn  bg-white btn-icon-text border ml-3">
+            <button onclick="printDiv('printable-content')" type="button" class="btn  bg-white btn-icon-text border ml-3">
                 <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
         </div>
     </div>
@@ -50,7 +50,8 @@
                     <th>Mobile Number</th>
                     <th>Physical Address</th>
                     <th>Has Property</th>
-                    <th class="text-center">Actions</th>
+                    <th ></th>
+                    <th class="text-left">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,17 +70,21 @@
                         <td>{{ $customer->mobile }}</td>
                         <td>{{ $customer->address }}</td>
                         <td>
-                            @if ($customer->frames()->count()==0 || $customer->stalls()->count()==0)
-                            <b style="color:red; font-weight:bold">No</b>
+                            @if ($customer->frames()->count() == 0 || $customer->stalls()->count() == 0)
+                                <b style="color:red; font-weight:bold">No</b>
                             @else
-                            <b style="color:green; font-weight:bold">Yes</b>
+                                <b style="color:green; font-weight:bold">Yes</b>
                             @endif
                         </td>
                         <td class="text-center">
-                            <a href="{{ route('customers.admin_show', $customer) }}" class="btn  btn-outline-info"
-                                type="button">
-                                View
-                            </a>
+                            <form action="{{ route('customers.admin_show') }}" method="GET">
+                                <input type="number" name="customer_id" value="{{ $customer->id }}" hidden>
+                                <button class="btn btn-outline-info" type="submit"></i> View
+                                </button>
+                            </form>
+                        </td>
+
+                            <td class="text-center">
                             <a href="#" class="btn  btn-outline-danger"
                                 onclick="if(confirm('Are you sure want to delete {{ $customer->name }}?')) document.getElementById('delete-customer-{{ $customer->id }}').submit()">
                                 Delete

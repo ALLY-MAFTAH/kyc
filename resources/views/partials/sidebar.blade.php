@@ -8,9 +8,9 @@
     <ul class="nav">
         <li class="pl-5 pt-2 pb-3 nav-item nav-profile">
             {{-- <a href="{{ route('home') }}" class="nav-link"> --}}
-                <img src="{{ asset('assets/images/logo.png') }}" height="90px" alt="logo" />
+            <img src="{{ asset('assets/images/logo.png') }}" height="90px" alt="logo" />
             {{-- </a> --}}
-        </li>   
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('home') }}">
                 <i class="mdi mdi-home menu-icon"></i>
@@ -56,7 +56,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                    aria-controls="ui-basic">
                     <i class="mdi mdi-file-document menu-icon"></i>
                     <span class="menu-title">Reports</span>
                     <i class="menu-arrow"></i>
@@ -64,16 +65,17 @@
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('reports.markets') }}">Markets Report</a>
+                            <a class="nav-link" href="{{ route('admin_reports.markets') }}">Markets Report</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('reports.customers') }}">Customers Report</a>
+                            <a class="nav-link" href="{{ route('admin_reports.customers') }}">Customers Report</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('reports.payments') }}">Payments Report</a>
+                            <a class="nav-link" href="{{ route('admin_reports.payments') }}">Payments Report</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('reports.frame_stall') }}">Frames & Stalls Report</a>
+                            <a class="nav-link" href="{{ route('admin_reports.frame_stall') }}">Frames & Stalls
+                                Report</a>
                         </li>
                     </ul>
                 </div>
@@ -86,8 +88,9 @@
             </li>
         @endif
         @if (Auth::user()->market_id && Auth::user()->status && Auth::user()->is_manager)
-            <li class="nav-item {{ request()->routeIs('markets.show') || request()->routeIs('customers.show') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('markets.show', Auth::user()->market_id) }}">
+            <li
+                class="nav-item {{ request()->routeIs('markets.show') || request()->routeIs('customers.show') ? 'active' : '' }}">
+                <a id="market-link"class="nav-link" type="button">
                     <i class="mdi mdi-hospital-building menu-icon"></i>
                     <span class="menu-title">Market</span>
                 </a>
@@ -99,7 +102,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                    aria-controls="ui-basic">
                     <i class="mdi mdi-file-document menu-icon"></i>
                     <span class="menu-title">Reports</span>
                     <i class="menu-arrow"></i>
@@ -107,13 +111,14 @@
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('reports.customers') }}">Customers Report</a>
+                            <a class="nav-link" href="{{ route('manager_reports.customers') }}">Customers Report</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('reports.payments') }}">Payments Report</a>
+                            <a class="nav-link" href="{{ route('manager_reports.payments') }}">Payments Report</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('reports.frame_stall') }}">Frames & Stalls Report</a>
+                            <a class="nav-link" href="{{ route('manager_reports.frame_stall') }}">Frames & Stalls
+                                Report</a>
                         </li>
                     </ul>
                 </div>

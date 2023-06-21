@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-block text-center my-3">Login</button>
-                @if (Route::has('password.request'))
+                @if (Route::has('passwords.request'))
                     <div class="text-center pt-3 text-muted">Forgot Password? <a
                             href="{{ route('password.request') }}">Reset</a></div>
                 @endif

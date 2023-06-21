@@ -39,7 +39,7 @@
                 <img src="{{ asset('assets/images/logo.png') }}" height="140px" width="180px" alt="">
             </div>
             <div class="h4 text-muted text-center pt-2">KYC System</div>
-            <form action="{{ route('password.email') }}" method="POST" class="pt-3">
+            <form action="{{ route('passwords.email') }}" method="POST" class="pt-3">
                 @csrf
                 <div class="form-group py-2">
                     <div class="input-field">

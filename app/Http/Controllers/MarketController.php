@@ -29,9 +29,9 @@ class MarketController extends Controller
     }
 
 
-    public function showMarket(Market $market)
+    public function showMarket(Request $request)
     {
-
+        $market=Market::find($request->market_id);
         if (Auth::user()->market_id && Auth::user()->market_id != $market->id) {
             return back()->with('error', "Access dinied! Unauthorized user.");
         }

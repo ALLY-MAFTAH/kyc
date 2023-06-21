@@ -203,8 +203,10 @@
                                         </div>
                                         <div class="py-2 text-right">
                                             <form id="showFrameRecord-{{ $frame->id }}"
-                                                action="{{ route('customers.show', ['customer' => $frame->customer, 'marketId' => $market->id]) }}"
+                                                action="{{ route('customers.show') }}"
                                                 method="get">
+                                                <input type="number" name="market_id" value="{{ $market->id }}" hidden>
+                                                <input type="number" name="customer_id" value="{{ $frame->customer_id }}" hidden>
                                                 <input type="number" value="{{ $frame->id }}"
                                                     name="selectedFrameId" hidden>
                                                 <input type="number" value="{{ $selectedStallId }}"
@@ -301,8 +303,10 @@
                                         </div>
                                         <div class="py-2 text-right">
                                             <form id="showStallRecord-{{ $stall->id }}"
-                                                action="{{ route('customers.show', ['customer' => $stall->customer, 'marketId' => $market->id]) }}"
+                                                action="{{ route('customers.show') }}"
                                                 method="get">
+                                                <input type="number" name="market_id" value="{{ $market->id }}" hidden>
+                                                <input type="number" name="customer_id" value="{{ $stall->customer_id }}" hidden>
                                                 <input type="number" value="{{ $stall->id }}"
                                                     name="selectedStallId" hidden>
                                                 <input type="number" value="{{ $selectedFrameId }}"

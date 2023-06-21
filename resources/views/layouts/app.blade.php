@@ -42,31 +42,31 @@
 <body>
     @guest
         <div></div>
-        @else
+    @else
         <div class="container-scroller">
-        @include('partials.sidebar')
+            @include('partials.sidebar')
 
-        <div class="container-fluid page-body-wrapper">
-            @include('partials.settings-panel')
-            @include('partials.navbar')
+            <div class="container-fluid page-body-wrapper">
+                @include('partials.settings-panel')
+                @include('partials.navbar')
 
-            <div class="main-panel">
-                <div class="content-wrapper pb-0">
-                    <div id="loader" class="loader">
-                        <!-- Loader content here -->
+                <div class="main-panel">
+                    <div class="content-wrapper pb-0">
+                        <div id="loader" class="loader">
+                            <!-- Loader content here -->
+                        </div>
+                        <div class="breadcrumbs">
+                            @yield('breadcrumbs')
+                        </div>
+                        <div id="printable-content">
+                            @yield('content')
+                        </div>
                     </div>
-                    <div class="breadcrumbs">
-                        @yield('breadcrumbs')
-                    </div>
-                    <div id="printable-content">
-                        @yield('content')
-                    </div>
+                    @include('partials.footer')
+
                 </div>
-                @include('partials.footer')
-
             </div>
         </div>
-    </div>
     @endguest
     <!-- container-scroller -->
 
@@ -368,6 +368,14 @@
                 }
             }
         }
+    </script>
+    <script>
+        document.getElementById('market-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            var marketId = "{{ Auth::user()->market_id }}";
+            window.location.href = '/show-market/?market_id=' + marketId;
+
+        });
     </script>
     @yield('scripts')
 </body>

@@ -20,10 +20,10 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 
 Auth::routes();
 
-Route::get('/reset-password', [ResetPasswordController::class, 'index'])->name('password.request');
-Route::post('/send-reset-link', [ResetPasswordController::class, 'validatePasswordRequest'])->name('password.email');
-Route::get('/password/reset/{token}', [ResetPasswordController::class, 'reset'])->name('password.reset');
-Route::post('/password/reset-confirm', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
+Route::get('/reset-password', [ResetPasswordController::class, 'index'])->name('passwords.request');
+Route::post('/send-reset-link', [ResetPasswordController::class, 'validatePasswordRequest'])->name('passwords.email');
+Route::get('/password/reset/{token}', [ResetPasswordController::class, 'reset'])->name('passwords.reset');
+Route::post('/password/reset-confirm', [ResetPasswordController::class, 'resetPassword'])->name('passwords.update');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -33,8 +33,7 @@ Route::middleware(['auth'])->group(function () {
 
     // MARKETS ROUTES
     Route::get('/all-markets', [MarketController::class, 'index'])->name('markets.index');
-    Route::get('/admin-show-market/{market}', [MarketController::class, 'showMarket'])->name('markets.show');
-    Route::get('/manager-show-market/{market}', [MarketController::class, 'showMarket']);
+    Route::get('show-market', [MarketController::class, 'showMarket'])->name('markets.show');
     Route::post('/add-market', [MarketController::class, 'postMarket'])->name('markets.add');
     Route::post('/add-manager/{market}', [MarketController::class, 'addManager'])->name('markets.add_manager');
     Route::put('/edit-market/{market}', [MarketController::class, 'putMarket'])->name('markets.edit');
@@ -65,8 +64,8 @@ Route::middleware(['auth'])->group(function () {
 
     // CUSTOMERS ROUTES
     Route::get('/all-customers', [CustomerController::class, 'index'])->name('customers.index');
-    Route::get('/show-customer-admin-view/{customer}', [CustomerController::class, 'showCustomerAdminView'])->name('customers.admin_show');
-    Route::get('/show-customer/{customer}/{marketId}', [CustomerController::class, 'showCustomer'])->name('customers.show');
+    Route::get('/show-customer-admin-view', [CustomerController::class, 'showCustomerAdminView'])->name('customers.admin_show');
+    Route::get('/show-customer', [CustomerController::class, 'showCustomer'])->name('customers.show');
     Route::post('/add-customer', [CustomerController::class, 'postCustomer'])->name('customers.add');
     Route::put('/edit-customer/{customer}', [CustomerController::class, 'putCustomer'])->name('customers.edit');
     Route::delete('/delete-customer/{customer}', [CustomerController::class, 'deleteCustomer'])->name('customers.delete');
@@ -98,26 +97,26 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/change-password', [UserController::class, 'changePassword'])->name('users.change_password');
 
     // ADMIN REPORTS ROUTES
-    Route::get('/admin-markets-report', [AdminReportController::class, 'marketsReport'])->name('reports.markets');
-    Route::get('/admin-customers-report', [AdminReportController::class, 'customersReport'])->name('reports.customers');
-    Route::get('/admin-payments-report', [AdminReportController::class, 'paymentsReport'])->name('reports.payments');
-    Route::get('/admin-frame-stall-report', [AdminReportController::class, 'customerPaymentsReport'])->name('reports.frame_stall');
+    Route::get('/admin-markets-report', [AdminReportController::class, 'marketsReport'])->name('admin_reports.markets');
+    Route::get('/admin-customers-report', [AdminReportController::class, 'customersReport'])->name('admin_reports.customers');
+    Route::get('/admin-payments-report', [AdminReportController::class, 'paymentsReport'])->name('admin_reports.payments');
+    Route::get('/admin-frame-stall-report', [AdminReportController::class, 'customerPaymentsReport'])->name('admin_reports.frame_stall');
 
-    Route::get('/admin-generate-markets-report', [AdminReportController::class, 'generateMarketsReport'])->name('reports.generate_markets_report');
-    Route::get('/admin-generate-customers-report', [AdminReportController::class, 'generateCustomersReport'])->name('reports.generate_customers_report');
-    Route::get('/admin-generate-payments-report', [AdminReportController::class, 'generatePaymentsReport'])->name('reports.generate_payments_report');
-    Route::get('/admin-generate-frame-stall-report'     , [AdminReportController::class, 'generateFrameStallReport'])->name('reports.generate_frame_stall_report');
+    Route::get('/admin-generate-markets-report', [AdminReportController::class, 'generateMarketsReport'])->name('admin_reports.generate_markets_report');
+    Route::get('/admin-generate-customers-report', [AdminReportController::class, 'generateCustomersReport'])->name('admin_reports.generate_customers_report');
+    Route::get('/admin-generate-payments-report', [AdminReportController::class, 'generatePaymentsReport'])->name('admin_reports.generate_payments_report');
+    Route::get('/admin-generate-frame-stall-report'     , [AdminReportController::class, 'generateFrameStallReport'])->name('admin_reports.generate_frame_stall_report');
 
     // MANAGER REPORTS ROUTES
-    Route::get('/manager-markets-report', [ManagerReportController::class, 'marketsReport'])->name('reports.markets');
-    Route::get('/manager-customers-report', [ManagerReportController::class, 'customersReport'])->name('reports.customers');
-    Route::get('/manager-payments-report', [ManagerReportController::class, 'paymentsReport'])->name('reports.payments');
-    Route::get('/manager-frame-stall-report', [ManagerReportController::class, 'customerPaymentsReport'])->name('reports.frame_stall');
+    Route::get('/manager-markets-report', [ManagerReportController::class, 'marketsReport'])->name('manager_reports.markets');
+    Route::get('/manager-customers-report', [ManagerReportController::class, 'customersReport'])->name('manager_reports.customers');
+    Route::get('/manager-payments-report', [ManagerReportController::class, 'paymentsReport'])->name('manager_reports.payments');
+    Route::get('/manager-frame-stall-report', [ManagerReportController::class, 'customerPaymentsReport'])->name('manager_reports.frame_stall');
 
-    Route::get('/manager-generate-markets-report', [ManagerReportController::class, 'generateMarketsReport'])->name('reports.generate_markets_report');
-    Route::get('/manager-generate-customers-report', [ManagerReportController::class, 'generateCustomersReport'])->name('reports.generate_customers_report');
-    Route::get('/manager-generate-payments-report', [ManagerReportController::class, 'generatePaymentsReport'])->name('reports.generate_payments_report');
-    Route::get('/manager-generate-frame-stall-report', [ManagerReportController::class, 'generateFrameStallReport'])->name('reports.generate_frame_stall_report');
+    Route::get('/manager-generate-markets-report', [ManagerReportController::class, 'generateMarketsReport'])->name('manager_reports.generate_markets_report');
+    Route::get('/manager-generate-customers-report', [ManagerReportController::class, 'generateCustomersReport'])->name('manager_reports.generate_customers_report');
+    Route::get('/manager-generate-payments-report', [ManagerReportController::class, 'generatePaymentsReport'])->name('manager_reports.generate_payments_report');
+    Route::get('/manager-generate-frame-stall-report', [ManagerReportController::class, 'generateFrameStallReport'])->name('manager_reports.generate_frame_stall_report');
 
 
     // SETTINGS ROUTES

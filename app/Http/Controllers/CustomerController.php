@@ -31,8 +31,10 @@ class CustomerController extends Controller
         return view('customers.index', compact('customers'));
     }
 
-    public function showCustomer(Request $request, Customer $customer, $marketId)
+    public function showCustomer(Request $request)
     {
+        $marketId=$request->market_id;
+        $customer=Customer::find($request->customer_id);
 
         if (Auth::user()->market_id && Auth::user()->market_id != $marketId) {
             return back()->with('error', "Access dinied! Unauthorized user.");
@@ -67,8 +69,9 @@ class CustomerController extends Controller
             'selectedStallId',
         ));
     }
-    public function showCustomerAdminView(Customer $customer)
+    public function showCustomerAdminView(Request $request)
     {
+        $customer = Customer::find($request->customer_id);
 
         if (Auth::user()->market_id) {
             return back()->with('error', "Access dinied! Unauthorized user.");

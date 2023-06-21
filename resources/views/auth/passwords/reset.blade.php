@@ -41,7 +41,7 @@
                 <img src="{{ asset('assets/images/logo.png') }}" height="140px" width="180px" alt="">
             </div>
             <div class="h4 text-muted text-center pt-2">KYC System</div>
-            <form action="{{ route('password.update') }}" method="POST" class="pt-3">
+            <form action="{{ route('passwords.update') }}" method="POST" class="pt-3">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
 

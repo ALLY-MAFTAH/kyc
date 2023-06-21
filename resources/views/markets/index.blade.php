@@ -18,7 +18,7 @@
         <div class="d-flex ">
             <button onclick="saveWebpage()" type="button" class="btn  bg-white btn-icon-text border">
                 <i class="mdi mdi-download btn-icon-prepend"></i> Download </button>
-            <button onclick="printDiv('printable-content')"  type="button" class="btn  bg-white btn-icon-text border ml-3">
+            <button onclick="printDiv('printable-content')" type="button" class="btn  bg-white btn-icon-text border ml-3">
                 <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
             <button type="button" class="btn  ml-3 btn-primary collapsed"data-bs-toggle="collapse"
                 data-bs-target="#addMarketCollapse"> Create Market </button>
@@ -201,7 +201,8 @@
                     <th>Frame Price</th>
                     <th>Stall Price</th>
                     <th>Size</th>
-                    <th class="text-center">Actions</th>
+                    <th></th>
+                    <th class="text-left">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -237,10 +238,13 @@
                         <td>{{ number_format($market->stall_price, 0, '.', ',') }} TZS</td>
                         <td>{{ $market->size }}</td>
                         <td class="text-center">
-                            <a href="{{ route('markets.show', $market) }}" class="btn  btn-outline-info collapsed"
-                                type="button">
-                                <i class="feather icon-edit"></i> View
-                            </a>
+                            <form action="{{ route('markets.show') }}" method="GET">
+                                <input type="number" name="market_id" value="{{ $market->id }}" hidden>
+                                <button class="btn btn-outline-info collapsed" type="submit"></i> View
+                                </button>
+                            </form>
+                        </td>
+                        <td class="text-center">
                             <a href="#" class="btn  btn-outline-danger"
                                 onclick="if(confirm('Are you sure want to delete {{ $market->name }}?')) document.getElementById('delete-market-{{ $market->id }}').submit()">
                                 <i class="f"></i>Delete
@@ -261,7 +265,7 @@
 <script>
     function goToMarketTr(event) {
         var id = event.target.parentNode.dataset.id;
-        window.location.href = '/admin-show-market/' + id;
+        window.location.href = '/show-market/?market_id=' + id;
     }
 </script>
 <script>
