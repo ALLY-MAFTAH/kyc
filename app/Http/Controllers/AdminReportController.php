@@ -102,8 +102,8 @@ class AdminReportController extends Controller
             if ($request->has('empty_frames')) {
                 $columns['Empty Frames'] = function ($market) {
                     return $market
-                        ->frames()
-                        ->where('customer_id', null)
+                    ->frames()
+                    ->where('customer_id', null)
                         ->count();
                 };
             }
@@ -133,6 +133,9 @@ class AdminReportController extends Controller
 
             if ($fileType == 'PDF') {
                 $reportInstance = new PdfReport();
+                dd($reportInstance->of($title, $subtitle, $meta, $markets, $columns)
+                ->setOrientation($orientation)
+                ->stream());
                 return $reportInstance
                     ->of($title, $subtitle, $meta, $markets, $columns)
                     ->setOrientation($orientation)

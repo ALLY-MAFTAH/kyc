@@ -228,10 +228,18 @@
                                             <div class="d-flex align-items-center">
                                                 <img src="{{ asset('storage/' . $customer->photo) }}" alt="image" />
                                                 <div class="table-user-name ml-3">
-                                                    <p class="mb-0 font-weight-medium"> <a style="text-decoration: none"
+                                                    <p class="mb-0 font-weight-medium">
+
+                                                        <a class="customer-link text-primary"class=""
+                                                            type="button" data-customerId="{{ $customer->id }}">
+                                                            {{ $customer->full_name }}
+                                                        </a>
+
+                                                        {{-- <a style="text-decoration: none"
                                                             href="{{ route('customers.admin_show', $customer) }}">
                                                             {{ $customer->first_name }} {{ $customer->middle_name }}
-                                                            {{ $customer->last_name }}</a> </p>
+                                                            {{ $customer->last_name }}</a> --}}
+                                                    </p>
                                                     <small> {{ $customer->nida }}</small>
                                                 </div>
                                             </div>
@@ -364,5 +372,14 @@
             chart.draw(data, options);
         }
     </script>
-
+    <script>
+        var customerLinks = document.getElementsByClassName('customer-link');
+        for (var i = 0; i < customerLinks.length; i++) {
+            customerLinks[i].addEventListener('click', function(e) {
+                e.preventDefault();
+                var customerId = this.getAttribute('data-customerId');
+                window.location.href = '/show-customer-admin-view/?customer_id=' + customerId;
+            });
+        }
+    </script>
 @endsection

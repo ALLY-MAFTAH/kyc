@@ -34,7 +34,7 @@
         {{ session('error') }}
     </div>
 @endif
-<form method="GET" action="{{ route('reports.generate_markets_report') }}">
+<form method="GET" action="{{ route('admin_reports.generate_markets_report') }}">
     @csrf
     <div class="card shadow">
         <div class="card-header">

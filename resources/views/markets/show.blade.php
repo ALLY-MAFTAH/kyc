@@ -235,6 +235,7 @@
                                             {{ $frame->customer->middle_name }}
                                             {{ $frame->customer->last_name }}
                                         </a>
+                                        
                                     @else
                                         <label class="p-1 m-0 text-white bg-danger">Empty</label>
                                     @endif

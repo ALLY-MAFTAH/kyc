@@ -34,7 +34,7 @@
         {{ session('error') }}
     </div>
 @endif
-<form method="GET" action="{{ route('reports.generate_payments_report') }}">
+<form method="GET" action="{{ route('manager_reports.generate_payments_report') }}">
     @csrf
     <div class="card shadow">
         <div class="card-header">
@@ -190,7 +190,7 @@
                                 </label>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
                 <div class="col-md-2"></div>
