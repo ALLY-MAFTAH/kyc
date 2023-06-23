@@ -39,14 +39,14 @@ class MarketController extends Controller
             ->latest('created_at')
             ->latest('id')
             ->first();
-        $lastFrameCode = $lastFrameRow ? $lastFrameRow->code : $market->code . "/FRM/000";
+        $lastFrameCode = $lastFrameRow ? $lastFrameRow->code : $market->code . "/FRM/0000";
         $newFrameCode = ++$lastFrameCode;
 
         $lastStallRow = Stall::where('market_id', $market->id)
             ->latest('created_at')
             ->latest('id')
             ->first();
-        $lastStallCode = $lastStallRow ? $lastStallRow->code : $market->code . "/STL/000";
+        $lastStallCode = $lastStallRow ? $lastStallRow->code : $market->code . "/STL/0000";
         $newStallCode = ++$lastStallCode;
 
         $customers = Customer::whereDoesntHave('markets', function ($query) use ($market) {
