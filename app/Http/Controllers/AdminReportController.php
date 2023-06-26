@@ -133,9 +133,6 @@ class AdminReportController extends Controller
 
             if ($fileType == 'PDF') {
                 $reportInstance = new PdfReport();
-                dd($reportInstance->of($title, $subtitle, $meta, $markets, $columns)
-                ->setOrientation($orientation)
-                ->stream());
                 return $reportInstance
                     ->of($title, $subtitle, $meta, $markets, $columns)
                     ->setOrientation($orientation)

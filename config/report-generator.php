@@ -2,6 +2,6 @@
 
 return [
     'flush' => false,
-    // 'pdfLibrary' => 'snappy' // snappy, dompdf
+    // 'pdfLibrary' => 'snappy' 
     'pdfLibrary' => 'dompdf'
 ];
